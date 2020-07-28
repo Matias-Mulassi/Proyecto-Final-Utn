@@ -34,8 +34,7 @@
                                     </span>
                                 @enderror                             
                         </div>
-                    </div>    
-                    </div>                      
+                    </div>                  
                     <input type="hidden" name="id" value="{{$us->id}}">
                     <div class="form-row">
                         <div class="col text-left mt-2">

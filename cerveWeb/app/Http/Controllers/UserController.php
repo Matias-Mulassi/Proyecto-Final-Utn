@@ -139,10 +139,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-      $idUsuario = User::where('id','=',$request['id'])->where('email','=',$request['email'])->get()->first()->id;
-      if(isset($idUsuario))
+      $usuarios = User::where('id','=',$request['id'])->where('email','=',$request['email'])->get();
+      if(isset($usuarios))
       {
         $ruleMail = [];
       }
@@ -150,44 +150,44 @@ class UserController extends Controller
       {
         $ruleMail = ['string', 'email', 'max:255', 'unique:users'];
       } 
-        $rules = [
-                    'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
-                    'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
-                    'email' => $ruleMail ,
-                    'telefono'=>['required','regex:/^[0-9]+$/','max:255'],
-                    'id_tipo_usuario' => ['required','integer'],
-                ];   
+      $rules = [
+                'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+                'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
+                'email' => $ruleMail ,
+                'id_tipo_usuario' => ['required','integer'],
+               ];   
 
-        $messages = [ 
-                        'nombre.regex'=>'Formato de nombre incorrecto',
-                        'nombre.required'=>'Complete el campo requerido',
-                        'nombre.max'=>'La longitud del nombre supera el máximo requerido',
-                        'apellido.regex'=>'Formato de apellido incorrecto',
-                        'apellido.required'=>'Complete el campo requerido',
-                        'apellido.max'=>'La longitud del nombre supera el máximo requerido',
-                        'email.required'=>'Complete el campo requerido',
-                        'email.max'=>'La longitud del email supera el maximo requerido',
-                        'email.string'=>'Formato de email incorrecto',
-                        'email.email'=>'Formato de email incorrecto',
-                        'email.unique'=>'El email ingresado ya existe',
-                        'id_tipo_usuario.required'=>'Seleccine un tipo de usuario'
-                    ];          
+      $messages = [ 
+                    'nombre.regex'=>'Formato de nombre incorrecto',
+                    'nombre.required'=>'Complete el campo requerido',
+                    'nombre.max'=>'La longitud del nombre supera el máximo requerido',
+                    'apellido.regex'=>'Formato de apellido incorrecto',
+                    'apellido.required'=>'Complete el campo requerido',
+                    'apellido.max'=>'La longitud del nombre supera el máximo requerido',
+                    'email.required'=>'Complete el campo requerido',
+                    'email.max'=>'La longitud del email supera el maximo requerido',
+                    'email.string'=>'Formato de email incorrecto',
+                    'email.email'=>'Formato de email incorrecto',
+                    'email.unique'=>'El email ingresado ya existe',
+                    'id_tipo_usuario.required'=>'Seleccine un tipo de usuario'
+                  ];          
 
-        $validacion = $this->validate($request,$rules,$messages);
+     $validacion = $this->validate($request,$rules,$messages);
 
-        if($validacion)
+     if($validacion)
+     {
+        $usuario = User::find($request['id']);
+        if(isset($usuario))
         {
-            $usuario = User::find($request['id']);
-            if(isset($usuario))
-            {
-                $usuario->update($request->all());
-                return redirect('abmlUsuarios')->with('success','Usuario actualizado con éxito');
-            }
-            else
-            {
-                return back()->with('error','Usuario no encontrado.');
-            }      
+            $usuario->update($request->all());
+            return redirect('abmlUsuarios')->with('success','Usuario actualizado con éxito');
         }
+        else
+        {
+            return back()->with('error','Usuario no encontrado.');
+        }      
+     }
+
     }
 
     /**
