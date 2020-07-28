@@ -16,9 +16,16 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'nombre', 'apellido', 'email', 'password','id_tipo_usuario','deleted_at'
     ];
 
+
+    public function tipo_usuario()
+    {
+        //return $this->belongsTo('Name of the model that is related to',"foreign key"-attribute");
+        return $this->belongsTo('App\TiposUsuarios',"id_tipo_usuario");
+
+    }
     /**
      * The attributes that should be hidden for arrays.
      *

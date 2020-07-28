@@ -15,12 +15,16 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
+            $table->string('nombre');
+            $table->string('apellido');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->bigInteger('id_tipo_usuario');
+            $table->dateTime('deleted_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
+            $table->foreign('id_tipo_usuario')->references('id')->on('tipos_usuarios')->onDelete('cascade');
         });
     }
 
@@ -31,6 +35,10 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::table('tipos_usuarios',function(Blueprint $table){
+            $table->dropForeign('id_tipo_usuario');
+       });
+
         Schema::dropIfExists('users');
     }
 }
