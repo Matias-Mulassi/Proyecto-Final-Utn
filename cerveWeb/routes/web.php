@@ -45,4 +45,13 @@ Route::get('/altaUsuario','UserController@create' )->name('altaUsuario');
 Route::post('/agregarUsuario','UserController@store' )->name('agregarUsuario');
 Route::get('/editarUsuario/{id}','UserController@edit' )->name('editarUsuario');
 Route::post('/updateUsuario','UserController@update' )->name('updateUsuario');
-Route::get('/abmlUsuarios/{id}','UserController@logic_delete' )->name('deleteUsuarios');
+Route::get('/deleteUsuarios/{id}','UserController@logic_delete' )->name('deleteUsuarios');
+
+Route::get('/abmlCervezas','CervezaController@index' )->name('abmlCervezas');
+Route::get('/altaCerveza','CervezaController@create' )->name('agregarCerveza');
+Route::post('/altaCerveza','CervezaController@store' )->name('altaCerveza');
+Route::get('/editarCerveza/{id}','CervezaController@edit' )->name('editarCerveza');
+Route::post('/actualizarCerveza','CervezaController@update' )->name('updateCerveza');
+Route::get('/deleteCerveza/{id}','CervezaController@logic_delete' )->name('deleteCerveza');
+
+
