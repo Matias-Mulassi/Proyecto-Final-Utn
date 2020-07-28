@@ -38,3 +38,11 @@ Route::get('/home', function()
 	}   
  
 })->name('home');
+
+
+Route::get('/abmlUsuarios','UserController@index' )->name('abmlUsuarios');
+Route::get('/altaUsuario','UserController@create' )->name('altaUsuario');
+Route::post('/agregarUsuario','UserController@store' )->name('agregarUsuario');
+Route::get('/editarUsuario/{id}','UserController@edit' )->name('editarUsuario');
+Route::post('/updateUsuario','UserController@update' )->name('updateUsuario');
+Route::get('/abmlUsuarios/{id}','UserController@logic_delete' )->name('deleteUsuarios');

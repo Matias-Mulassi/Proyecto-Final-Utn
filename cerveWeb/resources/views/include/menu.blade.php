@@ -48,7 +48,7 @@
 
                                             @case(2)
                                                 <span>                                               
-                                                   <a class="dropdown-item" href="#">Usuarios</a>
+                                                   <a class="dropdown-item" href="{{ route('abmlUsuarios') }}">Usuarios</a>
                                                    <a class="dropdown-item" href="#">Cervezas</a>
                                                    <a class="dropdown-item" href="#">Proovedores</a>
                                                    <a class="dropdown-item" href="#">Pedidos</a>
