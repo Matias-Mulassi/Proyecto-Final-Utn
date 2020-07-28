@@ -40,25 +40,26 @@
                                         @switch(Auth::user()->id_tipo_usuario)
                                             @case(1)
                                                 <span>
-                                                    <a class="dropdown-item" href="{{route('asignConVacants')}}">Vacantes disponibles</a>
-                                                    <a class="dropdown-item" href="{{route('listadoInscripciones')}}">Inscripciones realizadas</a>                                          
+                                                    <a class="dropdown-item" href="#">Mis pedidos</a>
+                                                    <a class="dropdown-item" href="#">Realizar Pedido</a>    
+                                                    <a class="dropdown-item" href="#">Cuenta Corriente</a>                                        
                                                 </span>
                                                 @break
 
                                             @case(2)
                                                 <span>                                               
-                                                   <a class="dropdown-item" href="{{ route('abmlUsuarios') }}">Usuarios</a>
-                                                   <a class="dropdown-item" href="{{route('abmlVacantes')}}">Vacantes</a>
-                                                   <a class="dropdown-item" href="{{ route('abmlTipoCargo') }}">Tipos de Cargos</a>
-                                                   <a class="dropdown-item" href="{{ route('abmlTiposUsuarios') }}">Tipos de Usuarios</a>
-                                                   <a class="dropdown-item" href="{{ route('abmlNovedades') }}">Novedades</a> 
-                                                   <a class="dropdown-item" href="{{route('asignarJefesDeCatedra')}}">Asignar Jefes de Cátedra</a>
+                                                   <a class="dropdown-item" href="#">Usuarios</a>
+                                                   <a class="dropdown-item" href="#">Cervezas</a>
+                                                   <a class="dropdown-item" href="#">Proovedores</a>
+                                                   <a class="dropdown-item" href="#">Pedidos</a>
                                                </span>
                                                 @break
 
                                             @case(3)
                                                 <span>
-                                                    <a class="dropdown-item">Ver Ordenes de mérito</a>
+                                                    <a class="dropdown-item" href="#">Pedidos</a>
+                                                    <a class="dropdown-item" href="#">Stock</a>
+                                                    <a class="dropdown-item" href="#">Logistica</a>
                                                 </span>
                                                 @break    
                                            

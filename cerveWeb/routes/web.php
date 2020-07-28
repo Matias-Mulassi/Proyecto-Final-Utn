@@ -17,4 +17,24 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home', function()
+{
+	switch (Auth::user()->id_tipo_usuario)
+	{
+			case 1:
+                return view('Usuario.homeUser');							
+				break;
+			
+			case 2:
+			    return view('Administrador.homeAdmin');
+				break;
+			
+			case 3:
+			    return view('Operador.homeOperador');
+				break;		
+			
+	}   
+ 
+})->name('home');
