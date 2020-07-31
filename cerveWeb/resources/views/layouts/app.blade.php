@@ -21,7 +21,6 @@
     <link href="{{ asset('css/scrollbar.css') }}" rel="stylesheet">
     <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
 
-
     <!-- Bootstrap cdn new version-->    
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <!-- -->
@@ -32,6 +31,12 @@
 </head>
 <style type="text/css">
     #foot{margin-bottom:0px;}
+    body {
+    background-image:url("../imagenes/sword.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+        }
 </style>
 <body>
     <div id="app">
@@ -39,10 +44,10 @@
 
         <main class="py-4">
             @yield('content')
+            
         </main>       
     </div> 
-    <div id="foot">
-        @include('include.footer')     
+    <div id="foot"> 
     </div> 
 </body>
 </html>

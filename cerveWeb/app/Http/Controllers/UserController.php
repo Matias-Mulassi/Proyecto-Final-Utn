@@ -66,6 +66,12 @@ class UserController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'id_tipo_usuario' => ['required','integer'],
+            'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/', 'min:13','max:13'],
+            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
+            'direcciónEntrega' => ['nullable','string'],
+            'prioridad' => ['nullable','integer'],
+            'telefono' => ['nullable','numeric'],
           ];   
 
         $messages = [ 'nombre.regex'=>'Formato de nombre incorrecto',
@@ -81,7 +87,18 @@ class UserController extends Controller
                 'email.unique'=>'El email ingresado ya existe',
                 'password.min'=>'La contraseña debe tener almenos 8 caracteres',
                 'password.confirmed'=>'Las contraseñas no coinciden',
-                'id_tipo_usuario.required'=>'Seleccine un tipo de usuario'
+                'id_tipo_usuario.required'=>'Seleccine un tipo de usuario',
+                'cuitcuil.regex'=>'Formato de cuit/cuil incorrecto',
+                'cuitcuil.max'=>'La longitud del cuit/cuil supera el maximo requerido',
+                'cuitcuil.min'=>'La longitud del cuit/cuil no supera el minimo requerido',
+                'razonSocial.regex'=>'Formato de razon Social incorrecto',
+                'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
+                'condicionIVA.in'=>'Valor Incorrecto, Vuelta a intentarlo',
+                'prioridad.integer'=>'Debe ser un valor entero',
+                'telefono.numeric'=>'El telefono debe ser numerico',
+
+                
+
 
               ];          
         $validacion = $this->validate($request,$rules,$messages);
@@ -94,6 +111,12 @@ class UserController extends Controller
             $us->email = $request['email'];
             $us->password = Hash::make($request['password']);
             $us->id_tipo_usuario= $request['id_tipo_usuario'];
+            $us->razonSocial= $request['razonSocial'];
+            $us->condicionIVA= $request['condicionIVA'];
+            $us->direcciónEntrega= $request['direcciónEntrega'];
+            $us->prioridad= $request['prioridad'];
+            $us->telefono= $request['telefono'];
+            $us->cuitcuil= $request['cuitcuil'];
             $us->save(); 
             return redirect('abmlUsuarios')->with('success','Usuario registrado con éxito');
         }     
@@ -151,25 +174,37 @@ class UserController extends Controller
         $ruleMail = ['string', 'email', 'max:255', 'unique:users'];
       } 
       $rules = [
-                'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
-                'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
-                'email' => $ruleMail ,
-                'id_tipo_usuario' => ['required','integer'],
+            'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
+            'email' => $ruleMail,
+            'id_tipo_usuario' => ['required','integer'],
+            'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/'],
+            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
+            'direcciónEntrega' => ['nullable','string'],
+            'prioridad' => ['nullable','integer'],
+            'telefono' => ['nullable','numeric'],
                ];   
 
       $messages = [ 
-                    'nombre.regex'=>'Formato de nombre incorrecto',
-                    'nombre.required'=>'Complete el campo requerido',
-                    'nombre.max'=>'La longitud del nombre supera el máximo requerido',
-                    'apellido.regex'=>'Formato de apellido incorrecto',
-                    'apellido.required'=>'Complete el campo requerido',
-                    'apellido.max'=>'La longitud del nombre supera el máximo requerido',
-                    'email.required'=>'Complete el campo requerido',
-                    'email.max'=>'La longitud del email supera el maximo requerido',
-                    'email.string'=>'Formato de email incorrecto',
-                    'email.email'=>'Formato de email incorrecto',
-                    'email.unique'=>'El email ingresado ya existe',
-                    'id_tipo_usuario.required'=>'Seleccine un tipo de usuario'
+                  'nombre.regex'=>'Formato de nombre incorrecto',
+                  'nombre.required'=>'Complete el campo requerido',
+                  'nombre.max'=>'La longitud del nombre supera el máximo requerido',
+                  'apellido.regex'=>'Formato de apellido incorrecto',
+                  'apellido.required'=>'Complete el campo requerido',
+                  'apellido.max'=>'La longitud del nombre supera el máximo requerido',
+                  'email.required'=>'Complete el campo requerido',
+                  'email.max'=>'La longitud del email supera el maximo requerido',
+                  'email.string'=>'Formato de email incorrecto',
+                  'email.email'=>'Formato de email incorrecto',
+                  'email.unique'=>'El email ingresado ya existe',
+                  'id_tipo_usuario.required'=>'Seleccione un tipo de usuario',
+                  'cuitcuil.regex'=>'Formato de cuit/cuil incorrecto',
+                  'razonSocial.regex'=>'Formato de razon Social incorrecto',
+                  'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
+                  'condicionIVA.in'=>'Valor Incorrecto, Vuelta a intentarlo',
+                  'prioridad.integer'=>'Debe ser un valor entero',
+                  'telefono.numeric'=>'El telefono debe ser numerico',
                   ];          
 
      $validacion = $this->validate($request,$rules,$messages);

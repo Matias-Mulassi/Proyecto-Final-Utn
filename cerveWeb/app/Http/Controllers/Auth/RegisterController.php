@@ -54,6 +54,15 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'id_tipo_usuario' => ['required','integer'],
+            'cuitcuil' => ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/', 'max:13'],
+            'razonSocial' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'condicionIVA' => ['required','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
+            'direcciónEntrega' => ['required','string'],
+            'prioridad' => ['required','integer'],
+            'telefono' => ['required','numeric'],
+            
+            
+
         ]);
     }
 
@@ -71,6 +80,12 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'id_tipo_usuario'=> $data['id_tipo_usuario'],
+            'cuitcuil'=> $data['cuitcuil'],
+            'razonSocial'=> $data['razonSocial'],
+            'condicionIVA'=> $data['condicionIVA'],
+            'direcciónEntrega'=> $data['direcciónEntrega'],
+            'prioridad'=> $data['prioridad'],
+            'telefono'=> $data['telefono'],
         ]);
     }
 }
