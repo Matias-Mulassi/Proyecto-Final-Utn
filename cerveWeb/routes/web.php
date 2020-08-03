@@ -54,4 +54,8 @@ Route::get('/editarCerveza/{id}','CervezaController@edit' )->name('editarCerveza
 Route::post('/actualizarCerveza','CervezaController@update' )->name('updateCerveza');
 Route::get('/deleteCerveza/{id}','CervezaController@logic_delete' )->name('deleteCerveza');
 
+Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
+Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');
+
+
 

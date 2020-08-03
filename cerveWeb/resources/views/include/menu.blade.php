@@ -41,7 +41,7 @@
                                             @case(1)
                                                 <span>
                                                     <a class="dropdown-item" href="#">Mis pedidos</a>
-                                                    <a class="dropdown-item" href="#">Realizar Pedido</a>    
+                                                    <a class="dropdown-item" href="{{ route('catalogoCervezas') }}">Realizar Pedido</a>    
                                                     <a class="dropdown-item" href="#">Cuenta Corriente</a>                                        
                                                 </span>
                                                 @break
