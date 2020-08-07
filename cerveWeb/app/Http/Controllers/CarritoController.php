@@ -147,4 +147,15 @@ class CarritoController extends Controller
     
     }
 
+
+
+    public function detallePedido()
+    {
+        if(count(\Session::get('carrito'))<=0) return redirect()->route('home');
+        $carrito = \Session::get('carrito');
+        $total = $this->getTotal();
+
+        return view('Usuario.detallePedido',compact('carrito','total'));
+
+    }
 }

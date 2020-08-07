@@ -1,8 +1,8 @@
-@extends('layouts.app')
+@extends('templates.template')
 
 @section('content')
 <center>
-     <div class="col-md-3 login">
+     <div class="col-md-3 login mt-5 mb-5">
                 <form method="POST" action="{{ route('login') }}" class="form-signin">
                       <h1 class="h3 mb-3 font-weight-normal">{{ __('Iniciar Sesion') }}</h1>
                       @csrf

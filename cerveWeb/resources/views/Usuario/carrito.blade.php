@@ -65,7 +65,7 @@
             <p>
                 <a href="{{route('catalogoCervezas')}}" class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i>Seguir Comprando</a>
 
-                <a href="#" class="btn btn-primary">Continuar <i class="fa fa-chevron-circle-right"></i></a>
+                <a href="{{route('detallepedido')}}" class="btn btn-primary">Continuar <i class="fa fa-chevron-circle-right"></i></a>
             </p>
         </div>
     </div>

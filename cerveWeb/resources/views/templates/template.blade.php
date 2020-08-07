@@ -23,7 +23,7 @@
 </style>
 <body>
     
-    @include('partials.nav')
+    @include('include.menu')
 
     @yield('content')
 

@@ -113,3 +113,14 @@ ul.redes li a{
 {
     width: 50px;
 }
+
+
+/* login -------- */
+
+.login h1{
+    color: goldenrod;
+}
+
+.login a{
+    color: blue;
+}

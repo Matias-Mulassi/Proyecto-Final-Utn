@@ -12,8 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('catalogoCervezas');
 });
+
+Route::get('/main', function () {
+    return redirect('catalogoCervezas');
+});
+
+
 
 Auth::routes();
 
@@ -24,7 +30,7 @@ Route::get('/home', function()
 	switch (Auth::user()->id_tipo_usuario)
 	{
 			case 1:
-                return view('Usuario.homeUser');							
+				return redirect('catalogoCervezas');							
 				break;
 			
 			case 2:
@@ -72,11 +78,18 @@ Route::get('/mostrarCarrito','CarritoController@show' )->name('mostrarCarrito');
 Route::get('/agregarItemCarrito/{cerveza}','CarritoController@addItem' )->name('agregarItemCarrito');
 Route::get('/eliminarItemCarrito/{cerveza}','CarritoController@deleteItem' )->name('eliminarItemCarrito');
 Route::get('/vaciarCarrito','CarritoController@trashCart' )->name('vaciarCarrito');
-
 Route::get('/updateItemCarrito/{cerveza}/{cantidad?}', [
 	'as' => 'updateItemCarrito',
 	'uses' => 'CarritoController@updateItem'
 ]);
+
+Route::get('/detallePedido',[
+	'middleware' =>'auth',
+	'as' => 'detallepedido',
+	'uses' => 'CarritoController@detallePedido'
+]);
+
+
 
 
 
