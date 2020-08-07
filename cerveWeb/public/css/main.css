@@ -1,5 +1,13 @@
 /* nav -------- */
 
+body{
+    font-family: 'Lemonada', cursive;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Lobster Two', cursive;
+}
+
 .main-title{
 
     color: goldenrod !important;
@@ -39,7 +47,6 @@ ul.redes li a{
     position: relative;
     max-width: 100%;
     width: 100%;
-    margin-top: 100px;
     }
     img {
     width: 100%;
@@ -83,10 +90,26 @@ ul.redes li a{
 /* slider -------- */
 
 .navbar{
-    margin-bottom: 20px;
-    
+    margin-bottom: 0;
 }
 
 .carousel-item img {
     height: 50vh;
   }
+
+
+/* Carrito de compras -------- */
+
+.table-cart
+{
+    background: #fff;
+    border-radius: 1em;
+    margin-bottom: 30px;
+    padding: 1em;
+
+}
+
+.table-cart img
+{
+    width: 50px;
+}

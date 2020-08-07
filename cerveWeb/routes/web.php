@@ -40,6 +40,17 @@ Route::get('/home', function()
 })->name('home');
 
 
+/*
+|--------------------------------------------------------------------------
+| Inyección de Dependencias
+|--------------------------------------------------------------------------
+*/
+
+Route::bind('cerveza', function($id){
+	return App\Cerveza::where('id',$id)->first();
+});
+
+
 Route::get('/abmlUsuarios','UserController@index' )->name('abmlUsuarios');
 Route::get('/altaUsuario','UserController@create' )->name('altaUsuario');
 Route::post('/agregarUsuario','UserController@store' )->name('agregarUsuario');
@@ -56,6 +67,16 @@ Route::get('/deleteCerveza/{id}','CervezaController@logic_delete' )->name('delet
 
 Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
 Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');
+
+Route::get('/mostrarCarrito','CarritoController@show' )->name('mostrarCarrito');
+Route::get('/agregarItemCarrito/{cerveza}','CarritoController@addItem' )->name('agregarItemCarrito');
+Route::get('/eliminarItemCarrito/{cerveza}','CarritoController@deleteItem' )->name('eliminarItemCarrito');
+Route::get('/vaciarCarrito','CarritoController@trashCart' )->name('vaciarCarrito');
+
+Route::get('/updateItemCarrito/{cerveza}/{cantidad?}', [
+	'as' => 'updateItemCarrito',
+	'uses' => 'CarritoController@updateItem'
+]);
 
 
 

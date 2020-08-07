@@ -87,7 +87,7 @@ class UserController extends Controller
                 'email.unique'=>'El email ingresado ya existe',
                 'password.min'=>'La contraseña debe tener almenos 8 caracteres',
                 'password.confirmed'=>'Las contraseñas no coinciden',
-                'id_tipo_usuario.required'=>'Seleccine un tipo de usuario',
+                'id_tipo_usuario.required'=>'Seleccione un tipo de usuario',
                 'cuitcuil.regex'=>'Formato de cuit/cuil incorrecto',
                 'cuitcuil.max'=>'La longitud del cuit/cuil supera el maximo requerido',
                 'cuitcuil.min'=>'La longitud del cuit/cuil no supera el minimo requerido',

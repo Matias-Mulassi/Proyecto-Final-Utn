@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cerveza;
+use App\Categoria;
 
 class CervezaController extends Controller
 {
@@ -24,8 +25,8 @@ class CervezaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('Administrador.altaCerveza');
+    {   $categorias = Categoria::all()->where('deleted_at',null);
+        return view('Administrador.altaCerveza',compact('categorias'));
     }
 
     /**
@@ -40,6 +41,7 @@ class CervezaController extends Controller
             'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
+            'id_categoria' => ['required','integer'],
           ];
         
         $messages = [ 'nombre.regex'=>'Formato de nombre incorrecto',
@@ -48,17 +50,19 @@ class CervezaController extends Controller
           'descripcion.required'=>'Complete el campo requerido.',
           'precio.required'=>'Complete el campo requerido.',
           'precio.numeric'=>'Formato de precio incorrecto.',
+          'id_categoria.required'=>'Seleccione un tipo de usuario',
         ];  
         
         $validacion = $this->validate($request,$rules,$messages);
      
      if($validacion)
      {
-        $tip = new Cerveza();
-        $tip->nombre = $request['nombre'];
-        $tip->descripcion = $request['descripcion'];
-        $tip->precio = $request['precio'];
-        $tip->save(); 
+        $cerveza = new Cerveza();
+        $cerveza->nombre = $request['nombre'];
+        $cerveza->descripcion = $request['descripcion'];
+        $cerveza->precio = $request['precio'];
+        $cerveza->id_categoria = $request['id_categoria'];
+        $cerveza->save(); 
         return redirect('abmlCervezas')->with('success','Cerveza registrada con éxito.');
      }          
     }

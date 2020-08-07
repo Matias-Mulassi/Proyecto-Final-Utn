@@ -12,7 +12,7 @@
                 <div class="cerveza-info panel">
                     <p> Precio x litro: ${{number_format($cerveza->precio,2)}}</p>
                     <p>
-                        <a class="btn btn-warning" href=""><i class="fa fa-cart-plus"></i> Adquirir</a>
+                        <a class="btn btn-warning" href="{{ route('agregarItemCarrito',$cerveza->id) }}"><i class="fa fa-cart-plus"></i> Adquirir</a>
                         <a class="btn btn-primary" href="{{ route('cerveza-detalle',$cerveza->id) }}"><i class="fa fa-chevron-circle-right"></i> Ver Mas Info</a>
 
                     </p>

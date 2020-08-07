@@ -8,7 +8,7 @@
                 <div class="card-header text-center">Registro Cerveza</div>
 
                 <div class="card-body">
-                    <form method="POST" action="{{ route('altaCerveza') }}">
+                    <form method="POST" action="{{ route('altaCerveza') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
                              <div class="col-md-6 col-sm">
@@ -45,16 +45,34 @@
                                 </span>
                                 @enderror 
                             </div>
-                            <div class="col-md-3 col-sm  mt-2 ">                                             
-                                 <button type="submit" class=" btn btn-primary mt-md-4 float-right">
-                                          {{ __('Confirmar Registro') }}
-                                 </button> 
-                            </div>    
                         </div>
+                       
+                        <div class="form-row">
+                                <div class="col text-left mt-2">
+                                    <label for="validationDefault03">{{ __('Categoria') }}</label>
+                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror" placeholder="Categoria" required>
+                                            @foreach($categorias as $categoria)
+                                            <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
+                                            @endforeach
+                                        </select>
+
+                                            @error('categoria')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror  
+                                </div>
+                        </div>
+                        <div class="col-md-3 col-sm  mt-2 ">                                             
+                                <button type="submit" class=" btn btn-primary mt-md-4 float-right">
+                                        {{ __('Confirmar Registro') }}
+                                </button> 
+                        </div>    
+                </div>
 
                         
                         
-                               
+                                
                     </form>
                 </div>
             </div>

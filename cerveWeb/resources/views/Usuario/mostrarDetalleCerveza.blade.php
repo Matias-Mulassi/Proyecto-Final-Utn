@@ -21,7 +21,7 @@
                         <span class="span label-success">Precio: $ {{number_format($cerveza->precio,2)}}</span>
                      </h3>
                     <p>
-                        <a class="btn btn-warning btn-block" href="#">Añadir al carrito <i class="fa fa-cart-plus fa-2x"></i></a>
+                        <a class="btn btn-warning btn-block" href="{{ route('agregarItemCarrito',$cerveza->id) }}">Añadir al carrito <i class="fa fa-cart-plus fa-2x"></i></a>
                     </p>
 
                 </div>
