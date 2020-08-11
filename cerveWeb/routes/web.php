@@ -90,6 +90,22 @@ Route::get('/detallePedido',[
 ]);
 
 
+//Paypal
+
+// Enviamos nuestro pedido a PayPal
+
+Route::get('/pago',array(
+	'as' => 'pago',
+	'uses' => 'PaypalController@registrarPago'
+));
+
+// Paypal redirecciona a esta ruta
+
+Route::get('/estadoPago',array(
+	'as' => 'estadoPago',
+	'uses' => 'PaypalController@getEstadoPago'
+));
+
 
 
 

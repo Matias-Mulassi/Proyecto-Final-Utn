@@ -23,6 +23,10 @@
 </style>
 <body>
     
+    @if(\Session::has('message'))
+		@include('partials.message')
+	@endif
+
     @include('include.menu')
 
     @yield('content')
