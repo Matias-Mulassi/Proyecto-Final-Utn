@@ -152,7 +152,8 @@ class CarritoController extends Controller
 
     public function detallePedido(Request $request)
     {
-        if(count(\Session::get('carrito'))<=0) return redirect()->route('home');
+        if(count(\Session::get('carrito'))<=0) return \Redirect::route('catalogoCervezas')
+        ->with('messageError', 'Carrito de compra Vacio!, añada cervezas');
         $current_date = Carbon::now()->modify('+1 day')->format('Y-m-d');
 
         $rules = [

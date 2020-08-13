@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm bg-light navbar-info justify-content-end navbar-light">
+<nav class="navbar navbar-expand-sm bg-light navbar-info justify-content-end navbar-light mt-0">
               @if (Auth::check())
               <a class="navbar-brand"  href="{{ route('home') }}"><!--{{ config('app.name', 'CerveWeb') }}-->CerveWeb</a>
               @else
@@ -56,7 +56,7 @@
                                                 <span>
 
                                                     <a class="dropdown-item" href="#">Mis pedidos</a>
-                                                    <a class="dropdown-item" href="{{ route('catalogoCervezas') }}">Realizar Pedido</a>  
+                                                    <a class="dropdown-item" href="{{ route('catalogoCervezas') }}">Realizar Pedidos</a>  
                                                     <a class="dropdown-item" href="#">Cuenta Corriente</a>                                        
                                                 </span>
                                                 @break

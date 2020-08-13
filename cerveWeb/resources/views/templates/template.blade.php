@@ -27,6 +27,10 @@
 		@include('partials.message')
 	@endif
 
+    @if(\Session::has('messageError'))
+		@include('partials.messageError')
+	@endif
+
     @include('include.menu')
 
     @yield('content')
