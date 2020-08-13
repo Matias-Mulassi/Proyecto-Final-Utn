@@ -45,10 +45,18 @@
                     </div>
                 </h3><hr>
 
+                <h3>
+                    <div class="alert alert-info" role="alert">
+                        Fecha Entrega Pedido: {{$fechaEntrega}}
+                    </div>
+                </h3><hr>
+
                 <p>
                     <a href="{{route('mostrarCarrito')}}" class="btn btn-primary"> <i class="fa fa-chevron-circle-left"></i> Regresar</a>
 
-                    <a href="{{route('pago')}}" class="btn btn-warning"> Pagar con <i class="fa fa-paypal fa-2x"></i></a>                    
+                    <a href="{{route('pago')}}" class="btn btn-warning"> Pagar con <i class="fa fa-paypal fa-2x"></i></a> 
+
+                    <a href="{{route('registroSinPago',$fechaEntrega)}}" class="btn btn-warning"> Realizar Pedido sin Abonar </a>                  
                 </p>
             </div>
         </div>

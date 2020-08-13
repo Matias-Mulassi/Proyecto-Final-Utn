@@ -83,7 +83,7 @@ Route::get('/updateItemCarrito/{cerveza}/{cantidad?}', [
 	'uses' => 'CarritoController@updateItem'
 ]);
 
-Route::get('/detallePedido',[
+Route::post('/detallePedido',[
 	'middleware' =>'auth',
 	'as' => 'detallepedido',
 	'uses' => 'CarritoController@detallePedido'
@@ -105,6 +105,10 @@ Route::get('/estadoPago',array(
 	'as' => 'estadoPago',
 	'uses' => 'PaypalController@getEstadoPago'
 ));
+
+//Registrar un pedido sin pagar
+
+Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
 
 
 

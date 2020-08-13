@@ -27,6 +27,12 @@ class User extends Authenticatable
         return $this->belongsTo('App\TiposUsuarios',"id_tipo_usuario");
 
     }
+
+    public function pedidos()
+    {
+    	return $this->hasMany('App\Pedido');
+    }	
+
     /**
      * The attributes that should be hidden for arrays.
      *

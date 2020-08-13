@@ -5,10 +5,21 @@
         <div class="page-header">
         <h1><i class="fa fa-shopping-cart"></i>Carrito de Compras</h1>
         </div> 
+        <form method="POST" action="{{ route('detallepedido') }}">
+        @csrf
         <div class="table-cart">
             @if(count($carrito))
             <p>
                 <a href="{{route('vaciarCarrito')}}" class="btn btn-danger">Vaciar Carrito <i class="fa fa-trash"></i></a>
+            </p>
+            <p>
+                <label for="validationDefault03" class="text-left">Fecha Entrega Pedido: </label>
+                <input type="date" name="fechaPedido" id="fechaPedido" class="form-control @error('fechaPedido') is-invalid @enderror" required>
+                @error('fechaPedido')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror  
             </p>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered">
@@ -65,8 +76,9 @@
             <p>
                 <a href="{{route('catalogoCervezas')}}" class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i>Seguir Comprando</a>
 
-                <a href="{{route('detallepedido')}}" class="btn btn-primary">Continuar <i class="fa fa-chevron-circle-right"></i></a>
+             <button class="btn btn-primary">Continuar <i class="fa fa-chevron-circle-right"></i></button> 
             </p>
         </div>
+        </form>
     </div>
 @stop
