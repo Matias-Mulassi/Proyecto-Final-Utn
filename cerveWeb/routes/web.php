@@ -64,6 +64,13 @@ Route::get('/editarUsuario/{id}','UserController@edit' )->name('editarUsuario');
 Route::post('/updateUsuario','UserController@update' )->name('updateUsuario');
 Route::get('/deleteUsuarios/{id}','UserController@logic_delete' )->name('deleteUsuarios');
 
+Route::get('/abmlTiposUsuarios','TipoUsuarioController@index')->name('abmlTiposUsuarios');
+Route::get('/altaTiposUsuarios','TipoUsuarioController@create' )->name('agregarTiposUsuarios');
+Route::post('/altaTiposUsuarios','TipoUsuarioController@store' )->name('altaTiposUsuarios');
+Route::get('/editarTiposUsuarios/{id}','TipoUsuarioController@edit' )->name('editarTiposUsuarios');
+Route::post('/actualizarTipoUsuario','TipoUsuarioController@update' )->name('updateTiposUsuarios');
+Route::get('/abmlTiposUsuarios/{id}','TipoUsuarioController@logic_delete' )->name('deleteTiposUsuarios');
+
 Route::get('/abmlCervezas','CervezaController@index' )->name('abmlCervezas');
 Route::get('/altaCerveza','CervezaController@create' )->name('agregarCerveza');
 Route::post('/altaCerveza','CervezaController@store' )->name('altaCerveza');
