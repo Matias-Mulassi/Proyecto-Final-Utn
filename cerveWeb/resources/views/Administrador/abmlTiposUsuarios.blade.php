@@ -1,4 +1,4 @@
-@extends('templates.template')
+@extends('templates.templateAdmin')
 
 @section('content')
  <center>

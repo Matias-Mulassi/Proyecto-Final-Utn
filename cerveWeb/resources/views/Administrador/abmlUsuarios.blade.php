@@ -1,11 +1,12 @@
-@extends('layouts.app')
+@extends('templates.templateAdmin')
 
 @section('content')
  <center>
       <div class="col-md-10 mt-4">
                 <div class="card">
                   <div class="card-header">
-                        Usuarios
+                        Usuarios  <a href="{{route('altaUsuario')}}" class="btn btn-success btn-circle ml-2">  <i class="fa fa-plus"></i>  
+                    </a>
                     </div>
                     <div class="card-body">
                             <div class="table-responsive">
@@ -34,17 +35,17 @@
                                             <td scope="col">
                                               @if(isset($usuario->deleted_at))
                                                 <button type="button"  class="btn btn-outline-success" data-toggle="modal" data-target="#_{{$usuario->id}}">
-                                                  Habilitar  &nbsp;
+                                                <i class="fa fa-check-circle"></i>
                                                 </button>
                                               @else
                                                <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$usuario->id}}">
-                                                  Inhabilitar 
+                                               <i class="fa fa-times-circle"></i>
                                                 </button>
                                               @endif                                          
                                             </td>
                                             <td scope="col">
                                                 <a href="{{route('editarUsuario',$usuario->id)}}" class="btn btn-outline-primary">
-                                                   Editar
+                                                  <i class="fa fa-pencil square"></i>
                                                 </a>                                         
                                             </td>
                                         </tr>
@@ -55,8 +56,7 @@
                         </div>    
                     </div>                         
                     </div>
-                    <a href="{{route('altaUsuario')}}" class="float-right mt-4 btn btn-success ">       Agregar
-                    </a>
+  
                     @if(session('success'))
                     <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
                           <strong>{{session('success')}}</strong>

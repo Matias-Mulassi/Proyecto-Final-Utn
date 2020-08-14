@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('templates.templateAdmin')
 
 @section('content')
-<div class="container">
+<div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -179,9 +179,15 @@
                                 @enderror  
                         </div>
                      </div>
-                       <button type="submit" class="btn btn-primary mt-4 float-right">
+                     <p>
+
+                        <button type="submit" class="btn btn-primary float-right mt-3">
                                 {{ __('Confirmar Registro') }}
-                       </button>   
+                        </button>  
+
+                        <a href="{{route('abmlUsuarios')}}" class="btn btn-warning float-right mr-3 mt-3">Cancelar</a>
+
+                    </p>
                     </form>                 
                 </div>
             </div>

@@ -1,11 +1,11 @@
-@extends('templates.template')
+@extends('templates.templateAdmin')
 
 @section('content')
 		<div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header text-center">Registro Categorias</div>
+                <div class="card-header text-center">CATEGORIAS <small>[Agregar Categoria]</small>  </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('altaCategoria') }}">
@@ -37,10 +37,15 @@
                                         @enderror                           
                                 </div>
                         </div>
-                        <button type="submit" class="btn btn-primary mt-4 float-right">
-                                {{ __('Confirmar Registro') }}
-                       </button>  
+                        <p>
+
+                            <button type="submit" class="btn btn-primary float-right mt-3">
+                                    {{ __('Confirmar Registro') }}
+                            </button>  
+
+                            <a href="{{route('abmlCategorias')}}" class="btn btn-warning float-right mr-3 mt-3">Cancelar</a>
                          
+                        </p>
                     </form>
                 </div>
             </div>

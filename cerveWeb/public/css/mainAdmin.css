@@ -1,0 +1,68 @@
+
+body{
+    font-family: 'Lemonada', cursive;
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-family: 'Lobster Two', cursive;
+}
+
+/* home -------- */
+
+.btn-home-admin
+{
+    font-size: 25px;
+}
+
+.page-header
+{
+    color: goldenrod;
+}
+
+/* footer -------- */
+
+footer{
+    background: #222;
+    padding: 20px;
+    text-align: center;
+    color: goldenrod;
+    
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-top:308px;
+    margin-bottom: 0px;
+
+}
+
+.page
+
+{
+    background: #fff;
+    border-radius: 1em;
+    margin: 1em;
+    min-height: 500px;
+    padding: 1em;
+    
+}
+
+.card-header
+{
+    color: goldenrod;
+}
+
+
+/* admin abml */
+
+
+
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    padding: 6px 0px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
