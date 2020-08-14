@@ -38,7 +38,7 @@ class CervezaController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
             'id_categoria' => ['required','integer'],
@@ -108,7 +108,7 @@ class CervezaController extends Controller
     public function update(Request $request)
     {
         $rules = [
-            'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
            ];   
@@ -170,7 +170,7 @@ class CervezaController extends Controller
         }
         else
         {
-           return back()->with('error','Usuario no encontrado');
+           return back()->with('error','Cerveza no encontrada');
         }    
     }
 

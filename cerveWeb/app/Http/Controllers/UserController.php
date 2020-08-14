@@ -61,13 +61,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
-            'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
+            'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
+            'apellido' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/' , 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'id_tipo_usuario' => ['required','integer'],
             'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/', 'min:13','max:13'],
-            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
             'direcciónEntrega' => ['nullable','string'],
             'prioridad' => ['nullable','integer'],
@@ -174,12 +174,12 @@ class UserController extends Controller
         $ruleMail = ['string', 'email', 'max:255', 'unique:users'];
       } 
       $rules = [
-            'nombre' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
-            'apellido' => ['required','regex:/^[A-Za-z\s-_]+$/' , 'max:255'],
+            'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
+            'apellido' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/' , 'max:255'],
             'email' => $ruleMail,
             'id_tipo_usuario' => ['required','integer'],
             'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/'],
-            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
+            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
             'direcciónEntrega' => ['nullable','string'],
             'prioridad' => ['nullable','integer'],

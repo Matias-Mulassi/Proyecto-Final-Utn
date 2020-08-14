@@ -71,6 +71,13 @@ Route::get('/editarCerveza/{id}','CervezaController@edit' )->name('editarCerveza
 Route::post('/actualizarCerveza','CervezaController@update' )->name('updateCerveza');
 Route::get('/deleteCerveza/{id}','CervezaController@logic_delete' )->name('deleteCerveza');
 
+Route::get('/abmlCategorias','CategoriaController@index' )->name('abmlCategorias');
+Route::get('/altaCategoria','CategoriaController@create' )->name('agregarCategoria');
+Route::post('/altaCategoria','CategoriaController@store' )->name('altaCategoria');
+Route::get('/editarCategoria/{id}','CategoriaController@edit' )->name('editarCategoria');
+Route::post('/actualizarCategoria','CategoriaController@update' )->name('updateCategoria');
+Route::get('/deleteCategoria/{id}','CategoriaController@logic_delete' )->name('deleteCategoria');
+
 Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
 Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');
 
