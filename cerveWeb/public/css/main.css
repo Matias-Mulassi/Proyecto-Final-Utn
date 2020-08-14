@@ -21,6 +21,14 @@ footer{
     background: #222;
     text-align: center;
     color: goldenrod;
+    
+    position: relative;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin-top:308px;
+    margin-bottom: 0px;
+
 }
 
 ul.redes li{

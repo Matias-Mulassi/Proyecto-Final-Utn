@@ -27,7 +27,7 @@ public function usuario()
 
 public function itemsPedidos()
 {
-  return $this->hasMany('App\ItemPedido');
+  return $this->hasMany('App\ItemPedido','id_pedido');
 }
 
 }

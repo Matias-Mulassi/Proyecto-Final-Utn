@@ -17,6 +17,6 @@ class Categoria extends Model
     
     public function cervezas()
     {
-    	return $this->hasMany('App\Cerveza');
+    	return $this->hasMany('App\Cerveza','id_cerveza');
     }					  
 }

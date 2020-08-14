@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Pedido;
 use App\ItemPedido;
+use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
 {
@@ -15,7 +17,11 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+        $pedidos = Pedido::where('id_usuario','=',Auth::user()->id)->where('deleted_at',null)->get();
+        $usuario = User::find(Auth::user()->id);
+        
+        return view('Usuario.listadoPedidos',compact('pedidos','usuario'));
+
     }
 
     /**
@@ -117,4 +123,28 @@ class PedidoController extends Controller
         $item_pedido->save();
 	}
 
+
+
+    public function logic_delete($id)
+    {
+        $pedido = Pedido::find($id);
+        if($pedido && ($pedido->estado=='pendiente'))
+        {
+           if(isset($pedido->deleted_at))
+           {
+             $pedido->deleted_at = null;
+           }
+           else
+           {
+            $pedido->deleted_at =  date('Y-m-d H:i:s');
+           }
+           
+           $pedido->save(); 
+           return back()->with('success','Pedido eliminado con éxito.');
+        }
+        else
+        {
+           return back()->with('error','El pedido que desea borrar ya se encuentra en elaboración para su entrega');
+        }    
+    }
 }

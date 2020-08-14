@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     public function pedidos()
     {
-    	return $this->hasMany('App\Pedido');
+    	return $this->hasMany('App\Pedido','id_pedido');
     }	
 
     /**

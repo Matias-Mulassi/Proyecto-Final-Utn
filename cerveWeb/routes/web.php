@@ -110,6 +110,10 @@ Route::get('/estadoPago',array(
 
 Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
 
+//Lista de Pedidos de un Usuario
+Route::get('/listadoPedidos','PedidoController@index')->name('listadoPedidos');
+Route::get('/deletePedidos/{id}','PedidoController@logic_delete' )->name('deletePedidos');
+
 
 
 
