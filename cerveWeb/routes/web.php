@@ -58,8 +58,8 @@ Route::bind('cerveza', function($id){
 
 
 Route::get('/abmlUsuarios','UserController@index' )->name('abmlUsuarios');
-Route::get('/altaUsuario','UserController@create' )->name('altaUsuario');
-Route::post('/agregarUsuario','UserController@store' )->name('agregarUsuario');
+Route::post('/altaUsuario','UserController@store' )->name('altaUsuario');
+Route::get('/agregarUsuario','UserController@create' )->name('agregarUsuario');
 Route::get('/editarUsuario/{id}','UserController@edit' )->name('editarUsuario');
 Route::post('/updateUsuario','UserController@update' )->name('updateUsuario');
 Route::get('/deleteUsuarios/{id}','UserController@logic_delete' )->name('deleteUsuarios');

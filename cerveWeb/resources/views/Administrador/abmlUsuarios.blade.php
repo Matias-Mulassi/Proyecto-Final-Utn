@@ -5,8 +5,7 @@
       <div class="col-md-10 mt-4">
                 <div class="card">
                   <div class="card-header">
-                        Usuarios  <a href="{{route('altaUsuario')}}" class="btn btn-success btn-circle ml-2">  <i class="fa fa-plus"></i>  
-                    </a>
+                        Usuarios <i class="fa fa-user"></i>
                     </div>
                     <div class="card-body">
                             <div class="table-responsive">
@@ -56,7 +55,8 @@
                         </div>    
                     </div>                         
                     </div>
-  
+                    <a href="{{route('agregarUsuario')}}" class="float-right mt-4 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
+                    </a>
                     @if(session('success'))
                     <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
                           <strong>{{session('success')}}</strong>

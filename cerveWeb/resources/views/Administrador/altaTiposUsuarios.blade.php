@@ -1,11 +1,11 @@
-@extends('templates.template')
+@extends('templates.templateAdmin')
 
 @section('content')
 		<div class="container mt-4">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-header text-center">Registro Tipos de Usuarios</div>
+                <div class="card-header text-center">TIPOS USUARIOS <small>[Agregar Tipo de usuario]</small></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('agregarTiposUsuarios') }}">
@@ -24,13 +24,15 @@
                                         @enderror                           
                                 </div>
                             </div>
-                            <div class="form-row">
-                                <div class="col text-left mt-2 ">
-                                    <button type="submit" class="btn btn-primary mt-md-2 mt-2 float-right">
-                                                {{ __('Confirmar Registro') }}
-                                    </button>
-                                </div>
-                            </div>
+                            <p>
+
+                                <button type="submit" class="btn btn-primary float-right mt-3">
+                                        {{ __('Confirmar Registro') }}
+                                </button>  
+
+                                <a href="{{route('abmlTiposUsuarios')}}" class="btn btn-warning float-right mr-3 mt-3">Cancelar</a>
+                         
+                            </p>
                          
                     </form>
                 </div>
