@@ -1,17 +1,17 @@
-@extends('layouts.app')
+@extends('templates.templateAdmin')
 
 @section('content')
-		<div class="container">
+		<div class="container mt-3">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header text-center">Registro Cerveza</div>
+                <div class="card-header text-center">CERVEZAS <small>[Agregar Cerveza]</small></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('altaCerveza') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-row">
-                             <div class="col-md-6 col-sm">
+                             <div class="col text-left mt-2">
                                <label for="nombre">
                                       {{ __('Nombre') }}:
                                </label>
@@ -26,7 +26,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Descripción</label>
-                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" required></textarea>
+                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" placeholder="Ingrese una descripción" required></textarea>
                                 @error('descripcion')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -46,6 +46,18 @@
                                 @enderror 
                             </div>
                         </div>
+
+                        <div class="form-row">												
+                            <div class="col text-left mt-3">
+                                <label class="control-label" for="fichero1">Imagen</label>
+                                <input style="padding: 5px;" id="image" class="form-control @error('image') is-invalid @enderror" type="file" name="image" required>
+                                @error('image')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror 	
+                            </div>
+                        </div>
                        
                         <div class="form-row">
                                 <div class="col text-left mt-2">
@@ -63,11 +75,15 @@
                                             @enderror  
                                 </div>
                         </div>
-                        <div class="col-md-3 col-sm  mt-2 ">                                             
-                                <button type="submit" class=" btn btn-primary mt-md-4 float-right">
-                                        {{ __('Confirmar Registro') }}
-                                </button> 
-                        </div>    
+                        <p>
+
+                            <button type="submit" class="btn btn-primary float-right mt-3">
+                                    {{ __('Confirmar Registro') }}
+                            </button>  
+
+                            <a href="{{route('abmlCervezas')}}" class="btn btn-warning float-right mr-3 mt-3">Cancelar</a>
+                         
+                        </p>
                 </div>
 
                         

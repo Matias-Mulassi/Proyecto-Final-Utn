@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-6">
             <div class="cerveza-bloque">
-                <img src="{{$cerveza->image}}">
+                <img src="../{{$cerveza->image}} ">
             </div>
         </div>
         <div class="col-md-6">

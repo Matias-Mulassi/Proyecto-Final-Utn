@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cerveza;
 use App\Categoria;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Builder;
+use Cookie;
+use Illuminate\Database\QueryException;
 
 class CervezaController extends Controller
 {
@@ -41,7 +46,9 @@ class CervezaController extends Controller
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
+            'image' => ['required','image'],
             'id_categoria' => ['required','integer'],
+            
           ];
         
         $messages = [ 'nombre.regex'=>'Formato de nombre incorrecto',
@@ -50,19 +57,32 @@ class CervezaController extends Controller
           'descripcion.required'=>'Complete el campo requerido.',
           'precio.required'=>'Complete el campo requerido.',
           'precio.numeric'=>'Formato de precio incorrecto.',
-          'id_categoria.required'=>'Seleccione un tipo de usuario',
+          'image.required'=>'Adjunte una Imagen',
+          'image.image'=>'El archivo adjuntado debe ser una imagen',
+          'id_categoria.required'=>'Seleccione una categoría',
         ];  
         
         $validacion = $this->validate($request,$rules,$messages);
      
      if($validacion)
      {
-        $cerveza = new Cerveza();
-        $cerveza->nombre = $request['nombre'];
-        $cerveza->descripcion = $request['descripcion'];
-        $cerveza->precio = $request['precio'];
-        $cerveza->id_categoria = $request['id_categoria'];
-        $cerveza->save(); 
+        DB::transaction(function() use ($request){
+          
+           
+            $nombre = str_replace ('.','_',$request->file('image')->getClientOriginalName());
+            $extension = $request->file('image')->getClientOriginalExtension();
+            $nombreImage = time().'_'.$nombre.'.'.$extension;
+            $ruta = $request->file('image')->storeAs('imagenes/cervezas',$nombreImage);   
+            $request->file('image')->move(public_path('../public/imagenes/cervezas'),$nombreImage);       
+            $cerveza = new Cerveza();
+            $cerveza->nombre = $request['nombre'];
+            $cerveza->descripcion = $request['descripcion'];
+            $cerveza->precio = $request['precio'];
+            $cerveza->image = $ruta;
+            $cerveza->id_categoria = $request['id_categoria'];
+            $cerveza->save(); 
+            
+        });
         return redirect('abmlCervezas')->with('success','Cerveza registrada con éxito.');
      }          
     }
@@ -87,10 +107,12 @@ class CervezaController extends Controller
     public function edit($id)
     {
         $cerveza = Cerveza::find($id);
+        
+        $categorias = Categoria::all()->where('deleted_at',null);
 
-        if(isset($cerveza))
+        if($cerveza && $categorias)
         {
-          return view('Administrador.editarCerveza',compact('cerveza'));  
+          return view('Administrador.editarCerveza',compact('cerveza','categorias'));  
         }
         else
         {

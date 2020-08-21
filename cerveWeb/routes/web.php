@@ -72,7 +72,7 @@ Route::post('/actualizarTipoUsuario','TipoUsuarioController@update' )->name('upd
 Route::get('/abmlTiposUsuarios/{id}','TipoUsuarioController@logic_delete' )->name('deleteTiposUsuarios');
 
 Route::get('/abmlCervezas','CervezaController@index' )->name('abmlCervezas');
-Route::get('/altaCerveza','CervezaController@create' )->name('agregarCerveza');
+Route::get('/agregarCerveza','CervezaController@create' )->name('agregarCerveza');
 Route::post('/altaCerveza','CervezaController@store' )->name('altaCerveza');
 Route::get('/editarCerveza/{id}','CervezaController@edit' )->name('editarCerveza');
 Route::post('/actualizarCerveza','CervezaController@update' )->name('updateCerveza');

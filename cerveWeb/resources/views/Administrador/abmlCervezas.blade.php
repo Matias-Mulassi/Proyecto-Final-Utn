@@ -15,8 +15,10 @@
                                         <tr>
                                             <th class="sticky-top bg-light" scope="col">Id</th>
                                             <th class="sticky-top bg-light" scope="col">Nombre</th>
+                                            <th class="sticky-top bg-light" scope="col">Imagen</th>
                                             <th class="sticky-top bg-light" scope="col">Descripcion</th>
                                             <th class="sticky-top bg-light" scope="col">Precio x lt</th>
+                                            <th class="sticky-top bg-light" scope="col">Categoria</th>
                                             <th colspan="2" class="sticky-top bg-light" scope="col"></th>
                                         </tr>
                                         </thead>
@@ -25,8 +27,14 @@
                                         <tr>
                                             <th scope="row">{{$cerveza->id}}</th>
                                             <td>{{$cerveza->nombre}}</td>
+                                            <td>
+                                                <center>
+                                                <img src="{{$cerveza->image}}" width="40">
+                                                </center>
+                                            </td>
                                             <td>{{$cerveza->descripcion}}</td>
                                             <td>{{$cerveza->precio}}</td>
+                                            <td>{{$cerveza->categoria->nombre}}</td>
                                             <td scope="col">
                                                 <center>
                                                     <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$cerveza->id}}">
@@ -44,7 +52,7 @@
                             </div>
                         </div>    
                     </div>                         
-                    </div>
+                    </div>              
                     <a href="{{route('agregarCerveza')}}" class="float-right mt-4 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
                     </a>
                     @if(session('success'))
