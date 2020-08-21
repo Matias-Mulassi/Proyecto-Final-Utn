@@ -19,7 +19,7 @@
                                             <th class="sticky-top bg-light" scope="col">E-mail</th>
                                             <th class="sticky-top bg-light" scope="col">Fecha-Hora Alta</th>
                                             <th class="sticky-top bg-light" scope="col">Tipo</th>
-                                            <th colspan="2" class="sticky-top bg-light" scope="col"></th>
+                                            <th colspan="3" class="sticky-top bg-light" scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -46,6 +46,11 @@
                                                 <a href="{{route('editarUsuario',$usuario->id)}}" class="btn btn-outline-primary">
                                                   <i class="fa fa-pencil square"></i>
                                                 </a>                                         
+                                            </td>
+                                            <td scope="col">
+                                              <button type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#__{{$usuario->id}}">
+                                                <i class="fa fa-info-circle" style="font-size:15px"></i>
+                                              </button>                                     
                                             </td>
                                         </tr>
                                         @endforeach
@@ -99,5 +104,75 @@
                 </div>
             </div>
             <!-- -->  
-         @endforeach                                                  
+         @endforeach 
+         @foreach($usuarios as $usuario)        
+            <!-- Modal -->
+             <div class="modal fade" id="__{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="__{{$usuario->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Datos Usuario</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             <center>
+                              Información usuario:<br><hr>
+                              
+                              @if((($usuario->tipo_usuario->descripcion)=="Administrador") || (($usuario->tipo_usuario->descripcion)=="Operador" ))
+                                  <strong>Id: </strong>{{$usuario->id}}<br>
+                                  <strong>Apellido: </strong>{{$usuario->apellido}}<br>
+                                  <strong>Nombre: </strong>{{$usuario->nombre}}<br>
+                                  
+                                  <strong>Email: </strong>{{$usuario->email}}<br> 
+                                  <strong>Tipo de usuario: </strong>{{$usuario->tipo_usuario->descripcion}}<br> 
+                                  @if(isset($usuario->deleted_at))
+                                  <strong>Habilitado: </strong>No <br>
+                                  @else
+                                  <strong>Habilitado: </strong>Si<br>
+                                  @endif
+                                @else
+                                  <strong>Id: </strong>{{$usuario->id}}<br>
+                                  <strong>Apellido: </strong>{{$usuario->apellido}}<br>
+                                  <strong>Nombre: </strong>{{$usuario->nombre}}<br>
+                                  
+                                  <strong>Email: </strong>{{$usuario->email}}<br> 
+                                  <strong>Tipo de usuario: </strong>{{$usuario->tipo_usuario->descripcion}}<br> 
+                                  @if(isset($usuario->deleted_at))
+                                  <strong>Habilitado: </strong>No <br>
+                                  @else
+                                  <strong>Habilitado: </strong>Si<br>
+                                  @endif
+                                  <strong>Telefono: </strong>{{$usuario->telefono}}<br>
+                                  <strong>Cuit/Cuil: </strong>{{$usuario->cuitcuil}}<br>     
+                                  <strong>Razon Social: </strong>{{$usuario->razonSocial}}<br>   
+                                  <strong>Condición IVA: </strong>{{$usuario->condicionIVA}}<br> 
+                                  <strong>Recibe pedidos en : </strong>{{$usuario->direcciónEntrega}}<br>            
+                                  @switch($usuario->prioridad)
+                                    @case(1)
+                                        <strong>Prioridad : </strong>Baja<br>
+                                        @break
+
+                                    @case(2)
+                                        <strong>Prioridad : </strong>Mediana<br>
+                                        @break
+
+                                    @case(3)
+                                        <strong>Prioridad : </strong>Alta<br>
+                                        @break
+                                    @default
+                                        <strong>Prioridad : </strong>No aplica<br>
+                                  @endswitch
+                                @endif
+                              </center>
+                       </div>
+                       <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+         @endforeach                                                              
 @endsection

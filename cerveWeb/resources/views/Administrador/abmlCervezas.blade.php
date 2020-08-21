@@ -39,7 +39,11 @@
                                                 <center>
                                                     <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$cerveza->id}}">
                                                         <i class="fa fa-trash"></i>
-                                                    </button> 
+                                                    </button>
+                                            </td>
+                                                </center>
+                                            <td scope="col">
+                                                <center> 
                                                     <a href="{{route('editarCerveza',$cerveza->id)}}" class="btn btn-outline-primary">
                                                         <i class="fa fa-pencil square"></i>
                                                     </a>
@@ -84,14 +88,15 @@
                               </button>
                        </div>
                        <div class="modal-body">
-                             Desea eliminar la Cerveza:<br>
-                            <strong>Id: </strong>{{$cerveza->id}}<br>
+                           <center>
+                             Desea eliminar la Cerveza:<br><hr>
+                            <strong>Id: </strong>{{$cerveza->id}}<br> <br>
 
-                            <strong>Nombre: </strong>{{$cerveza->nombre}}<br>
+                            <strong>Nombre: </strong>{{$cerveza->nombre}}<br> <br>
                         
-                            <strong>Descripción: </strong>{{$cerveza->descripcion}}<br>
+                            <strong>Descripción: </strong>{{$cerveza->descripcion}}<br> <br><br>
 
-                            <strong>Precio x lt: </strong>{{$cerveza->precio}}<br>
+                            <strong>Precio x lt: </strong>{{$cerveza->precio}}<br> <br>
                             <br>
 
 
@@ -99,6 +104,7 @@
                               <span class="text-danger">La acción no podrá revertirse.</span>
                           </strong>
                        </div>
+                       </center>
                        <div class="modal-footer">
                            <a href="{{route('deleteCerveza',$cerveza->id)}}" class="btn btn-primary">Aceptar</a>   
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

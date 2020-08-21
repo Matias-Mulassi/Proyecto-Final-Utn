@@ -30,9 +30,18 @@ Route::get('/home', function()
 	switch (Auth::user()->id_tipo_usuario)
 	{
 			case 1:
-				return redirect('catalogoCervezas');							
+				if(isset(Auth::user()->deleted_at))
+				{
+					return view('Usuario.noHabilitado');
+					break;
+				}
+				else
+				{
+				return redirect('catalogoCervezas');
 				break;
-			
+				}
+				
+				
 			case 2:
 			    return view('Administrador.homeAdmin');
 				break;
