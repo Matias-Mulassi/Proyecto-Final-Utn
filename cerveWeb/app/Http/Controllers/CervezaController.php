@@ -133,6 +133,8 @@ class CervezaController extends Controller
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
+            'image' => ['required','image'],
+            'id_categoria' => ['required','integer'],
            ];   
 
         $messages = [ 'nombre.regex'=>'Formato de nombre incorrecto',
@@ -141,25 +143,42 @@ class CervezaController extends Controller
         'descripcion.required'=>'Complete el campo requerido.',
         'precio.required'=>'Complete el campo requerido.',
         'precio.numeric'=>'Formato de precio incorrecto.',
+        'image.required'=>'Adjunte una Imagen',
+        'image.image'=>'El archivo adjuntado debe ser una imagen',
+        'id_categoria.required'=>'Seleccione una categoría',
         ];        
 
         $validacion = $this->validate($request,$rules,$messages);
 
         if($validacion)
         {
-            $cerveza = Cerveza::find($request['id']);
-            if(isset($cerveza)){
-                $cerveza->nombre = $request['nombre'];
-                $cerveza->descripcion = $request['descripcion'];
-                $cerveza->precio = $request['precio'];
+            DB::transaction(function() use ($request){
+          
+                $cerveza = Cerveza::find($request['id']);
+                if(isset($cerveza)){
+                    $nombre = str_replace ('.','_',$request->file('image')->getClientOriginalName());
+                    $extension = $request->file('image')->getClientOriginalExtension();
+                    $nombreImage = time().'_'.$nombre.'.'.$extension;
+                    $ruta = $request->file('image')->storeAs('imagenes/cervezas',$nombreImage);   
+                    $request->file('image')->move(public_path('../public/imagenes/cervezas'),$nombreImage);
+                    $cerveza->nombre = $request['nombre'];
+                    $cerveza->descripcion = $request['descripcion'];
+                    $cerveza->precio = $request['precio'];
+                    $cerveza->image = $ruta;
+                    $cerveza->id_categoria = $request['id_categoria'];
+                    $cerveza->update();
+                    }
+                   
+                
+                
+            });
 
-            $cerveza->update();
             return redirect('abmlCervezas')->with('success','Cerveza actualizada con éxito.');
-            }
-            else{
-                return redirect('abmlCervezas')->with('error','Cerveza no encontrada');
-            }
         }
+        else{
+            return redirect('abmlCervezas')->with('error','Cerveza no encontrada');
+        }
+      
     }
 
     /**
