@@ -152,3 +152,18 @@ ul.redes li a{
 .login a{
     color: blue;
 }
+
+/* Problemas con z-index */
+
+.dropdown-item
+{
+    z-index: 1000!;
+    background-color: white;
+    position: relative;
+}
+
+.sticky-top
+{
+
+    z-index: 1;
+}

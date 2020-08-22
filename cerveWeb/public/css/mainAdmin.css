@@ -1,4 +1,13 @@
 
+/* navegador */
+
+.dropdown-item
+{
+    z-index: 1000!;
+    background-color: white;
+    position: relative;
+}
+
 body{
     font-family: 'Lemonada', cursive;
 }
@@ -55,7 +64,11 @@ footer{
 
 /* admin abml */
 
+.sticky-top
+{
 
+    z-index: 1;
+}
 
 .btn-circle {
     width: 30px;
