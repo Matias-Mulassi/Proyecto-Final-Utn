@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cerveza;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CarritoController extends Controller
 {
@@ -152,35 +153,41 @@ class CarritoController extends Controller
 
     public function detallePedido(Request $request)
     {
-        if(count(\Session::get('carrito'))<=0) return \Redirect::route('catalogoCervezas')
-        ->with('messageError', 'Carrito de compra Vacio!, añada cervezas');
-        $current_date = Carbon::now()->modify('+1 day')->format('Y-m-d');
-
-        $rules = [
-            
-            'fechaPedido' => ['required','date','after_or_equal:'.$current_date],            
-          ];   
-
-        $messages = [
-                'fechaPedido.required'=>'Ingrese fecha de entrega Pedido.',
-                'fechaPedido.after_or_equal'=>'La fecha de Entrega del pedido debe ser mayor o igual a la fecha actual y un dia de agregado como minimo para la preparación del pedido',
-              ];
-
-
-        $validacion = $this->validate($request,$rules,$messages);
-
-        if($validacion)
-        {
-        $fechaEntrega = Carbon::parse($request['fechaPedido'])->format('Y-m-d');
-        $carrito = \Session::get('carrito');
-        $total = $this->getTotal();
-
-        return view('Usuario.detallePedido',compact('carrito','total','fechaEntrega'));
+        if(isset(Auth::user()->deleted_at)){
+            return view('Usuario.noHabilitado');
         }
         else
         {
-           return redirect('mostrarCarrito')->with('error','Error.No se ha podido registrar pedido.');
-        } 
+            if(count(\Session::get('carrito'))<=0) return \Redirect::route('catalogoCervezas')
+            ->with('messageError', 'Carrito de compra Vacio!, añada cervezas');
+            $current_date = Carbon::now()->modify('+1 day')->format('Y-m-d');
+
+            $rules = [
+                
+                'fechaPedido' => ['required','date','after_or_equal:'.$current_date],            
+            ];   
+
+            $messages = [
+                    'fechaPedido.required'=>'Ingrese fecha de entrega Pedido.',
+                    'fechaPedido.after_or_equal'=>'La fecha de Entrega del pedido debe ser mayor o igual a la fecha actual y un dia de agregado como minimo para la preparación del pedido',
+                ];
+
+
+            $validacion = $this->validate($request,$rules,$messages);
+
+            if($validacion)
+            {
+            $fechaEntrega = Carbon::parse($request['fechaPedido'])->format('Y-m-d');
+            $carrito = \Session::get('carrito');
+            $total = $this->getTotal();
+
+            return view('Usuario.detallePedido',compact('carrito','total','fechaEntrega'));
+            }
+            else
+            {
+            return redirect('mostrarCarrito')->with('error','Error.No se ha podido registrar pedido.');
+            } 
+        }
         
 
     }
