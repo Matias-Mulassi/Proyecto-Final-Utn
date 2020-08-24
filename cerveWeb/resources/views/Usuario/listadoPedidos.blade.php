@@ -114,13 +114,22 @@
                               </button>
                        </div>
                        <div class="modal-body">
-                            <strong>Nro: </strong>{{$pedido->id}}<br>
+                         <center>
+                            <strong>Nro: </strong>{{$pedido->id}}<br> <br>
                             @foreach($pedido->itemsPedidos as $item)
-                                <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br>
+                                <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br> <br>
+                                <img style= "height:100px; width:100px" src="{{ $item->cerveza->image }}"> <br> <br>
                                 <strong>Cantidad : </strong>{{$item->cantidad}} litros<br>
-                            @endforeach      
-                            <strong> Total a abonar: $ </strong>{{$pedido->total}}<br>               
-                       </div>
+                            @endforeach
+                            <hr>
+                            
+                            <h3>
+                            <div class="alert alert-warning" role="alert">
+                                <strong> Total a abonar: $ </strong>{{number_format($pedido->total,2)}}<br>  
+                            </div>                            
+                         </center>
+                        </div>
+
                        <div class="modal-footer">
                             <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
                        </div>

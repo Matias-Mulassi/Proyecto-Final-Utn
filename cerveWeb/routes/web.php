@@ -94,6 +94,10 @@ Route::get('/editarCategoria/{id}','CategoriaController@edit' )->name('editarCat
 Route::post('/actualizarCategoria','CategoriaController@update' )->name('updateCategoria');
 Route::get('/deleteCategoria/{id}','CategoriaController@logic_delete' )->name('deleteCategoria');
 
+//Administración de pedidos
+
+Route::get('/blPedidos','PedidoController@obtenerPedidos' )->name('blPedidos');
+
 Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
 Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');
 
@@ -136,6 +140,9 @@ Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' 
 //Lista de Pedidos de un Usuario
 Route::get('/listadoPedidos','PedidoController@index')->name('listadoPedidos');
 Route::get('/deletePedidos/{id}','PedidoController@logic_delete' )->name('deletePedidos');
+Route::get('/deletePedidosAdmin/{id}','PedidoController@logic_delete2' )->name('deletePedidos2');
+
+
 
 
 

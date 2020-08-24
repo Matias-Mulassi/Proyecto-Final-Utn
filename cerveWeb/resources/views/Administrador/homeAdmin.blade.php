@@ -56,7 +56,7 @@
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">PEDIDOS</a>
+                    <a href="{{route('blPedidos')}}" class="btn btn-warning btn-block btn-home-admin">PEDIDOS</a>
                 </div>
             </div>
 

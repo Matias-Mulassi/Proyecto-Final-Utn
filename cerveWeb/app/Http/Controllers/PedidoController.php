@@ -24,6 +24,13 @@ class PedidoController extends Controller
 
     }
 
+    public function obtenerPedidos()
+    {
+        $pedidos = Pedido::where('deleted_at',null)->get();
+        return view('Administrador.blPedidos',compact('pedidos'));
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -145,6 +152,29 @@ class PedidoController extends Controller
         else
         {
            return back()->with('error','El pedido que desea borrar ya se encuentra en elaboración para su entrega');
+        }    
+    }
+
+    public function logic_delete2($id)
+    {
+        $ped = Pedido::find($id);
+        if($ped)
+        {
+           if(isset($ped->deleted_at))
+           {
+             $ped->deleted_at = null;
+           }
+           else
+           {
+            $ped->deleted_at =  date('Y-m-d H:i:s');
+           }
+           
+           $ped->save(); 
+           return back()->with('success','Pedido eliminado con éxito.');
+        }
+        else
+        {
+           return back()->with('error','Pedido no encontrado.');
         }    
     }
 }
