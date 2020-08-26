@@ -7,7 +7,7 @@
                  <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="col-md-9">                 
+                    <div class="col-md-8">                 
                         <nav class="navbar navbar-light bg-light">
                             <span class="navbar-text">
                                 Tienda de cerveceria Online

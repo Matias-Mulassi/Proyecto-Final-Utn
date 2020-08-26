@@ -37,7 +37,7 @@
                                                 <i class="fa fa-check-circle"></i>
                                                 </button>
                                               @else
-                                               <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$usuario->id}}">
+                                               <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#___{{$usuario->id}}">
                                                <i class="fa fa-times-circle"></i>
                                                 </button>
                                               @endif                                          
@@ -85,16 +85,16 @@
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Usuario</h5>
+                        <h5 class="modal-title" id="exampleModalLabel">Habilitar Usuario</h5>
                              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                  <span aria-hidden="true">&times;</span>
                               </button>
                        </div>
                        <div class="modal-body">
-                             Desea cambiar el estado del usuario:<br>
+                             ¿Desea habilitar el usuario:<br>
                             <strong>Id: </strong>{{$usuario->id}}<br>
                             <strong>Apellido: </strong>{{$usuario->apellido}}<br>
-                            <strong>Nombre: </strong>{{$usuario->nombre}}<br>                     
+                            <strong>Nombre: </strong>{{$usuario->nombre}}?<br>                     
                        </div>
                        <div class="modal-footer">
                            <a href="{{route('deleteUsuarios',$usuario->id)}}" class="btn btn-primary">Aceptar</a>   
@@ -104,7 +104,33 @@
                 </div>
             </div>
             <!-- -->  
-         @endforeach 
+         @endforeach
+         @foreach($usuarios as $usuario)        
+            <!-- Modal -->
+             <div class="modal fade" id="___{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="___{{$usuario->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Inhabilitar Usuario</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             ¿Desea Inhabilitar el usuario:<br>
+                            <strong>Id: </strong>{{$usuario->id}}<br>
+                            <strong>Apellido: </strong>{{$usuario->apellido}}<br>
+                            <strong>Nombre: </strong>{{$usuario->nombre}}?<br>                     
+                       </div>
+                       <div class="modal-footer">
+                           <a href="{{route('deleteUsuarios',$usuario->id)}}" class="btn btn-primary">Aceptar</a>   
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+         @endforeach
          @foreach($usuarios as $usuario)        
             <!-- Modal -->
              <div class="modal fade" id="__{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="__{{$usuario->id}}" aria-hidden="true">

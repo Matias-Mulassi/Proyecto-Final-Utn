@@ -117,6 +117,7 @@
                          <center>
                             <strong>Nro: </strong>{{$pedido->id}}<br> <br>
                             @foreach($pedido->itemsPedidos as $item)
+                                <br>
                                 <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br> <br>
                                 <img style= "height:100px; width:100px" src="{{ $item->cerveza->image }}"> <br> <br>
                                 <strong>Cantidad : </strong>{{$item->cantidad}} litros<br>
