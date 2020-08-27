@@ -142,7 +142,13 @@ Route::get('/estadoPago',array(
 
 //Registrar un pedido sin pagar
 
-Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
+Route::get('/registroSinPago/{fechaEntrega}',[
+	'middleware' =>'prioridad',
+	'as' => 'registroSinPago',
+	'uses' => 'PedidoController@registrarPedido'
+]);
+
+//Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
 
 //Lista de Pedidos de un Usuario
 Route::get('/listadoPedidos','PedidoController@index')->name('listadoPedidos');
