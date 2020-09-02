@@ -64,7 +64,7 @@
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/dusk/60/000000/supplier.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">PROVEEDORES</a>
+                    <a href="{{route('abmlProveedores')}}" class="btn btn-warning btn-block btn-home-admin">PROVEEDORES</a>
                 </div>
             </div>
 

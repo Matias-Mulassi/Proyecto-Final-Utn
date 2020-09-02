@@ -14,7 +14,7 @@
             </p>
             <p>
                 <label for="validationDefault03" class="text-left">Fecha Entrega Pedido: </label>
-                <input type="date" name="fechaPedido" id="fechaPedido" class="form-control @error('fechaPedido') is-invalid @enderror" required>
+                <input type="date" name="fechaPedido" id="fechaPedido" value="{{ old('fechaPedido') }}" class="form-control @error('fechaPedido') is-invalid @enderror" required>
                 @error('fechaPedido')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

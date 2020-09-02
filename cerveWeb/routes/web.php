@@ -89,11 +89,18 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/deleteCerveza/{id}','CervezaController@logic_delete' )->name('deleteCerveza');
 
 	Route::get('/abmlCategorias','CategoriaController@index' )->name('abmlCategorias');
-	Route::get('/altaCategoria','CategoriaController@create' )->name('agregarCategoria');
+	Route::get('/agregarCategoria','CategoriaController@create' )->name('agregarCategoria');
 	Route::post('/altaCategoria','CategoriaController@store' )->name('altaCategoria');
 	Route::get('/editarCategoria/{id}','CategoriaController@edit' )->name('editarCategoria');
 	Route::post('/actualizarCategoria','CategoriaController@update' )->name('updateCategoria');
 	Route::get('/deleteCategoria/{id}','CategoriaController@logic_delete' )->name('deleteCategoria');
+
+	Route::get('/abmlProveedores','ProveedorController@index' )->name('abmlProveedores');
+	Route::get('/agregarProveedor','ProveedorController@create' )->name('agregarProveedor');
+	Route::post('/altaProveedor','ProveedorController@store' )->name('altaProveedor');
+	Route::get('/editarProveedor/{id}','ProveedorController@edit' )->name('editarProveedor');
+	Route::post('/actualizarProveedor','ProveedorController@update' )->name('updateProveedor');
+	Route::get('/deleteProveedor/{id}','ProveedorController@logic_delete' )->name('deleteProveedor');
 
 	//Administración de pedidos
 

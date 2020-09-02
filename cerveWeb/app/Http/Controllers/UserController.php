@@ -166,7 +166,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
       $usuarios = User::where('id','=',$request['id'])->where('email','=',$request['email'])->get();
-      if(isset($usuarios))
+      if(count($usuarios)>0)
       {
         $ruleMail = [];
       }

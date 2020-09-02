@@ -61,7 +61,7 @@
                                                    <a class="dropdown-item" href="{{ route('abmlTiposUsuarios') }}">Tipos de Usuarios</a>
                                                    <a class="dropdown-item" href="{{ route('abmlCervezas') }}">Cervezas</a>
                                                    <a class="dropdown-item" href="{{ route('abmlCategorias') }}">Categorias</a>
-                                                   <a class="dropdown-item" href="#">Proveedores</a>
+                                                   <a class="dropdown-item" href="{{ route('abmlProveedores') }}">Proveedores</a>
                                                    <a class="dropdown-item" href="{{ route('blPedidos') }}">Pedidos</a>
                                                </span>
                                                 @break
