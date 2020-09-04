@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/editarProveedor/{id}','ProveedorController@edit' )->name('editarProveedor');
 	Route::post('/actualizarProveedor','ProveedorController@update' )->name('updateProveedor');
 	Route::get('/deleteProveedor/{id}','ProveedorController@logic_delete' )->name('deleteProveedor');
+	Route::get('/cargarCervezas/{id}','ProveedorController@loadBeer' )->name('cargarCervezasProveedor');
 
 	//Administración de pedidos
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\Cerveza;
 
 class ProveedorController extends Controller
 {
@@ -278,5 +279,15 @@ class ProveedorController extends Controller
            return back()->with('error','Proveedor no encontrado');
         }    
     }
+
+    public function loadBeer($id)
+    {
+        $categorias = Categoria::where('deleted_at', '=',null)->get();
+        $cervezas = Cerveza::all()->where('deleted_at',null);     
+        return view('Administrador.asignarCervezasProveedor',compact('cervezas','categorias'));
+
+    }
+
+
 
 }
