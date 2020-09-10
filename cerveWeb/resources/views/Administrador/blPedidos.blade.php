@@ -25,14 +25,19 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                           @foreach($pedidos as $pedido)    
+
+                                           @foreach($pedidos as $pedido)
+                                           <p hidden>{{$total=0}}</p>
                                         <tr>
                                             <th scope="row">{{$pedido->id}}</th>
                                             <td>{{$pedido->created_at->format('d-m-Y H:m:s')}}</td>
                                             <td>{{$pedido->fecha_entrega}}</td>
                                             <td>{{$pedido->estado}}</td>                                                                              
                                             <td>{{$pedido->usuario->nombre}} , {{$pedido->usuario->apellido}} </td>
-                                            <td>$ {{number_format($pedido->total,2)}}</td>
+                                            @foreach($pedido->itemsPedidos as $item)
+                                                <p hidden>{{$total+=$item->cantidad * $item->cerveza->precio}}</p>
+                                            @endforeach
+                                            <td>$ {{number_format($total,2)}}</td>
                                             <td scope="col">
                                             <center>
                                                     <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$pedido->id}}">
@@ -121,6 +126,7 @@
                        </div>
                        <div class="modal-body">
                             <center>
+                                <p hidden>{{$total=0}}</p>
                                 <strong>Nro: </strong>{{$pedido->id}}<br> <hr>
                                 <div class="table-responsive">
                                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
@@ -140,6 +146,7 @@
                                                     <td>{{$item->cerveza->nombre}}</td>
                                                     <td>{{$item->cantidad}} litros</td>
                                                     <td>${{number_format($item->cerveza->precio * $item->cantidad,2)}}</td>
+                                                    <p hidden>{{$total+=$item->cantidad * $item->cerveza->precio}}</p>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -150,7 +157,7 @@
                                 
                                 <h3>
                                 <div class="alert alert-warning" role="alert">
-                                    <strong> Total a abonar: $ </strong>{{number_format($pedido->total,2)}} 
+                                    <strong> Total a abonar: $ </strong>{{number_format($total,2)}} 
                                 </div>
                                 <h3>
                                 <div class="alert alert-info" role="alert">

@@ -84,14 +84,19 @@
                               </button>
                        </div>
                        <div class="modal-body">
-                             Desea Eliminar el pedido:<br>
-                            <strong>Nro: </strong>{{$pedido->id}}<br>
-                            @foreach($pedido->itemsPedidos as $item)
-                                <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br>
-                                <strong>Cantidad Litros: </strong>{{$item->cantidad}}<br>
-                            @endforeach      
-                            <strong> Total a abonar: $ </strong>{{$pedido->total}}<br>               
+                            <center>
+                                Desea Eliminar el pedido? <br>
+                                <p hidden>{{$total=0}}</p>
+                                <strong>Nro: </strong>{{$pedido->id}}<br>
+                                @foreach($pedido->itemsPedidos as $item)
+                                    <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br>
+                                    <strong>Cantidad Litros: </strong>{{$item->cantidad}}<br>
+                                    <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}} </p>
+                                @endforeach      
+                                <strong> Total a abonar: $ </strong>{{number_format($total,2)}}<br>    
+                            </center>           
                        </div>
+
                        <div class="modal-footer">
                            <a href="{{route('deletePedidos',$pedido->id)}}" class="btn btn-primary">Aceptar</a>   
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -116,17 +121,19 @@
                        <div class="modal-body">
                          <center>
                             <strong>Nro: </strong>{{$pedido->id}}<br> <br>
+                            <p hidden>{{$total=0}}</p>
                             @foreach($pedido->itemsPedidos as $item)
                                 <br>
                                 <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br> <br>
                                 <img style= "height:100px; width:100px" src="{{ $item->cerveza->image }}"> <br> <br>
                                 <strong>Cantidad : </strong>{{$item->cantidad}} litros<br>
+                                <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}} </p>
                             @endforeach
                             <hr>
                             
                             <h3>
                             <div class="alert alert-warning" role="alert">
-                                <strong> Total a abonar: $ </strong>{{number_format($pedido->total,2)}}<br>  
+                                <strong> Total a abonar: $ </strong>{{number_format($total,2)}}<br>  
                             </div>                            
                          </center>
                         </div>

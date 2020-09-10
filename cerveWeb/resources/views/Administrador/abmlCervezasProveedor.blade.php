@@ -8,6 +8,7 @@
                         Cervezas que abastece la proveedora {{$proveedor->razonSocial}}
                     </div>
                     <div class="card-body">
+                        @if(count($proveedor->productos_cervezas))
                             <div class="table-responsive">
                                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                                     <table class="table table-bordered table-striped mb-0">
@@ -46,9 +47,15 @@
                                         </tbody>
                                 </table>
                             </div>
-                        </div>    
+                        </div> 
+                        @else
+                        <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> Este proveedor no tiene cervezas asignadas!
+									
+                        </div>   
                     </div>                         
                     </div>
+                        @endif
                     <hr>
                     <p>
                         <a href="{{route('abmlProveedores')}}" class="btn btn-warning"><i class="fa fa-chevron-circle-left"></i> Volver</a>

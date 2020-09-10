@@ -99,16 +99,11 @@ class PedidoController extends Controller
 
     public function registrarPedido($fechaEntrega)
     {
-        $total = 0;
+        
 		$carrito = \Session::get('carrito');
- 
-		foreach($carrito as $cerveza){
-			$total += $cerveza->cantidad * $cerveza->precio;
-		}
  
         $pedido = new Pedido();
         $pedido->fecha_entrega= $fechaEntrega;
-        $pedido->total=$total;
         $pedido->id_usuario=\Auth::user()->id;
         $pedido->save();
 

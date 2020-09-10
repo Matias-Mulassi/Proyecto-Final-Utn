@@ -76,7 +76,7 @@ class CervezaProveedorController extends Controller
                     $cervezaProductor->proveedores()->attach($proveedor, ['costo' => $request['costo']]);
                 }
                 
-                return redirect()->route('abmlCervezasProveedores',$proveedor->id)->with('success','Cerveza asignada al productor con éxito');
+                return redirect()->route('abmlCervezasProveedores',$proveedor->id)->with('success','Cerveza asignada al proveedor con éxito');
             }
             else
             {

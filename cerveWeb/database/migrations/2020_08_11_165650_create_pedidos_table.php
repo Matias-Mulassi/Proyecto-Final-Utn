@@ -17,7 +17,6 @@ class CreatePedidosTable extends Migration
             $table->bigIncrements('id');
             $table->string('estado')->default('pendiente');
             $table->date('fecha_entrega');
-            $table->float('total', 8, 2);
             $table->integer('id_usuario')->unsigned();
             $table->dateTime('deleted_at')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');

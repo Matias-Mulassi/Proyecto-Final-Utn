@@ -18,7 +18,6 @@ class CreateCervezaProveedorTable extends Migration
             $table->unsignedBigInteger('id_proveedor')->nullable('false');
             $table->float('costo', 8, 2);
             $table->primary(['id_producto_cerveza','id_proveedor']);
-            $table->dateTime('deleted_at')->nullable();
             $table->foreign('id_producto_cerveza')->references('id')->on('productos_cervezas')->onDelete('cascade')->onUpdate('cascade');  
             $table->foreign('id_proveedor')->references('id')->on('proveedores')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
