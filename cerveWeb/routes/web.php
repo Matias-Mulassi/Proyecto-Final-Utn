@@ -101,7 +101,15 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/editarProveedor/{id}','ProveedorController@edit' )->name('editarProveedor');
 	Route::post('/actualizarProveedor','ProveedorController@update' )->name('updateProveedor');
 	Route::get('/deleteProveedor/{id}','ProveedorController@logic_delete' )->name('deleteProveedor');
-	Route::get('/cargarCervezas/{id}','ProveedorController@loadBeer' )->name('cargarCervezasProveedor');
+	
+	Route::get('/asignarCerveza/{id}','ProveedorController@asignarCerveza' )->name('asignarCerveza');
+	Route::get('/abmlCervezasProveedores/{id}','CervezaProveedorController@index' )->name('abmlCervezasProveedores');
+	Route::post('/registroCervezasProveedor','CervezaProveedorController@store' )->name('registroCervezaProveedor');
+	Route::get('/editarCervezaProveedor/{idProveedor}/{idCerveza}','CervezaProveedorController@edit' )->name('editarCervezaProveedor');
+	Route::post('/updateCervezaProveedor','CervezaProveedorController@update' )->name('updateCervezaProveedor');
+	Route::get('/deleteCervezaProveedor/{idProveedor}/{idCerveza}','CervezaProveedorController@destroy' )->name('deleteCervezaProveedor');
+	
+	
 
 	//Administración de pedidos
 

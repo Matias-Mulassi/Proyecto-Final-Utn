@@ -11,14 +11,13 @@ class ProductoCerveza extends Model
     protected $fillabel = [
                             'id',
                             'nombre',
-                            'costo',
                             'image',
                             'deleted_at'
                             ];
 
     public function proveedores()
     {
-        return $this->belongsToMany('App\Proveedor');
+        return $this->belongsToMany('App\Proveedor','cerveza_proveedor','id_producto_cerveza','id_proveedor')->withPivot('costo')->withTimestamps();
     }
 
 }

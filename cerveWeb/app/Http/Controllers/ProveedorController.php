@@ -280,12 +280,12 @@ class ProveedorController extends Controller
         }    
     }
 
-    public function loadBeer($id)
-    {
-        $categorias = Categoria::where('deleted_at', '=',null)->get();
-        $cervezas = Cerveza::all()->where('deleted_at',null);     
-        return view('Administrador.asignarCervezasProveedor',compact('cervezas','categorias'));
-
+    public function asignarCerveza($id)
+    {  
+        
+        $cervezas = Cerveza::all()->where('deleted_at',null);
+        return view('Administrador.asignarCervezaProveedor',compact('cervezas','id'));
+    
     }
 
 

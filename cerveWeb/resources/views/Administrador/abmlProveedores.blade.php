@@ -38,8 +38,11 @@
                                                     <a href="{{route('editarProveedor',$proveedor->id)}}" class="btn btn-outline-primary">
                                                         <i class="fa fa-pencil square"></i>
                                                     </a>
-                                                    <a href="{{route('cargarCervezasProveedor',$proveedor->id)}}" class="btn btn-outline-warning">
+                                                    <a href="{{route('asignarCerveza',$proveedor->id)}}" class="btn btn-outline-warning">
                                                         <i class="fa fa-beer"></i>
+                                                    </a>
+                                                    <a href="{{route('abmlCervezasProveedores',$proveedor->id)}}" class="btn btn-outline-info">
+                                                        <i class="fa fa-list"></i>
                                                     </a>
                                                 </center>                                      
                                             </td>

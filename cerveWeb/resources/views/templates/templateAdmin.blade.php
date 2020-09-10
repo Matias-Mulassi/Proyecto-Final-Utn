@@ -15,7 +15,7 @@
 <style type="text/css">
     #foot{margin-bottom:0px;}
     body {
-    background-image:url("../imagenes/backgroundAdmin.jpg");
+    background-image:url("../../imagenes/backgroundAdmin.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;

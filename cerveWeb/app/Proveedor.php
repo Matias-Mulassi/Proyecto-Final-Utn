@@ -19,7 +19,7 @@ class Proveedor extends Model
 
   public function productos_cervezas()
   {
-      return $this->belongsToMany('App\ProductoCerveza','proveedores_cervezas','id_proveedor','id_producto_cerveza');
+      return $this->belongsToMany('App\ProductoCerveza','cerveza_proveedor','id_proveedor','id_producto_cerveza')->withPivot('costo')->withTimestamps();
   }
 
 

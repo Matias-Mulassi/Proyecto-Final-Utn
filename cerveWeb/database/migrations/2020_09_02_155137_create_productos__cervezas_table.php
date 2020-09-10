@@ -16,7 +16,6 @@ class CreateProductosCervezasTable extends Migration
         Schema::create('productos_cervezas', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->float('costo', 8, 2);
             $table->string('image',6500);
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
