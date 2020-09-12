@@ -124,11 +124,25 @@ class CarritoController extends Controller
     
     public function updateItem(Cerveza $cerveza,$cantidad)
     {
-        $carrito = \Session::get('carrito');
-        $carrito[$cerveza->id]->cantidad=$cantidad;
-        \Session::put('carrito',$carrito);
-
-        return redirect()->route('mostrarCarrito');
+        if(ctype_digit($cantidad))
+        {
+            if($cantidad<=60)
+            {
+                $carrito = \Session::get('carrito');
+                $carrito[$cerveza->id]->cantidad=$cantidad;
+                \Session::put('carrito',$carrito);
+                return redirect()->route('mostrarCarrito');
+            }
+            else
+            {
+                return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros no puede ser mayor a 60.');
+            }
+        }
+        else
+        {
+            return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros debe ser entera.'); 
+        }
+        
     }
 
     public function trashCart()

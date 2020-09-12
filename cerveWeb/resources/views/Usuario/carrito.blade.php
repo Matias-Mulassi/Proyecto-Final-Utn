@@ -43,6 +43,9 @@
                                     <input 
                                         type="number"
                                         min="1"
+                                        max="60"
+                                        step="1"
+                                        pattern="\d*"
                                         value="{{$item->cantidad}}"
                                         id="cerveza_{{$item->id}}"
                                         >
@@ -73,6 +76,14 @@
             <h3><span class="label label-warning">No hay cervezas en el carrito</span></h3>
             @endif
             <hr>
+            @if(session('error'))
+                <div class=" col-md-6 float-left mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>{{session('error')}}</strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+            @endif
             <p>
                 <a href="{{route('catalogoCervezas')}}" class="btn btn-primary"><i class="fa fa-chevron-circle-left"></i>Seguir Comprando</a>
 
