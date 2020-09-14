@@ -19,6 +19,9 @@ class CreateCervezasTable extends Migration
             $table->text('descripcion');
             $table->float('precio', 8, 2);
             $table->string('image',6500);
+            $table->integer('cantidadStock')->unsigned();
+            $table->integer('puntoPedido')->unsigned();
+            $table->integer('loteOptimo')->unsigned()->nullable();
             $table->integer('id_categoria')->unsigned();
             $table->dateTime('deleted_at')->nullable();
             $table->timestamps();

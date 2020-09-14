@@ -46,6 +46,8 @@ class CervezaController extends Controller
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
+            'stockDisponible' => ['required','integer','min:1'],
+            'puntoPedido' => ['required','integer','min:1'],
             'image' => ['required','image'],
             'id_categoria' => ['required','integer'],
             
@@ -57,6 +59,12 @@ class CervezaController extends Controller
           'descripcion.required'=>'Complete el campo requerido.',
           'precio.required'=>'Complete el campo requerido.',
           'precio.numeric'=>'Formato de precio incorrecto.',
+          'stockDisponible.required'=>'Complete el campo requerido.',
+          'stockDisponible.integer'=>'El stock debe ser entero.',
+          'stockDisponible.min'=>'El stock debe ser positivo.',
+          'puntoPedido.required'=>'Complete el campo requerido.',
+          'puntoPedido.integer'=>'El puntoPedido debe ser entero.',
+          'puntoPedido.min'=>'El punto de pedido debe ser positivo.',
           'image.required'=>'Adjunte una Imagen',
           'image.image'=>'El archivo adjuntado debe ser una imagen',
           'id_categoria.required'=>'Seleccione una categoría',
@@ -78,6 +86,8 @@ class CervezaController extends Controller
             $cerveza->nombre = $request['nombre'];
             $cerveza->descripcion = $request['descripcion'];
             $cerveza->precio = $request['precio'];
+            $cerveza->cantidadStock = $request['stockDisponible'];
+            $cerveza->puntoPedido = $request['puntoPedido'];
             $cerveza->image = $ruta;
             $cerveza->id_categoria = $request['id_categoria'];
             $cerveza->save(); 
@@ -133,6 +143,8 @@ class CervezaController extends Controller
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
             'precio' => ['required', 'numeric'],
+            'stockDisponible' => ['required','integer','min:1'],
+            'puntoPedido' => ['required','integer','min:1'],
             'image' => ['required','image'],
             'id_categoria' => ['required','integer'],
            ];   
@@ -143,6 +155,12 @@ class CervezaController extends Controller
         'descripcion.required'=>'Complete el campo requerido.',
         'precio.required'=>'Complete el campo requerido.',
         'precio.numeric'=>'Formato de precio incorrecto.',
+        'stockDisponible.required'=>'Complete el campo requerido.',
+        'stockDisponible.integer'=>'El stock debe ser entero.',
+        'stockDisponible.min'=>'El stock debe ser positivo.',
+        'puntoPedido.required'=>'Complete el campo requerido.',
+        'puntoPedido.integer'=>'El puntoPedido debe ser entero.',
+        'puntoPedido.min'=>'El punto de pedido debe ser positivo.',
         'image.required'=>'Adjunte una Imagen',
         'image.image'=>'El archivo adjuntado debe ser una imagen',
         'id_categoria.required'=>'Seleccione una categoría',
@@ -155,19 +173,24 @@ class CervezaController extends Controller
             DB::transaction(function() use ($request){
           
                 $cerveza = Cerveza::find($request['id']);
-                if(isset($cerveza)){
+                if(isset($cerveza))
+                {
+                    
+               
                     $nombre = str_replace ('.','_',$request->file('image')->getClientOriginalName());
                     $extension = $request->file('image')->getClientOriginalExtension();
                     $nombreImage = time().'_'.$nombre.'.'.$extension;
                     $ruta = $request->file('image')->storeAs('imagenes/cervezas',$nombreImage);   
                     $request->file('image')->move(public_path('../public/imagenes/cervezas'),$nombreImage);
+                    $cerveza->image = $ruta;
                     $cerveza->nombre = $request['nombre'];
                     $cerveza->descripcion = $request['descripcion'];
                     $cerveza->precio = $request['precio'];
-                    $cerveza->image = $ruta;
+                    $cerveza->cantidadStock = $request['stockDisponible'];
+                    $cerveza->puntoPedido = $request['puntoPedido'];
                     $cerveza->id_categoria = $request['id_categoria'];
                     $cerveza->update();
-                    }
+                }
                    
                 
                 

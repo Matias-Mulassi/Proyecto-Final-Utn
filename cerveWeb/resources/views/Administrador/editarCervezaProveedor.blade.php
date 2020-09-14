@@ -17,7 +17,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Costo x lt</label>
-                                <input type="number" step="any" class="form-control  @error('costo') is-invalid @enderror" name="costo" value="{{ $costo }}" id="costo">
+                                <input type="number" min="1" step="any" class="form-control  @error('costo') is-invalid @enderror" name="costo" value="{{ $costo }}" id="costo">
                                 @error('costo')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

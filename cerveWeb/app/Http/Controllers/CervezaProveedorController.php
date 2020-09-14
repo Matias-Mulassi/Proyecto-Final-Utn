@@ -44,7 +44,7 @@ class CervezaProveedorController extends Controller
     {
         $rules = [
             'id_cerveza' => ['required','integer'],
-            'costo' => ['required', 'numeric'],
+            'costo' => ['required', 'numeric','min:1'],
             
           ];
 
@@ -52,6 +52,7 @@ class CervezaProveedorController extends Controller
         'id_cerveza.required'=>'Seleccione una cerveza',
         'costo.required'=>'Complete el campo requerido.',
         'costo.numeric'=>'Formato de costo incorrecto.',
+        'costo.min'=>'El costo debe ser positivo.',
     ];
 
         $validacion = $this->validate($request,$rules,$messages);
@@ -140,13 +141,14 @@ class CervezaProveedorController extends Controller
     {
         $rules = [
             
-            'costo' => ['required', 'numeric'],
+            'costo' => ['required', 'numeric','min:1'],
             
            ];   
 
         $messages = [ 
         'costo.required'=>'Complete el campo requerido.',
         'costo.numeric'=>'Formato de costo incorrecto.',
+        'costo.min'=>'El costo debe ser positivo.',
        
         ];
 

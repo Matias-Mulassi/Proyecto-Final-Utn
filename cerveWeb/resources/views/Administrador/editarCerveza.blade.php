@@ -15,7 +15,7 @@
                                <label for="nombre">
                                       {{ __('Nombre') }}:
                                </label>
-                               <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{$cerveza->nombre }}" required autocomplete="nombre" autofocus placeholder="Nombre">
+                               <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{$cerveza->nombre }}"  autocomplete="nombre" autofocus placeholder="Nombre">
                                     @error('nombre')
                                        <span class="invalid-feedback" role="alert">
                                            <strong>{{ $message }}</strong>
@@ -27,7 +27,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Descripción</label>
-                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion"  required>{{$cerveza->descripcion}}
+                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion"  >{{$cerveza->descripcion}}
                                 </textarea>
                                 @error('descripcion')
                                 <span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Precio x lt</label>
-                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" step="any" name="precio" value="{{$cerveza->precio }}" id="precio" required>
+                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" min="1" step="any" name="precio" value="{{$cerveza->precio }}" id="precio" >
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -48,10 +48,35 @@
                                 @enderror 
                             </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
+                                <label for="validationDefault03">Stock Disponible</label>
+                                <input type="number"  class="form-control  @error('stockDisponible') is-invalid @enderror" name="stockDisponible" value="{{$cerveza->cantidadStock }}" id="stockDisponible" >
+                                @error('stockDisponible')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
+                                <label for="validationDefault03">Punto Pedido</label>
+                                <input type="number"  class="form-control  @error('puntoPedido') is-invalid @enderror" name="puntoPedido" value="{{$cerveza->puntoPedido}}" id="puntoPedido" >
+                                @error('puntoPedido')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
                         <div class="form-row">												
                             <div class="col text-left mt-3">
                                 <label class="control-label" for="fichero1">Imagen</label>
-                                <input style="padding: 5px;" id="image" class="form-control @error('image') is-invalid @enderror" type="file" name="image" required>
+                                <input style="padding: 5px;" id="image" class="form-control @error('image') is-invalid @enderror" type="file" name="image" >
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -63,7 +88,7 @@
                         <div class="form-row">
                                 <div class="col text-left mt-2">
                                     <label for="validationDefault03">{{ __('Categoria') }}</label>
-                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror" placeholder="Categoria" required>
+                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror" placeholder="Categoria" >
                                             @foreach($categorias as $categoria)
                                                 @if($categoria->id == $cerveza->id_categoria)
                                                     <option selected value="{{$categoria->id}}">{{$categoria->nombre}}</option>

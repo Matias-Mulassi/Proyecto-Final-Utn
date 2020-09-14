@@ -14,7 +14,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        $cervezas= Cerveza::all();
+        $cervezas = Cerveza::all()->where('deleted_at',null);
         return view('Usuario.catalogoCervezas',compact('cervezas'));
     }
 

@@ -140,7 +140,7 @@ class CarritoController extends Controller
         }
         else
         {
-            return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros debe ser entera.'); 
+            return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros debe ser entera y positiva.'); 
         }
         
     }

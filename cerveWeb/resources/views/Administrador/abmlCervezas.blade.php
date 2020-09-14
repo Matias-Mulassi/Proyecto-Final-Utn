@@ -8,6 +8,7 @@
                         Cervezas <i class="fa fa-beer"></i>
                     </div>
                     <div class="card-body">
+                        @if(count($cervezas))
                             <div class="table-responsive">
                                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                                     <table class="table table-bordered table-striped mb-0">
@@ -18,6 +19,8 @@
                                             <th class="sticky-top bg-light" scope="col">Imagen</th>
                                             <th class="sticky-top bg-light" scope="col">Descripcion</th>
                                             <th class="sticky-top bg-light" scope="col">Precio x lt</th>
+                                            <th class="sticky-top bg-light" scope="col">Stock Disponible</th>
+                                            <th class="sticky-top bg-light" scope="col">Punto Pedido</th>
                                             <th class="sticky-top bg-light" scope="col">Categoria</th>
                                             <th colspan="2" class="sticky-top bg-light" scope="col"></th>
                                         </tr>
@@ -34,6 +37,8 @@
                                             </td>
                                             <td>{{$cerveza->descripcion}}</td>
                                             <td>{{$cerveza->precio}}</td>
+                                            <td>{{$cerveza->cantidadStock}}</td>
+                                            <td>{{$cerveza->puntoPedido}}</td>
                                             <td>{{$cerveza->categoria->nombre}}</td>
                                             <td scope="col">
                                                 <center>
@@ -54,9 +59,15 @@
                                         </tbody>
                                 </table>
                             </div>
+                        </div>
+                        @else
+                        <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> No hay cervezas en toda CerveWeb!
+									
                         </div>    
                     </div>                         
-                    </div>              
+                    </div>
+                    @endif              
                     <a href="{{route('agregarCerveza')}}" class="float-right mt-4 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
                     </a>
                     @if(session('success'))

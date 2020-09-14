@@ -146,9 +146,18 @@
                             @enderror   
                         </div>
                       </div>
-                       <button type="submit" class="btn btn-primary mt-4 float-right">
-                                {{ __('Confirmar Registro') }}
-                       </button>   
+                      <p>
+
+                        
+                        <button type="submit" class="btn btn-primary mt-4 float-right">
+                                    {{ __('Confirmar Registro') }}
+                        </button>
+
+                        <a href="{{route('catalogoCervezas')}}" class="btn btn-warning float-right mr-3 mt-4">Volver</a>
+                      
+                        
+                      </p>
+                          
                     </form>                 
                 </div>
             </div>
