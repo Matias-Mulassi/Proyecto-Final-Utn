@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Pedido;
+use App\Cerveza;
 use App\ItemPedido;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
@@ -172,4 +174,92 @@ class PedidoController extends Controller
            return back()->with('error','Pedido no encontrado.');
         }    
     }
+
+    public function getPedidosEntregaHoy()
+    {
+        $nombreDia=Carbon::now()->format('l');
+        $nombreDia=$this->traducirDia($nombreDia);
+        
+        $fechaActual=Carbon::now()->format('d-m-Y');
+        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
+        return view('Operador.listadoPedidosEntregaHoy',compact('pedidos','fechaActual','nombreDia'));
+
+    }
+
+    static function traducirDia($nombreDia)
+    {
+        switch ($nombreDia)
+	{
+			case "Monday":
+                return "Lunes";
+                break;
+			case "Tuesday":
+                return "Martes";
+                break;
+            
+            case "Wednesday":
+                return "Miércoles";
+                break;
+
+            case "Thursday":
+                return "Jueves";
+                break;
+            
+            case "Friday":
+                return "Viernes";
+                break;
+
+            case "Saturday":
+                return "Sábado";
+                break;
+
+            case "Sunday":
+                return "Domingo";
+                break;
+			
+	}   
+
+    }
+
+    public function controlStock($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        if(isset($pedido))
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cantidad<=$item->cerveza->cantidadStock)
+                {
+                    if($item->cerveza->cantidadStock>$item->cerveza->puntoPedido)
+                    {
+                        $cerveza = Cerveza::find($item->cerveza->id);
+                        if(isset($cerveza))
+                        { 
+                            $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
+                            $cerveza->update();
+                        }
+                        else{
+                            return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar el pedido');
+                        }
+                    }
+                    else
+                    {
+                        //Ver como disparar proceso de compra
+                    }
+                }
+                else
+                {
+                    return redirect('listadoPedidosEntregaHoy')->with('error','No hay stock para procesar este pedido');
+                }
+                
+            }
+            return back()->with('success','Pedido procesado con exito.');
+        }
+        else
+        {
+            return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar el pedido');
+        }
+        
+    }
+
 }

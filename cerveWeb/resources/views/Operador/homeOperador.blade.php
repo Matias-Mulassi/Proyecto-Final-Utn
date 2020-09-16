@@ -16,15 +16,16 @@
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">PEDIDOS</a>
+                    <a href="{{route('listadoPedidosEntregaHoy')}}" class="btn btn-warning btn-block btn-home-admin">PEDIDOS A ENTREGAR HOY</a>
                 </div>
             </div>
+
 
             <div class="col-md-6">
                 <div class="panel">
 
-                    <img src="https://img.icons8.com/dusk/60/000000/delivery.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">LOGISTICA</a>
+                    <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
+                    <a href="#" class="btn btn-warning btn-block btn-home-admin">PEDIDOS PENDIENTES</a>
                 </div>
             </div>
 

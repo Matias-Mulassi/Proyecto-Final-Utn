@@ -180,4 +180,7 @@ Route::get('/noHabilitado', ['as' => 'noHablitado', function() {
 
 
 
+// OPERADOR //
 
+Route::get('/listadoPedidosEntregaHoy','PedidoController@getPedidosEntregaHoy' )->name('listadoPedidosEntregaHoy');
+Route::get('/controlStock/{id}','PedidoController@controlStock' )->name('controlStock');
