@@ -223,6 +223,8 @@ class PedidoController extends Controller
 
     public function controlStock($idPedido)
     {
+        $fechaActual= Carbon::now()->format('d-m-Y');
+        $fechaPago= Carbon::now()->addDays(15)->format('d-m-Y');
         $pedido = Pedido::find($idPedido);
         if(isset($pedido))
         {
@@ -253,7 +255,25 @@ class PedidoController extends Controller
                 }
                 
             }
-            return back()->with('success','Pedido procesado con exito.');
+            
+            switch ($pedido->usuario->condicionIVA)
+            {
+                case "Responsable Inscripto":
+                    return view('Operador.generaciónFacturaElectronicaA',compact('pedido','fechaActual','fechaPago'));
+                    break;
+                case "Monotributista":
+                    return view('Operador.generaciónFacturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+                
+                case "Exento":
+                    return view('Operador.generaciónFacturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+
+                case "Consumidor Final":
+                    return view('Operador.generaciónFacturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+            }   
+            
         }
         else
         {
