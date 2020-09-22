@@ -182,5 +182,13 @@ Route::get('/noHabilitado', ['as' => 'noHablitado', function() {
 
 // OPERADOR //
 
-Route::get('/listadoPedidosEntregaHoy','PedidoController@getPedidosEntregaHoy' )->name('listadoPedidosEntregaHoy');
+Route::get('/listadoPedidosEntrega','PedidoController@getPedidosProxEntrega' )->name('listadoPedidosEntrega');
 Route::get('/controlStock/{id}','PedidoController@controlStock' )->name('controlStock');
+
+Route::get('/expedicionPedido/{id}','PedidoController@expedicionPedido' )->name('expedicionPedido');
+Route::get('/expedicionPedido','PedidoController@getPedidosExpedicion' )->name('expedicionCamion');
+Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mostrarFactura');
+Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
+
+
+

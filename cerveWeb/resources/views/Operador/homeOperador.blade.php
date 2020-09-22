@@ -16,7 +16,7 @@
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
-                    <a href="{{route('listadoPedidosEntregaHoy')}}" class="btn btn-warning btn-block btn-home-admin">PEDIDOS A ENTREGAR HOY</a>
+                    <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning btn-block btn-home-admin">PROXIMOS PEDIDOS A ENTREGAR</a>
                 </div>
             </div>
 

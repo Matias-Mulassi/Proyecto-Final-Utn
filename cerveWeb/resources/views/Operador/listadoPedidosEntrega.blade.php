@@ -3,16 +3,22 @@
 @section('content')
     <center>
         <script src='https://kit.fontawesome.com/a076d05399.js'></script>
-                <h1 style="color:goldenrod;" class="h3 mt-5 font-weight-normal">Pedidos con fecha de entrega {{$nombreDia}}, {{$fechaActual}} <i class='fas fa-clipboard-list'></i></h1>
+                <h1 style="color:goldenrod;" class="h3 mt-5 font-weight-normal">Pedidos con fecha de entrega {{$nombreDia}}, {{$fechaMañana}} <i class='fas fa-clipboard-list'></i></h1>
                      
 
-
+        
+        <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
+                    <strong>Procesar pedidos de acuerdo al orden explicitado en la lista siguiente!</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+        </div>
         <div class="col-md-10 mt-4">
             <div class="card text-center mt-5">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
                 <li class="nav-item">
-                    <a class="nav-link active" href="{{route('listadoPedidosEntregaHoy')}}">Pedidos de hoy</a>
+                    <a class="nav-link active" href="{{route('listadoPedidosEntrega')}}">Pedidos</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Camión</a>

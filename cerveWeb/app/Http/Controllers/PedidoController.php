@@ -175,14 +175,14 @@ class PedidoController extends Controller
         }    
     }
 
-    public function getPedidosEntregaHoy()
+    public function getPedidosProxEntrega()
     {
-        $nombreDia=Carbon::now()->format('l');
+        $nombreDia=Carbon::now()->modify('+1 day')->format('l');
         $nombreDia=$this->traducirDia($nombreDia);
         
-        $fechaActual=Carbon::now()->format('d-m-Y');
-        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
-        return view('Operador.listadoPedidosEntregaHoy',compact('pedidos','fechaActual','nombreDia'));
+        $fechaMañana=Carbon::now()->modify('+1 day')->format('d-m-Y');
+        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
+        return view('Operador.listadoPedidosEntrega',compact('pedidos','fechaMañana','nombreDia'));
 
     }
 
@@ -232,26 +232,15 @@ class PedidoController extends Controller
             {
                 if($item->cantidad<=$item->cerveza->cantidadStock)
                 {
-                    if($item->cerveza->cantidadStock>$item->cerveza->puntoPedido)
+                    if(!($item->cerveza->cantidadStock>$item->cerveza->puntoPedido))
                     {
-                        $cerveza = Cerveza::find($item->cerveza->id);
-                        if(isset($cerveza))
-                        { 
-                            $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
-                            $cerveza->update();
-                        }
-                        else{
-                            return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar el pedido');
-                        }
-                    }
-                    else
-                    {
+                        return redirect('listadoPedidosEntrega')->with('error','Se alcanzó el punto de pedido de algun producto');
                         //Ver como disparar proceso de compra
                     }
                 }
                 else
                 {
-                    return redirect('listadoPedidosEntregaHoy')->with('error','No hay stock para procesar este pedido');
+                    return redirect('listadoPedidosEntrega')->with('error','No hay stock para procesar este pedido');
                 }
                 
             }
@@ -277,9 +266,94 @@ class PedidoController extends Controller
         }
         else
         {
-            return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar el pedido');
+            return redirect('listadoPedidosEntrega')->with('error','Se ha producido un error al procesar el pedido');
         }
         
+    }
+
+
+    public function expedicionPedido($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        if(isset($pedido))
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                $cerveza = Cerveza::find($item->cerveza->id);
+                if(isset($cerveza))
+                { 
+                    $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
+                    $cerveza->update();
+                }
+                else{
+                    return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar el pedido');
+                }
+            }
+            $pedido->estado = "en expedicion";
+            $pedido->update(); 
+            return redirect()->route('expedicionCamion');
+
+        }
+        else
+        {
+            return redirect('listadoPedidosEntrega')->with('error','Se ha producido un error al procesar el pedido');
+        }
+
+
+    }
+
+    public function GetPedidosExpedicion()
+    {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        return view('Operador.expedicionesCamion',compact('pedidos'));
+
+    }
+
+    public function MostrarRemito($idPedido)
+    {
+        $pedido = Pedido::find($idPedido);
+        if(isset($pedido))
+        {
+            return view('Operador.remito',compact('pedido'));
+        }
+        else
+        {
+            return redirect('expedicionCamion')->with('error','Se ha producido un error al visualizar el remito');
+        }
+
+    }
+
+    public function MostrarFactura($idPedido)
+    {
+        $fechaActual= Carbon::now()->format('d-m-Y');
+        $fechaPago= Carbon::now()->addDays(15)->format('d-m-Y');
+        $pedido = Pedido::find($idPedido);
+        if(isset($pedido))
+        {
+            switch ($pedido->usuario->condicionIVA)
+            {
+                case "Responsable Inscripto":
+                    return view('Operador.facturaElectronicaA',compact('pedido','fechaActual','fechaPago'));
+                    break;
+                case "Monotributista":
+                    return view('Operador.facturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+                
+                case "Exento":
+                    return view('Operador.facturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+
+                case "Consumidor Final":
+                    return view('Operador.facturaElectronicaB',compact('pedido','fechaActual','fechaPago'));
+                    break;
+            }
+
+        }
+        else
+        {
+            return redirect('expedicionCamion')->with('error','Se ha producido un error al visualizar la factura');
+        }   
+
     }
 
 }

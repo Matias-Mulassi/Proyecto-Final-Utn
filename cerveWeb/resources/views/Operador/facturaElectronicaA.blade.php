@@ -226,9 +226,7 @@
 
     <p>
 
-    <a class="btn btn-primary btn-lg mt-5 mr-5 float-right" href="{{route('expedicionPedido',$pedido->id)}}" role="button">Cargar en Camión</a>
-
-        <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Volver</a>
+        <a href="{{route('expedicionCamion')}}" class="btn btn-warning btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Volver</a>
 
     </p>
 
