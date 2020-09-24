@@ -42,7 +42,14 @@
     // Themes end
 
     var capacity = 1500;
-    var value = 1300;
+    if({{$litrosTotales}} !=null)
+    {
+      var value = {{$litrosTotales}};
+    }
+    else
+    {
+      var value=0;
+    }
     var circleSize = 0.57;
 
     var component = am4core.create("chartdiv", am4core.Container)

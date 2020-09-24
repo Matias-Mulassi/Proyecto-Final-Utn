@@ -221,6 +221,46 @@ class PedidoController extends Controller
 
     }
 
+    public function procesarTodosPedidos()
+    {
+        $pedidosAtrasados=array();
+        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
+        foreach($pedidos as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cantidad<=$item->cerveza->cantidadStock)
+                {
+                    if(!($item->cerveza->cantidadStock>$item->cerveza->puntoPedido))
+                    {
+                        //Ver como disparar proceso de compra
+                    }
+                }
+                else
+                {
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->update();
+                    array_push($pedidosAtrasados,$pedido->id);
+                }
+                
+                $cerveza = Cerveza::find($item->cerveza->id);
+
+                if(isset($cerveza))
+                { 
+                    $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
+                    $cerveza->update();
+                }
+                else{
+                    return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar los pedidos');
+                }
+                $pedido->estado = "en expedicion";
+                $pedido->update();
+            }
+        }
+        return redirect()->route('expedicionCamion');
+
+    }
+
     public function controlStock($idPedido)
     {
         $fechaActual= Carbon::now()->format('d-m-Y');
@@ -234,13 +274,14 @@ class PedidoController extends Controller
                 {
                     if(!($item->cerveza->cantidadStock>$item->cerveza->puntoPedido))
                     {
-                        return redirect('listadoPedidosEntrega')->with('error','Se alcanzó el punto de pedido de algun producto');
                         //Ver como disparar proceso de compra
                     }
                 }
                 else
                 {
-                    return redirect('listadoPedidosEntrega')->with('error','No hay stock para procesar este pedido');
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->update();
+                    return redirect('listadoPedidosEntrega')->with('error','No hay stock para procesar este pedido. El pedido '.$pedido->id.' atrasa su fecha de entrega hasta el dia siguiente');
                 }
                 
             }
@@ -305,7 +346,8 @@ class PedidoController extends Controller
     public function GetPedidosExpedicion()
     {
         $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
-        return view('Operador.expedicionesCamion',compact('pedidos'));
+        $litrosTotales=$this->getLitrosCamion($pedidos);
+        return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales'));
 
     }
 
@@ -356,4 +398,16 @@ class PedidoController extends Controller
 
     }
 
+    public static function getLitrosCamion($pedidos)
+    {
+        $litrosTotales=0;
+        foreach($pedidos as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                $litrosTotales+= $item->cantidad;
+            }
+        }
+        return $litrosTotales;
+    }
 }

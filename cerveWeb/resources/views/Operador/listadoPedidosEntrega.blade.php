@@ -7,12 +7,26 @@
                      
 
         
+        @if(count($pedidos)>0)
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <strong>Procesar pedidos de acuerdo al orden explicitado en la lista siguiente!</strong>
+                    <strong>¿Procesar pedidos de acuerdo al orden explicitado en la lista siguiente?</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
+                    <span aria-hidden="true">&times;</span> </button>
+                    <p class="text-right">
+                    <button type="button" class="btn btn-outline-danger btn mr-2" data-dismiss="alert" arial-label="Close"><span aria-hidden="true"></span><i class="fa fa-times"></i></button>
+                    <a href="{{ route('procesarTodosPedidos') }}" class="btn btn-outline-success btn" data-dismiss="modal"><i class="fa fa-check"></i></a>
+                    </p>
         </div>
+        @endif
+        <br>
+        @if(session('error'))
+            <div class=" col-md-6 mt-2 mb-3 alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{session('error')}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
         <div class="col-md-10 mt-4">
             <div class="card text-center mt-5">
             <div class="card-header">
@@ -26,6 +40,7 @@
                 </ul>
             </div>
             <div class="card-body">
+                @if(count($pedidos)>0)
                 <div class="row">
                     <div class="col-4">
                         <div class="list-group" id="list-tab" role="tablist">
@@ -119,14 +134,13 @@
                             <span aria-hidden="true">&times;</span>
                           </button>
                     </div>
-                    @elseif(session('error'))
-                    <div class=" col-md-6 float-left mt-2 alert alert-danger alert-dismissible fade show" role="alert">
-                          <strong>{{session('error')}}</strong>
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                      </div>
                 @endif
+            @else
+            <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+                <strong><i class="fa fa-info-circle"></i></strong> No hay pedidos pendientes de entrega por el momento!
+                            
+            </div>
+            @endif
             </div>
             </div>
         </div>
