@@ -439,4 +439,14 @@ class PedidoController extends Controller
         }
         return $litrosTotales;
     }
+
+    public function mostrarCamion()
+    {
+        $nombreDia=Carbon::now()->modify('+1 day')->format('l');
+        $nombreDia=$this->traducirDia($nombreDia);
+        $fechaMañana=Carbon::now()->modify('+1 day')->format('d-m-Y');
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        $litrosTotales=$this->getLitrosCamion($pedidos);
+        return view('Operador.estadoCamion',compact('pedidos','litrosTotales','nombreDia','fechaMañana'));
+    }
 }

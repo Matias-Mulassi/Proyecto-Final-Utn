@@ -35,7 +35,7 @@
                     <a class="nav-link active" href="{{route('listadoPedidosEntrega')}}">Pedidos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Camión</a>
+                    <a class="nav-link" href="{{route('mostrarCamion')}}">Camión</a>
                 </li>
                 </ul>
             </div>
@@ -145,6 +145,13 @@
             </div>
         </div>
     </center>
+
+    <p>
+ 
+
+        <a href="{{route('home')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Menu Principal</a>
+
+    </p>
 
 
 

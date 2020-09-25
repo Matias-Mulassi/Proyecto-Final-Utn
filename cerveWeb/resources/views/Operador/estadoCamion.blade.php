@@ -1,6 +1,27 @@
 @extends('templates.templateOperator')
 
 @section('content')
+    <center>
+        <script src='https://kit.fontawesome.com/a076d05399.js'></script>
+                <h1 style="color:goldenrod;" class="h3 mt-5 font-weight-normal">Pedidos con fecha de entrega {{$nombreDia}}, {{$fechaMañana}} <i class='fas fa-clipboard-list'></i></h1>
+                     
+
+        
+        
+        
+        <div class="col-md-10 mt-4">
+            <div class="card text-center mt-5">
+            <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{route('listadoPedidosEntrega')}}">Pedidos</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{route('mostrarCamion')}}">Camión</a>
+                </li>
+                </ul>
+            </div>
+            <div class="card-body">
     
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse float-left">
       <div class="sidebar-sticky pt-3">
@@ -29,20 +50,6 @@
     </nav>
 
     <h1 style="color:goldenrod; margin-right:220px;" class="h3 mt-5 font-weight-normal text-center"> Información del camion <img src="https://img.icons8.com/plasticine/80/000000/truck.png"/> </h1>
-    
-    <center>
-    @if(count($pedidosPostergados)>0)
-        <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>Debido a ausencia de stock, estos son los pedidos postergados para mañana :</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span> 
-                    </button>
-                    @foreach($pedidosPostergados as $number)
-                      <h3>Pedido n° {{$number}}</h3>
-                    @endforeach                   
-        </div>
-    @endif
-    </center>
 
     <!-- Styles -->
     <style>
@@ -372,12 +379,21 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
             <!-- -->
 
 
-            <p>
+            </div>
+            </div>
+        </div>
+    </center>
+
+    <p>
  
 
-              <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
+        <a href="{{route('home')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Menu Principal</a>
 
-            </p>
+    </p>
+
+
+
+
 
 
 

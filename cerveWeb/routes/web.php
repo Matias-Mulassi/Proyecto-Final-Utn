@@ -190,6 +190,7 @@ Route::get('/expedicionPedido/{id}','PedidoController@expedicionPedido' )->name(
 Route::get('/expedicionCamion','PedidoController@getPedidosExpedicion' )->name('expedicionCamion');
 Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mostrarFactura');
 Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
+Route::get('/mostrarRemito','PedidoController@mostrarCamion' )->name('mostrarCamion');
 
 
 
