@@ -223,46 +223,60 @@ class PedidoController extends Controller
 
     public function procesarTodosPedidos()
     {
-        $pedidosAtrasados=array();
+        if(!\Session::has('pedidosPostergados')) \Session::put('pedidosPostergados',array());
+        $pedidosPostergados = \Session::get('pedidosPostergados');
         $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
         foreach($pedidos as $pedido)
         {
+            $c=0;
             foreach($pedido->itemsPedidos as $item)
             {
                 if($item->cantidad<=$item->cerveza->cantidadStock)
                 {
-                    if(!($item->cerveza->cantidadStock>$item->cerveza->puntoPedido))
-                    {
-                        //Ver como disparar proceso de compra
-                    }
+                  //Ok, hay stock para este item Pedido   
+                  $c++;
                 }
                 else
                 {
                     $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
                     $pedido->update();
-                    array_push($pedidosAtrasados,$pedido->id);
+                    array_push($pedidosPostergados,$pedido->id);
+                    break;
                 }
                 
-                $cerveza = Cerveza::find($item->cerveza->id);
+               
+            }
+            if($c==count($pedido->itemsPedidos))
+            {   $this->actualizarStock($pedido);
+                $pedido->estado = "en expedicion";
+                $pedido->update();
+            }
+        }
+        \Session::put('pedidosPostergados',$pedidosPostergados);
+        return redirect()->route('expedicionCamion');
 
+    }
+
+    public static function actualizarStock($pedido)
+    {
+        foreach($pedido->itemsPedidos as $item)
+            {
+                $cerveza = Cerveza::find($item->cerveza->id);
                 if(isset($cerveza))
                 { 
                     $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
                     $cerveza->update();
                 }
                 else{
-                    return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar los pedidos');
+                    return redirect('listadoPedidosEntregaHoy')->with('error','Se ha producido un error al procesar los pedido');
                 }
-                $pedido->estado = "en expedicion";
-                $pedido->update();
             }
-        }
-        return redirect()->route('expedicionCamion');
-
     }
 
+    //Procesamiento de un pedido
     public function controlStock($idPedido)
     {
+        $pedidosPostergados = \Session::get('pedidosPostergados');
         $fechaActual= Carbon::now()->format('d-m-Y');
         $fechaPago= Carbon::now()->addDays(15)->format('d-m-Y');
         $pedido = Pedido::find($idPedido);
@@ -281,7 +295,10 @@ class PedidoController extends Controller
                 {
                     $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
                     $pedido->update();
-                    return redirect('listadoPedidosEntrega')->with('error','No hay stock para procesar este pedido. El pedido '.$pedido->id.' atrasa su fecha de entrega hasta el dia siguiente');
+                    array_push($pedidosPostergados,$pedido->id);
+                    \Session::put('pedidosPostergados',$pedidosPostergados);
+                    return redirect('listadoPedidosEntrega')->with('error','No hay stock para procesar este pedido. El pedido '.$pedido->id.' posterga su fecha de entrega hasta el dia siguiente');
+                    
                 }
                 
             }
@@ -345,9 +362,21 @@ class PedidoController extends Controller
 
     public function GetPedidosExpedicion()
     {
-        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
-        $litrosTotales=$this->getLitrosCamion($pedidos);
-        return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales'));
+        if(\Session::has('pedidosPostergados'))
+        {
+            $pedidosPostergados= \Session::get('pedidosPostergados');
+            $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+            $litrosTotales=$this->getLitrosCamion($pedidos);
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados'));
+        }
+        else
+        {
+            $pedidosPostergados= array();
+            $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+            $litrosTotales=$this->getLitrosCamion($pedidos);
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados'));
+        }
+       
 
     }
 
