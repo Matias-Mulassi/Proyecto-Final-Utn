@@ -223,8 +223,10 @@ class PedidoController extends Controller
 
     public function procesarTodosPedidos()
     {
+        if(!\Session::has('pedidosPostergadosCapacidad')) \Session::put('pedidosPostergadosCapacidad',array());
         if(!\Session::has('pedidosPostergados')) \Session::put('pedidosPostergados',array());
         $pedidosPostergados = \Session::get('pedidosPostergados');
+        $pedidosPostergadosCapacidad=\Session::get('pedidosPostergadosCapacidad');
         $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
         foreach($pedidos as $pedido)
         {
@@ -246,13 +248,30 @@ class PedidoController extends Controller
                 
                
             }
+
+            
             if($c==count($pedido->itemsPedidos))
-            {   $this->actualizarStock($pedido);
-                $pedido->estado = "en expedicion";
-                $pedido->update();
+            {   
+                $litrosAcumulados= $this->getLitrosCamion(Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','en expedicion')->orderBy('id', 'ASC')->get()) + $this->getTotalLitrosPedido($pedido);
+                if($litrosAcumulados>1500)
+                {
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->update();
+                    array_push($pedidosPostergadosCapacidad,$pedido->id);
+                    
+                }
+                else
+                {
+                    $this->actualizarStock($pedido);
+                    $pedido->estado = "en expedicion";
+                    $pedido->update();
+                }
+                
+                
             }
         }
         \Session::put('pedidosPostergados',$pedidosPostergados);
+        \Session::put('pedidosPostergadosCapacidad',$pedidosPostergadosCapacidad);
         return redirect()->route('expedicionCamion');
 
     }
@@ -276,7 +295,11 @@ class PedidoController extends Controller
     //Procesamiento de un pedido
     public function controlStock($idPedido)
     {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        if(!\Session::has('pedidosPostergadosCapacidad')) \Session::put('pedidosPostergadosCapacidad',array());
+        if(!\Session::has('pedidosPostergados')) \Session::put('pedidosPostergados',array());
         $pedidosPostergados = \Session::get('pedidosPostergados');
+        $pedidosPostergadosCapacidad=\Session::get('pedidosPostergadosCapacidad');
         $fechaActual= Carbon::now()->format('d-m-Y');
         $fechaPago= Carbon::now()->addDays(15)->format('d-m-Y');
         $pedido = Pedido::find($idPedido);
@@ -302,7 +325,18 @@ class PedidoController extends Controller
                 }
                 
             }
+
+            $litrosAcumulados= $this->getLitrosCamion($pedidos) + $this->getTotalLitrosPedido($pedido);
+            if($litrosAcumulados>1500)
+            {
+                $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                $pedido->update();
+                array_push($pedidosPostergadosCapacidad,$pedido->id);
+                \Session::put('pedidosPostergadosCapacidad',$pedidosPostergadosCapacidad);
+                return redirect('listadoPedidosEntrega')->with('error','Se excede la capacidad del camion al procesar este pedido. El pedido '.$pedido->id.' posterga su fecha de entrega hasta el dia siguiente');
+            }
             
+
             switch ($pedido->usuario->condicionIVA)
             {
                 case "Responsable Inscripto":
@@ -329,6 +363,16 @@ class PedidoController extends Controller
         
     }
 
+    public static function getTotalLitrosPedido($pedido)
+    {
+        $lts=0;
+        foreach($pedido->itemsPedidos as $item)
+        
+        {
+            $lts+=$item->cantidad;
+        }
+        return $lts;
+    }
 
     public function expedicionPedido($idPedido)
     {
@@ -362,19 +406,36 @@ class PedidoController extends Controller
 
     public function GetPedidosExpedicion()
     {
-        if(\Session::has('pedidosPostergados'))
+        if(\Session::has('pedidosPostergados') & \Session::has('pedidosPostergadosCapacidad') )
         {
+            $pedidosPostergadosCapacidad= \Session::get('pedidosPostergadosCapacidad');
             $pedidosPostergados= \Session::get('pedidosPostergados');
             $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
             $litrosTotales=$this->getLitrosCamion($pedidos);
-            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados'));
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados','pedidosPostergadosCapacidad'));
         }
-        else
+        elseif(\Session::has('pedidosPostergados'))
+        {   $pedidosPostergadosCapacidad=array();
+            $pedidosPostergados= \Session::get('pedidosPostergados');
+            $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+            $litrosTotales=$this->getLitrosCamion($pedidos);
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados','pedidosPostergadosCapacidad'));
+        }
+        elseif(\Session::has('pedidosPostergadosCapacidad'))
         {
+            $pedidosPostergadosCapacidad=\Session::get('pedidosPostergadosCapacidad');
             $pedidosPostergados= array();
             $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
             $litrosTotales=$this->getLitrosCamion($pedidos);
-            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados'));
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados','pedidosPostergadosCapacidad'));
+        }
+        else
+        {
+            $pedidosPostergadosCapacidad=array();
+            $pedidosPostergados= array();
+            $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+            $litrosTotales=$this->getLitrosCamion($pedidos);
+            return view('Operador.expedicionesCamion',compact('pedidos','litrosTotales','pedidosPostergados','pedidosPostergadosCapacidad'));
         }
        
 

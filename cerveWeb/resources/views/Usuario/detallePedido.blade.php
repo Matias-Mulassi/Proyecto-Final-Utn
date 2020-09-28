@@ -25,7 +25,7 @@
                 <table class="table table-striped table-hover table-bordered">
                     <tr>
                         <th>Producto</th>
-                        <th>Precio</th>
+                        <th>Precio x lt</th>
                         <th>Cantidad</th>
                         <th>SubTotal</th>
                     </tr>

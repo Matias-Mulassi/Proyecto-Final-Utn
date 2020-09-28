@@ -33,11 +33,24 @@
     <center>
     @if(count($pedidosPostergados)>0)
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>Debido a ausencia de stock, estos son los pedidos postergados para mañana :</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>Debido a falta de stock, estos son los pedidos postergados para mañana :</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>
                     @foreach($pedidosPostergados as $number)
+                      <h3>Pedido n° {{$number}}</h3>
+                    @endforeach                   
+        </div>
+    @endif
+    </center> <br>
+    <center>
+    @if(count($pedidosPostergadosCapacidad)>0)
+        <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>Debido a exceso de capacidad del camion, estos son los pedidos postergados para mañana :</strong>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                      <span aria-hidden="true">&times;</span> 
+                    </button>
+                    @foreach($pedidosPostergadosCapacidad as $number)
                       <h3>Pedido n° {{$number}}</h3>
                     @endforeach                   
         </div>
