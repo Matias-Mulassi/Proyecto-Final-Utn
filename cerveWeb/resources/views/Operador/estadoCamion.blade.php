@@ -158,7 +158,7 @@
 
     <!-- HTML -->
     <center>
-    <div style="position: relative;">
+    <div style="position: relative; margin-left:170px;">
       <div class="carga" id="chartdiv"></div>
       <div class="camion">
         <img src="https://img.icons8.com/officel/560/000000/truck.png"/>
