@@ -45,7 +45,7 @@ class CervezaController extends Controller
         $rules = [
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
-            'precio' => ['required', 'numeric'],
+            'precio' => ['required', 'numeric','min:1'],
             'stockDisponible' => ['required','integer','min:1'],
             'puntoPedido' => ['required','integer','min:1'],
             'image' => ['required','image'],
@@ -59,6 +59,7 @@ class CervezaController extends Controller
           'descripcion.required'=>'Complete el campo requerido.',
           'precio.required'=>'Complete el campo requerido.',
           'precio.numeric'=>'Formato de precio incorrecto.',
+          'precio.min'=>'El precio debe ser positivo.',
           'stockDisponible.required'=>'Complete el campo requerido.',
           'stockDisponible.integer'=>'El stock debe ser entero.',
           'stockDisponible.min'=>'El stock debe ser positivo.',
@@ -142,7 +143,7 @@ class CervezaController extends Controller
         $rules = [
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
-            'precio' => ['required', 'numeric'],
+            'precio' => ['required', 'numeric','min:1'],
             'stockDisponible' => ['required','integer','min:1'],
             'puntoPedido' => ['required','integer','min:1'],
             'image' => ['required','image'],
@@ -155,6 +156,7 @@ class CervezaController extends Controller
         'descripcion.required'=>'Complete el campo requerido.',
         'precio.required'=>'Complete el campo requerido.',
         'precio.numeric'=>'Formato de precio incorrecto.',
+        'precio.min'=>'El precio debe ser positivo.',
         'stockDisponible.required'=>'Complete el campo requerido.',
         'stockDisponible.integer'=>'El stock debe ser entero.',
         'stockDisponible.min'=>'El stock debe ser positivo.',

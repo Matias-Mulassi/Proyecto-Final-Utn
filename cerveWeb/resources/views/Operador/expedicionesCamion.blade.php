@@ -29,6 +29,11 @@
     </nav>
 
     <h1 style="color:goldenrod; margin-right:220px;" class="h3 mt-5 font-weight-normal text-center"> Información del camion <img src="https://img.icons8.com/plasticine/80/000000/truck.png"/> </h1>
+    @if($litrosTotales!=1500)
+    <h4 style="color:goldenrod; margin-right:220px;" class="text-center">(Quedan {{1500-$litrosTotales}} lts de capacidad)</h4>
+    @else
+    <h4 style="color:goldenrod; margin-right:220px;" class="text-center">(El camión se encuentra lleno!)</h4>
+    @endif
      
     <center>
     @if(count($pedidosPostergados)>0)

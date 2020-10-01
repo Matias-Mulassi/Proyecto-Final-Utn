@@ -8,6 +8,7 @@
                         Categorias <i class="fa fa-list"></i>
                     </div>
                     <div class="card-body">
+                        @if(count($categorias)>0)
                             <div class="table-responsive">
                                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
                                     <table class="table table-bordered table-striped mb-0">
@@ -40,9 +41,15 @@
                                         </tbody>
                                 </table>
                             </div>
+                        </div>
+                        @else
+                        <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> No hay categorias en toda CerveWeb!
+									
                         </div>    
                     </div>                         
                     </div>
+                    @endif
                     <a href="{{route('agregarCategoria')}}" class="float-right mt-4 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
                     </a>
                     @if(session('success'))

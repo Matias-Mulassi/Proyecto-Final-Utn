@@ -122,26 +122,38 @@ class CarritoController extends Controller
      * updateItem funciona con javaScript hecha en public main.js.
      */
     
-    public function updateItem(Cerveza $cerveza,$cantidad)
+    public function updateItem(Cerveza $cerveza,$cantidad = NULL)
     {
-        if(ctype_digit($cantidad))
+        if(isset($cantidad))
         {
-            if($cantidad<=60)
+            if(ctype_digit($cantidad))
             {
-                $carrito = \Session::get('carrito');
-                $carrito[$cerveza->id]->cantidad=$cantidad;
-                \Session::put('carrito',$carrito);
-                return redirect()->route('mostrarCarrito');
+                if($cantidad==0)
+                {
+                    return redirect()->route('mostrarCarrito')->with('error','La cantidad minima a pedir es de 1 litro');
+                }
+                if($cantidad<=60)
+                {
+                    $carrito = \Session::get('carrito');
+                    $carrito[$cerveza->id]->cantidad=$cantidad;
+                    \Session::put('carrito',$carrito);
+                    return redirect()->route('mostrarCarrito');
+                }
+                else
+                {
+                    return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros no puede ser mayor a 60.');
+                }
             }
             else
             {
-                return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros no puede ser mayor a 60.');
+                return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros debe ser entera y positiva.'); 
             }
         }
         else
         {
-            return redirect()->route('mostrarCarrito')->with('error','La cantidad en litros debe ser entera y positiva.'); 
+            return redirect()->route('mostrarCarrito')->with('error','Ingrese una cantidad de litros a pedir.');
         }
+        
         
     }
 

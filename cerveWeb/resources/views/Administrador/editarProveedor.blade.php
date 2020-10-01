@@ -45,7 +45,7 @@
                                     <label for="Telefono">
                                         {{ __('Telefono') }}
                                     </label>
-                                    <input type="tel" id="telefono" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ $prov->telefono }}" autofocus placeholder="30-71031609-9" autocomplete="telefono"><br>
+                                    <input type="tel" id="telefono" class="form-control @error('telefono') is-invalid @enderror" name="telefono" value="{{ $prov->telefono }}" autofocus placeholder="Telefono" autocomplete="telefono"><br>
                                     <small>Formato: 341-71031609</small>
                     
                                         @error('telefono')

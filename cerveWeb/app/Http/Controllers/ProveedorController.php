@@ -58,7 +58,7 @@ class ProveedorController extends Controller
             'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
             'razonSocial.unique'=>'La razon Social ingresada ya se encuentra registrada, intente con otra',
             'telefono.required'=>'Complete el campo requerido',
-            'telefono.numeric'=>'El telefono debe ser numerico',
+            'telefono.numeric'=>'El telefono debe ser numerico. No ingrese espacios',
         ];
         
         $validacion = $this->validate($request,$rules,$messages);
@@ -220,7 +220,7 @@ class ProveedorController extends Controller
             'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
             'razonSocial.unique'=>'La razon Social ingresada ya se encuentra registrada, intente con otra',
             'telefono.required'=>'Complete el campo requerido',
-            'telefono.numeric'=>'El telefono debe ser numerico',
+            'telefono.numeric'=>'El telefono debe ser numerico. No ingrese espacios',
                     
                     ];          
 
@@ -283,7 +283,20 @@ class ProveedorController extends Controller
     public function asignarCerveza($id)
     {  
         
-        $cervezas = Cerveza::all()->where('deleted_at',null);
+        $proveedor = Proveedor::find($id);
+        $cervezasProveedor=array();
+        if(isset($proveedor))
+        {
+            foreach($proveedor->productos_cervezas as $cervezaProveedor)
+            {
+                array_push($cervezasProveedor,$cervezaProveedor->nombre);
+            }
+            $cervezas = Cerveza::all()->where('deleted_at',null)->whereNotIn('nombre',$cervezasProveedor);
+        }
+        else
+        {
+            return back()->with('error','Error al asignar cerveza a un proveedor');
+        }
         return view('Administrador.asignarCervezaProveedor',compact('cervezas','id'));
     
     }

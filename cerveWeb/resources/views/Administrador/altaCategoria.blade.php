@@ -16,7 +16,7 @@
                                 <label for="nombre" >
                                         {{ __('Nombre') }}:
                                 </label>
-                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" required autocomplete="Nombre" autofocus placeholder="Nombre">
+                                <input id="nombre" type="text" class="form-control @error('nombre') is-invalid @enderror" name="nombre" value="{{ old('nombre') }}" autocomplete="Nombre" autofocus placeholder="Nombre">
                                         @error('nombre')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>

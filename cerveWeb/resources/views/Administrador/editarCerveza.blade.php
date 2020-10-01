@@ -40,7 +40,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Precio x lt</label>
-                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" min="1" step="any" name="precio" value="{{$cerveza->precio }}" id="precio" >
+                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" step="any" name="precio" value="{{$cerveza->precio }}" id="precio" >
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

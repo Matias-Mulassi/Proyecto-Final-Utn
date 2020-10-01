@@ -38,7 +38,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Precio x lt</label>
-                                <input type="number" min="1" step="any" class="form-control  @error('precio') is-invalid @enderror" name="precio" value="{{ old('precio') }}" id="precio">
+                                <input type="number"  step="any" class="form-control  @error('precio') is-invalid @enderror" name="precio" value="{{ old('precio') }}" id="precio">
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -50,7 +50,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Stock Disponible</label>
-                                <input type="number" min="1" class="form-control  @error('stockDisponible') is-invalid @enderror" name="stockDisponible" value="{{ old('stockDisponible') }}" id="stockDisponible">
+                                <input type="number" class="form-control  @error('stockDisponible') is-invalid @enderror" name="stockDisponible" value="{{ old('stockDisponible') }}" id="stockDisponible">
                                 @error('stockDisponible')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -62,7 +62,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Punto Pedido</label>
-                                <input type="number" min="1" class="form-control  @error('puntoPedido') is-invalid @enderror" name="puntoPedido" value="{{ old('puntoPedido') }}" id="puntoPedido">
+                                <input type="number" class="form-control  @error('puntoPedido') is-invalid @enderror" name="puntoPedido" value="{{ old('puntoPedido') }}" id="puntoPedido">
                                 @error('puntoPedido')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
