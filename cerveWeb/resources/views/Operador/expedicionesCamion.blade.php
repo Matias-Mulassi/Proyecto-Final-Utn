@@ -69,7 +69,7 @@
     @endphp
     @if($litrosTotales==1500 & Carbon::now()->format('H:i:s')>='20:00:00')
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos, presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos. Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia.Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -78,7 +78,7 @@
     @elseif($litrosTotales==1500)
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno, presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -87,7 +87,7 @@
     @elseif(Carbon::now()->format('H:i:s')>='20:00:00')
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos, presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               

@@ -105,7 +105,7 @@ class PedidoController extends Controller
 		$carrito = \Session::get('carrito');
  
         $pedido = new Pedido();
-        $pedido->fecha_entrega= $fechaEntrega;
+        $pedido->fecha_entrega= Carbon::parse($fechaEntrega)->hour(10)->minute(00)->second(00)->format('Y-m-d H:i:s');
         $pedido->id_usuario=\Auth::user()->id;
         $pedido->save();
 
@@ -181,7 +181,18 @@ class PedidoController extends Controller
         $nombreDia=$this->traducirDia($nombreDia);
         
         $fechaMañana=Carbon::now()->modify('+1 day')->format('d-m-Y');
-        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
+        $pedidos = Pedido::whereDate('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('fecha_entrega', 'ASC')->orderBy('id', 'ASC')->get();
+
+        if(Carbon::now()->format('H:i:s')>='20:00:00' | ($this->getLitrosCamion(Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','en expedicion')->orderBy('id', 'ASC')->get())==1500))
+        {
+            foreach($pedidos as $pedido)
+            {
+                $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
+                $pedido->update();
+                $indice=array_search($pedido,$pedidos->toArray());
+                unset($pedidos[$indice]);
+            }
+        }
         return view('Operador.listadoPedidosEntrega',compact('pedidos','fechaMañana','nombreDia'));
 
     }
@@ -227,7 +238,7 @@ class PedidoController extends Controller
         if(!\Session::has('pedidosPostergados')) \Session::put('pedidosPostergados',array());
         $pedidosPostergados = \Session::get('pedidosPostergados');
         $pedidosPostergadosCapacidad=\Session::get('pedidosPostergadosCapacidad');
-        $pedidos = Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('id', 'ASC')->get();
+        $pedidos = Pedido::whereDate('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','pendiente')->orderBy('fecha_entrega', 'ASC')->orderBy('id', 'ASC')->get();
         foreach($pedidos as $pedido)
         {
             $c=0;
@@ -240,7 +251,7 @@ class PedidoController extends Controller
                 }
                 else
                 {
-                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
                     $pedido->update();
                     array_push($pedidosPostergados,$pedido->id);
                     break;
@@ -252,10 +263,10 @@ class PedidoController extends Controller
             
             if($c==count($pedido->itemsPedidos))
             {   
-                $litrosAcumulados= $this->getLitrosCamion(Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','en expedicion')->orderBy('id', 'ASC')->get()) + $this->getTotalLitrosPedido($pedido);
+                $litrosAcumulados= $this->getLitrosCamion(Pedido::whereDate('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','en expedicion')->orderBy('id', 'ASC')->get()) + $this->getTotalLitrosPedido($pedido);
                 if($litrosAcumulados>1500)
                 {
-                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
                     $pedido->update();
                     array_push($pedidosPostergadosCapacidad,$pedido->id);
                     
@@ -316,7 +327,7 @@ class PedidoController extends Controller
                 }
                 else
                 {
-                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                    $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
                     $pedido->update();
                     array_push($pedidosPostergados,$pedido->id);
                     \Session::put('pedidosPostergados',$pedidosPostergados);
@@ -329,7 +340,7 @@ class PedidoController extends Controller
             $litrosAcumulados= $this->getLitrosCamion($pedidos) + $this->getTotalLitrosPedido($pedido);
             if($litrosAcumulados>1500)
             {
-                $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->format('Y-m-d');
+                $pedido->fecha_entrega = Carbon::parse($pedido->fecha_entrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
                 $pedido->update();
                 array_push($pedidosPostergadosCapacidad,$pedido->id);
                 \Session::put('pedidosPostergadosCapacidad',$pedidosPostergadosCapacidad);

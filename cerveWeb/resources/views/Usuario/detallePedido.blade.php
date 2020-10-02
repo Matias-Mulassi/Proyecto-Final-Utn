@@ -47,7 +47,10 @@
 
                 <h3>
                     <div class="alert alert-info" role="alert">
-                        Fecha Entrega Pedido: {{$fechaEntrega}}
+                        @php
+                        use Carbon\Carbon;
+                        @endphp
+                        Fecha Entrega Pedido: {{Carbon::parse($fechaEntrega)->format('d-m-Y')}}
                     </div>
                 </h3><hr>
 

@@ -16,7 +16,7 @@ class CreatePedidosTable extends Migration
         Schema::create('pedidos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('estado')->default('pendiente');
-            $table->date('fecha_entrega');
+            $table->dateTime('fecha_entrega');
             $table->integer('id_usuario')->unsigned();
             $table->dateTime('deleted_at')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
