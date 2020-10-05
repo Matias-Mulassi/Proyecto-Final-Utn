@@ -203,7 +203,7 @@
         <img src="https://img.icons8.com/officel/560/000000/truck.png"/>
       </div> <br>
       @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
-        <a href="#" class="btn btn-success  btn-lg float-right mr-3 mt-3">Despachar Camión <i class="fa fa-truck"></i></a>
+        <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-3">Despachar Camión <i class="fa fa-truck"></i></a>
       @endif
     </div>
     </center>

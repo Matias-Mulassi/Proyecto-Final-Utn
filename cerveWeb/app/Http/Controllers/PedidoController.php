@@ -105,7 +105,15 @@ class PedidoController extends Controller
 		$carrito = \Session::get('carrito');
  
         $pedido = new Pedido();
-        $pedido->fecha_entrega= Carbon::parse($fechaEntrega)->hour(10)->minute(00)->second(00)->format('Y-m-d H:i:s');
+        if(($fechaEntrega == Carbon::now()->modify('+1 day')->format('Y-m-d')) & (Carbon::now()->format('H:i:s')>='20:00:00' | ($this->getLitrosCamion(Pedido::where('fecha_entrega','=',Carbon::now()->modify('+1 day')->format('Y-m-d'))->where('deleted_at',null)->where('estado','en expedicion')->orderBy('id', 'ASC')->get())==1500))  )
+        {
+            $pedido->fecha_entrega= Carbon::parse($fechaEntrega)->addDays(1)->hour(8)->minute(00)->second(00)->format('Y-m-d H:i:s');
+        }
+        else
+        {
+            $pedido->fecha_entrega= Carbon::parse($fechaEntrega)->hour(10)->minute(00)->second(00)->format('Y-m-d H:i:s');
+        }
+        
         $pedido->id_usuario=\Auth::user()->id;
         $pedido->save();
 
@@ -520,5 +528,148 @@ class PedidoController extends Controller
         $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
         $litrosTotales=$this->getLitrosCamion($pedidos);
         return view('Operador.estadoCamion',compact('pedidos','litrosTotales','nombreDia','fechaMañana'));
+    }
+
+
+    public function logisticaPedidos()
+    {  
+        if($this->traducirDia(Carbon::now()->format('l'))=="Domingo")
+        {
+            $cervezas = Cerveza::all()->where('deleted_at',null);
+            foreach($cervezas as $cerveza)
+            {
+                $this->calculoPPLO($cerveza);
+            }
+            
+        }
+        
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        foreach($pedidos as $pedido)
+        {
+            $pedido->estado='entregado';
+            $pedido->update();
+        }
+        return view('Operador.logisticaCamion');
+    }
+
+
+    static function calculoPPLO($cerveza)
+    {
+        // SUMATORIA LITROS PEDIDO LUNES
+        $pedidosLunes = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-6 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltLunes=0;
+        foreach($pedidosLunes as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltLunes+=$item->cantidad;
+                }
+            }
+        }
+
+        // SUMATORIA LITROS PEDIDO MARTES
+        $pedidosMartes = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-5 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltMartes=0;
+        foreach($pedidosMartes as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltMartes+=$item->cantidad;
+                }
+            }
+        }
+
+        // SUMATORIA LITROS PEDIDO MIERCOLES
+        $pedidosMiercoles = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-4 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltMiercoles=0;
+        foreach($pedidosMiercoles as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltMiercoles+=$item->cantidad;
+                }
+            }
+        }
+
+        // SUMATORIA LITROS PEDIDO JUEVES
+        $pedidosJueves = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-3 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltJueves=0;
+        foreach($pedidosJueves as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltJueves+=$item->cantidad;
+                }
+            }
+        }
+
+        // SUMATORIA LITROS PEDIDO VIERNES
+        $pedidosJueves = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-2 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltViernes=0;
+        foreach($pedidosViernes as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltViernes+=$item->cantidad;
+                }
+            }
+        }
+
+        // SUMATORIA LITROS PEDIDO SABADO
+        $pedidosSabado = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-1 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltSabado=0;
+        foreach($pedidosSabado as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltSabado+=$item->cantidad;
+                }
+            }
+        }
+        
+        // SUMATORIA LITROS PEDIDO DOMINGO
+        $pedidosDomingo = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $ltDomingo=0;
+        foreach($pedidosDomingo as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre == $cerveza->nombre)
+                {
+                    $ltDomingo+=$item->cantidad;
+                }
+            }
+        }
+
+        $sumaParte1=$ltLunes + $ltMartes + $ltMiercoles;
+        $sumapromedioParte2= ($ltJueves + $ltViernes + $ltSabado + $ltDomingo) / 4;
+        $demandaPromedio = $sumaParte1+$sumapromedioParte2;
+
+        $devioEstandar= sqrt((pow($ltLunes-$demandaPromedio,2)+pow($ltMartes-$demandaPromedio,2)+pow($ltMiercoles-$demandaPromedio,2)+pow($ltJueves-$demandaPromedio,2)+pow($ltViernes-$demandaPromedio,2)+pow($ltSabado-$demandaPromedio,2)+pow($ltDomingo-$demandaPromedio,2))/3);
+        $leedTime=1;
+        $tStudent=2.3534; //Valor hallado de la tabla
+        $costoFijoCompra=1500; //Por flete
+        $costoMantenimientoInventario=1071; //Por dia
+        $tasaMantenimientoExistencial=0.11; //Por dia
+        
+        $ptoPedido= $demandaPromedio * $leedTime + $tStudent * $desvioEstandar * sqrt($leedTime);
+
+        $loteOptimo= sqrt((2*$demandaPromedio*$costoFijoCompra)/($costoMantenimientoInventario*$tasaMantenimientoExistencial));
+
+        $cerveza->puntoPedido= $ptoPedido;
+        $cerveza->loteOptimo= $loteOptimo;
+        $cerveza->update();
     }
 }
