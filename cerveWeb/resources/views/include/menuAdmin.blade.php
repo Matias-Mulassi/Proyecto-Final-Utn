@@ -7,7 +7,7 @@
                  <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="col-md-9">                 
+                    <div class="col-md-7">                 
                         <nav class="navbar navbar-light bg-light">
                             <span class="navbar-text">
                                 <strong><i class="fa fa-dashboard"></i> Dashboard</strong>
@@ -36,7 +36,32 @@
                                     </a>
                                 </li>
                                 @endif
-                             @else
+                             @else                               
+                                <p hidden>{{$mensajes = App\Mensaje::where('id_usuario','=',Auth::user()->id)->where('leido',false)->get()}}</p>
+                                <li class="mt-2 mr-3"><div class="dropdown">
+                                    <a class="toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <i class="fa fa-globe"></i> Notificaciones <span class="badge badge-info">{{count($mensajes)}}</span>
+                                    </a>
+                                    @if(count($mensajes)>0)
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                        @foreach($mensajes->take(4) as $mensaje)
+                                        <a class="dropdown-item" href="{{route('notificacion',$mensaje)}}">{{$mensaje->cuerpo}}</a>
+                                        @endforeach
+                                        <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-center" style="color:blue;" href="{{route('panelNotificaciones')}}"> <u>Ver todas las notificaciones</u></a>
+                                        </div>
+                                    </div></li>
+                                    @else
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                            <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+                                                <strong><i class="fa fa-info-circle"></i></strong> No posee notificaciones sin leer
+                                                        
+                                            </div>
+                                            <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-center" style="color:blue;" href="{{route('panelNotificaciones')}}"> <u>Ver todas las notificaciones</u></a>
+                                            </div>
+                                        </div></li>
+                                    @endif
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                        <i class="fa fa-user"></i> {{Auth::user()->apellido}}, {{Auth::user()->nombre }} 

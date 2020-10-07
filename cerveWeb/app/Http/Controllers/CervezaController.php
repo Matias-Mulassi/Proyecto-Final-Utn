@@ -91,6 +91,7 @@ class CervezaController extends Controller
             $cerveza->puntoPedido = $request['puntoPedido'];
             $cerveza->image = $ruta;
             $cerveza->id_categoria = $request['id_categoria'];
+            $cerveza->loteOptimo=300;
             $cerveza->save(); 
             
         });

@@ -8,6 +8,7 @@ use App\Pedido;
 use App\Cerveza;
 use App\ItemPedido;
 use Carbon\Carbon;
+use App\Mensaje;
 use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
@@ -256,6 +257,33 @@ class PedidoController extends Controller
                 {
                   //Ok, hay stock para este item Pedido   
                   $c++;
+                  if(($item->cerveza->cantidadStock-$item->cantidad)<=$item->cerveza->puntoPedido)
+                    {   
+                        $cerveza = Cerveza::find($item->cerveza->id);
+                        if(isset($cerveza))
+                        {   
+                            $contador=0;
+                            $mensajes = Mensaje::all();
+                            foreach($mensajes as $mensaje)
+                            {
+                                $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                                if($pos===false)
+                                {
+                                    $contador++;
+                                }
+                            }
+                            if($contador==count($mensajes))
+                            {
+                                $this->notificaciónPuntoPedido($cerveza);
+                            }
+                            
+                        }
+                        else
+                        {
+                          return back()->with('error','Ha ocurrido un error.');
+                        }
+                       
+                    }
                 }
                 else
                 {
@@ -328,9 +356,31 @@ class PedidoController extends Controller
             {
                 if($item->cantidad<=$item->cerveza->cantidadStock)
                 {
-                    if(!($item->cerveza->cantidadStock>$item->cerveza->puntoPedido))
-                    {
-                        //Ver como disparar proceso de compra
+                    if(($item->cerveza->cantidadStock-$item->cantidad)<=$item->cerveza->puntoPedido)
+                    {   
+                        $cerveza = Cerveza::find($item->cerveza->id);
+                        if(isset($cerveza))
+                        {
+                            $contador=0;
+                            $mensajes = Mensaje::all();
+                            foreach($mensajes as $mensaje)
+                            {
+                                $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                                if($pos===false)
+                                {
+                                    $contador++;
+                                }
+                            }
+                            if($contador==count($mensajes))
+                            {
+                                $this->notificaciónPuntoPedido($cerveza);
+                            }
+                        }
+                        else
+                        {
+                          return back()->with('error','Ha ocurrido un error.');
+                        }
+                       
                     }
                 }
                 else
@@ -671,5 +721,18 @@ class PedidoController extends Controller
         $cerveza->puntoPedido= $ptoPedido;
         $cerveza->loteOptimo= $loteOptimo;
         $cerveza->update();
+    }
+
+    static function notificaciónPuntoPedido($cerveza)
+    {
+        $administradores = User::where('id_tipo_usuario', '=',2)->get();
+        foreach($administradores as $admin)
+        {
+            $mensaje = new Mensaje();
+            $mensaje->id_usuario=$admin->id;
+            $mensaje->cuerpo='Stock: Se necesita comprar '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre;
+            $mensaje->leido=false;
+            $mensaje->save();
+        }
     }
 }

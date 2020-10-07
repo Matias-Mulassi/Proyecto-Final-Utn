@@ -8,13 +8,14 @@
                 <div class="card-header text-center">Registro de cerveza que vende el proveedor </div>
 
                 <div class="card-body">
+                    @if(count($cervezas)>0)
                     <form method="POST" action="{{ route('registroCervezaProveedor') }}">
                         @csrf
-
+            
                         <div class="form-row">
                                 <div class="col text-left mt-2">
                                     <label for="validationDefault03">{{ __('Cerveza') }}</label>
-                                        <select id="id_cerveza" name="id_cerveza" class="form-control @error('id_cerveza') is-invalid @enderror" placeholder="Cerveza" required>
+                                        <select id="id_cerveza" name="id_cerveza" style="padding:5px;" class="form-control @error('id_cerveza') is-invalid @enderror" placeholder="Cerveza" required>
                                             @foreach($cervezas as $cerveza)
                                             <option value="{{$cerveza->id}}">{{$cerveza->nombre}} </option>
                                             @endforeach
@@ -49,6 +50,15 @@
                          
                         </p>
                     </form>
+                    @else
+                    <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> El proveedor ya abastece todas las cervezas que la empresa CerveWeb provee!
+									
+                    </div>
+                    <p>
+                        <a href="{{route('abmlProveedores')}}" class="btn btn-warning float-right mr-3 mt-3">Volver</a>
+                    </p>
+                    @endif
                 </div>
             </div>
         </div>

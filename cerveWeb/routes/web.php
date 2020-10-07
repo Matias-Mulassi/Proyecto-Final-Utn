@@ -116,6 +116,13 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/blPedidos','PedidoController@obtenerPedidos' )->name('blPedidos');
 
 	Route::get('/deletePedidosAdmin/{id}','PedidoController@logic_delete2' )->name('deletePedidos2');
+
+	//NOTIFICACIONES
+	Route::get('/notificaciones/{mensaje}','MensajeController@show' )->name('notificacion');
+	Route::get('/panelNotificaciones','MensajeController@showAllNotificaciones' )->name('panelNotificaciones');
+
+	
+
 });
 
 
@@ -192,6 +199,4 @@ Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mos
 Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
 Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
 Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
-
-
 

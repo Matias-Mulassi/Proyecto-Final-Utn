@@ -33,6 +33,11 @@ class User extends Authenticatable
     	return $this->hasMany('App\Pedido','id_pedido');
     }	
 
+    public function mensajes()
+    {
+    	return $this->hasMany('App\Mensaje','id_mensaje');
+    }
+
     /**
      * The attributes that should be hidden for arrays.
      *
