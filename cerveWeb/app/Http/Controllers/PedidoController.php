@@ -9,6 +9,7 @@ use App\Cerveza;
 use App\ItemPedido;
 use Carbon\Carbon;
 use App\Mensaje;
+use App\Proveedor;
 use Illuminate\Support\Facades\Auth;
 
 class PedidoController extends Controller
@@ -734,5 +735,10 @@ class PedidoController extends Controller
             $mensaje->leido=false;
             $mensaje->save();
         }
+    }
+
+    public function solicitarAbastecimiento(Cerveza $cerveza, Proveedor $proveedor)
+    {
+        return view('Administrador.ordenCompra',compact('cerveza','proveedor'));
     }
 }

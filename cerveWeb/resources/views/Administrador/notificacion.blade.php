@@ -31,7 +31,7 @@
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
           <strong class="text-gray-dark">@Sistema</strong>
-          <a href="#">Confirmar</a>
+          <a href="{{route('solicitarAbastecimiento',['cerveza'=>$cerveza,'proveedor'=>$proveedor])}}">Confirmar</a>
         </div>
         <span class="d-block">Realizar compra de {{$cerveza->loteOptimo}} lts de cerveza {{$cerveza->nombre}} al proveedor <strong>{{$proveedor->razonSocial}}</strong></span>
       </div>
