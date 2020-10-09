@@ -120,8 +120,8 @@ Route::group(['middleware' => ['auth']], function()
 	//NOTIFICACIONES
 	Route::get('/notificaciones/{mensaje}','MensajeController@show' )->name('notificacion');
 	Route::get('/panelNotificaciones','MensajeController@showAllNotificaciones' )->name('panelNotificaciones');
-	Route::get('/solicitarAbastecimiento/{cerveza}/{proveedor}','PedidoController@solicitarAbastecimiento' )->name('solicitarAbastecimiento');
-
+	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
+	
 	
 
 });

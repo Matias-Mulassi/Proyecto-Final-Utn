@@ -1,25 +1,25 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="img/png" href="{{ asset('imagenes/logo.png') }}">
+    <link rel="icon" type="img/png" href="http://localhost:8000/imagenes/logo.png">
     <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta name="csrf-token" content="SMaeD13u292RZ1m12r5qwpZ8zgyjGzYXSnmgyzHH">
 
-    <title>{{ config('app.name', 'newname') }}</title>
+    <title>Laravel</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="http://localhost:8000/js/app.js" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/scrollbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
+    <link href="http://localhost:8000/css/app.css" rel="stylesheet">
+    <link href="http://localhost:8000/css/scrollbar.css" rel="stylesheet">
+    <link href="http://localhost:8000/css/layout.css" rel="stylesheet">
 
 
     <!-- Bootstrap cdn new version-->    
@@ -35,11 +35,11 @@
                 <div class="col" style="border: 1px solid black;">
                     <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; margin-bottom:0px;">
                            
-                            <strong>Proveedor:</strong> {{$proveedor->razonSocial}}
+                            <strong>Proveedor:</strong> Beer House SRL
                     </p>
                     <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; margin-bottom:0px;">
                            
-                           <strong>Solicitó el pedido el SR.:</strong> {{Auth::user()->apellido}}, {{Auth::user()->nombre}}
+                           <strong>Solicitó el pedido el SR.:</strong> Mulassi, Matias
                    </p>
 
                 </div>
@@ -48,17 +48,15 @@
                         <center>
                             <table style="font-family: Arial, Helvetica, sans-serif; border: 1px solid black; margin:10px;">
                                 
-                                @php
-                                    use Carbon\Carbon;
-                                @endphp           
+                                           
 
                                 <tr>
                                     <td colspan="3" class="text-center" style="border: 1px solid black;"><strong> FECHA PEDIDO </strong></td>
                                 </tr>
                                 <tr>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->day}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->month}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->year}}</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>9</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>10</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>2020</strong></td>
                                 </tr>
                             </table>
                         </center>
@@ -83,17 +81,18 @@
                             </thead>
                             <tbody style="background-color:white;" class="text-right">
                                         <tr>
-                                            <td scope="row" class="text-right" style="border: 1px solid black;">{{$cerveza->loteOptimo}} lts</th>
-                                            <td class="text-center" style="border: 1px solid black;">Cerveza {{$cerveza->nombre}}</td>
-                                            <p hidden>{{$costoCerveza=0}}</p>
-                                            @foreach($proveedor->productos_cervezas as $cervezaProveedor)
-                                            
-                                                @if($cervezaProveedor->nombre==$cerveza->nombre)
-                                                <p hidden>{{$costoCerveza=$cervezaProveedor->pivot->costo}}</p>
-                                                @endif
-                                            @endforeach
-                                            <td class="text-right" style="border: 1px solid black;">$ {{number_format($costoCerveza,2)}}</td>
-                                            <td class="text-right" style="border-top: 1px solid black; border-bottom: 1px solid black;">$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}}</td>
+                                            <td scope="row" class="text-right" style="border: 1px solid black;">300 lts</th>
+                                            <td class="text-center" style="border: 1px solid black;">Cerveza English Pale Ale</td>
+                                            <p hidden>0</p>
+                                                                                        
+                                                                                                                                        
+                                                                                                                                        
+                                                                                                                                        
+                                                                                                <p hidden>45.5</p>
+                                                                                                                                        
+                                                                                                                                        
+                                                                                                                                        <td class="text-right" style="border: 1px solid black;">$ 45.50</td>
+                                            <td class="text-right" style="border-top: 1px solid black; border-bottom: 1px solid black;">$ 13,650.00</td>
                                         </tr>
                             </tbody>
                         </table>
@@ -110,7 +109,7 @@
                                 </td>
                                 <td style="border-right: 1px solid black; font-size:25px; padding-top:50px;"> <strong>TOTAL $ </strong></td>
                                 
-                                <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}} </strong></div></td>
+                                <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>$ 13,650.00 </strong></div></td>
                             </tr>
 
                         </tbody>
@@ -119,7 +118,7 @@
             </div>
             <div class="row" style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif;">
                 <div class="col">
-                <p class="p-2" style="margin-left: 20px;"><strong>Fecha de Entrega: </strong>{{Carbon::now()->modify('+1 day')->format('d-m-Y')}}  </p>
+                <p class="p-2" style="margin-left: 20px;"><strong>Fecha de Entrega: </strong>10-10-2020  </p>
                 </div>
             </div>
             
