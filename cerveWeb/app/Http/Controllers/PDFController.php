@@ -98,4 +98,32 @@ class PDFController extends Controller
         return \Redirect::route('home')->with('message', $message);
     }
 
+
+    public function enviarVariosEmails(Cerveza $cervezas, Mensaje $mensajes)
+    {
+        /*
+        $proveedores = Proveedor::all()->where('deleted_at',null);
+        for ($i = 0; $i <= count($proveedores)-1; $i++)
+        {
+            ${"cervezaProveedor_".$proveedores[i]->razonSocial}=array();
+        }
+
+        foreach($proveedores as $proveedor)
+        {
+            foreach($cervezas as $cerveza)
+            {
+                if($proveedor->razonSocial == $cerveza->proveedor->razonSocial)
+                {
+                    array_push(${"cervezaProveedor_".$proveedor->razonSocial},$cerveza);
+                }
+            }
+        }
+
+        foreach($proveedores as $proveedor)
+        {
+
+        }
+        */
+    }
+    
 }

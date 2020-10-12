@@ -32,14 +32,14 @@
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
           <strong class="text-gray-dark">@Sistema</strong>
-          <a href="#">Confirmar</a>
+          <a href="{{route('confirmarAbastecimiento',['cerveza'=>$cervezas[$i],'proveedor'=>$cervezas[$i]->proveedor,'mensaje'=>$mensajes[$i]])}}">Confirmar</a>
         </div>
         <span class="d-block">Realizar compra de {{$cervezas[$i]->loteOptimo}} lts de cerveza {{$cervezas[$i]->nombre}} al proveedor <strong>{{$cervezas[$i]->proveedor->razonSocial}}</strong></span>
       </div>
     </div>
     @endfor
     <small class="d-block text-right mt-3">
-      <a href="#">Realizar Todas las compras</a>
+      <a href="{{route('confirmarTodosAbastecimientos',['cerveza'=>$cervezas,'mensajes'=>$mensajes)}}">Realizar todas las compras</a>
     </small>
   </div>
 </main>

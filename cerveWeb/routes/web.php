@@ -121,6 +121,7 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/notificaciones/{mensaje}','MensajeController@show' )->name('notificacion');
 	Route::get('/panelNotificaciones','MensajeController@showAllNotificaciones' )->name('panelNotificaciones');
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
+	Route::get('/confirmarTodosAbastecimientos/{cervezas}//{mensajes}','PDFController@enviarVariosEmails' )->name('confirmarTodosAbastecimientos');
 	
 	
 
