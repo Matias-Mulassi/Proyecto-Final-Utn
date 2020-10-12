@@ -49,7 +49,7 @@ class Authenticate {
 			if(isset(auth()->user()->deleted_at))
 			{
 				$message = 'Permiso denegado: Solo los administradores pueden entrar a esta sección';
-				return redirect()->route('noHablitado')->with('message', $message);;
+				return redirect()->route('noHablitado')->with('message', $message);
 			}
             switch (auth()->user()->id_tipo_usuario) {
                 case 1:

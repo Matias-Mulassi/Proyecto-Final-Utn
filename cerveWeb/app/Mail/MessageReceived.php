@@ -14,15 +14,17 @@ class MessageReceived extends Mailable
     use Queueable, SerializesModels;
     public $subject= 'Abastecimiento CerveWeb S.A';
     public $pdf;
+    public $proveedor;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($pdf)
+    public function __construct($pdf,$proveedor)
     {
         $this->pdf=$pdf;
+        $this->proveedor=$proveedor;
     }
 
     /**
@@ -32,6 +34,6 @@ class MessageReceived extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.message-received')->attachData($this->pdf, 'OrdenCompra.pdf');;
+        return $this->view('emails.message-received',compact('proveedor'))->attachData($this->pdf, 'OrdenCompra.pdf');;
     }
 }

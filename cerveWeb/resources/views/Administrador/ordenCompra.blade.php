@@ -1,75 +1,51 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="img/png" href="{{ asset('imagenes/logo.png') }}">
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <title>{{ config('app.name', 'newname') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-    <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/scrollbar.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/layout.css') }}" rel="stylesheet">
-
-
-    <!-- Bootstrap cdn new version-->    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.0/lumen/bootstrap.min.css" integrity="sha384-VMuWne6iwiifi8iEWNZMw8sDatgb6ntBpBIr67q0rZAyOQwfu/VKpnFntQrjxB5W" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Lemonada:wght@500&family=Lobster+Two:ital,wght@1,700&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="jumbotron">
+    
+
+
+<div>
         <h1 class="display-4 text-center">Orden de compra</h1>
-        <hr class="my-4">
-        <div class="container">
-            <div class="row" style="border: 1px solid black;">
-                <div class="col" style="border: 1px solid black;">
-                    <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; margin-bottom:0px;">
-                           
-                            <strong>Proveedor:</strong> {{$proveedor->razonSocial}}
-                    </p>
-                    <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; margin-bottom:0px;">
-                           
-                           <strong>Solicitó el pedido el SR.:</strong> {{Auth::user()->apellido}}, {{Auth::user()->nombre}}
-                   </p>
+        <hr>
 
-                </div>
-                <div class="col text-center" style="border: 1px solid black;">
+        <div>
+            @php
+                use Carbon\Carbon;
+            @endphp
+            <div style="border: 1px solid black;">
+                <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; padding:5px;">
                         
-                        <center>
-                            <table style="font-family: Arial, Helvetica, sans-serif; border: 1px solid black; margin:10px;">
-                                
-                                @php
-                                    use Carbon\Carbon;
-                                @endphp           
+                        <strong>Proveedor:</strong> {{$proveedor->razonSocial}}
+                </p>
+                <p style="font-family: Arial, Helvetica, sans-serif; padding:5px; float:right;">
+                        
+                    <strong>Fecha Pedido: {{Carbon::now()->format('d-m-Y')}}
+                </p>
+                <p class="text-left" style="font-family: Arial, Helvetica, sans-serif; padding:5px;">
+                        
+                        <strong>Solicitó el pedido el SR.:</strong> {{Auth::user()->apellido}}, {{Auth::user()->nombre}}
+                </p>
 
-                                <tr>
-                                    <td colspan="3" class="text-center" style="border: 1px solid black;"><strong> FECHA PEDIDO </strong></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->day}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->month}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->year}}</strong></td>
-                                </tr>
-                            </table>
-                        </center>
-                        </div>
             </div>
-            <div class="row" style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif; margin-top: 5px;">
-                <div class="col p-2">
-                   <p style="float:left;"> <strong>Producto Requerido: </strong> Cerveza Artesanal  </p>
+        <div>
+            <div style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif; margin-top: 5px;">
+                <div>
+                    <center>
+                    
+                   <p> <strong>Producto Requerido: </strong> Cerveza Artesanal  </p>
+                   </center>
                 </div>
             </div>
-            <div class="row" style="border: 1px solid black; margin-top:5px;">
+            <div style="border: 1px solid black; margin-top:5px;">
                 <div class="table-responsive" style="font-family: Arial, Helvetica, sans-serif;">
                     <div class="table-wrapper-scroll-y my-custom-scrollbar">
                         <table class="table mb-0">
@@ -100,34 +76,32 @@
                     </div>
                 </div>    
             </div>
-            <div class="row" style="border: 1px solid black;">
-                <div class="table-responsive" style="font-family: Arial, Helvetica, sans-serif;">
+            <div style="border: 1px solid black; margin-top:5px;">
+                <div style="font-family: Arial, Helvetica, sans-serif;">
                     <table class="table mb-0">
                         <tbody style="background-color:white; border: 0px solid white;">
                             <tr>
                                 <td colspan="2">
                                     <strong>FORMA DE PAGO: </strong> CONTADO
                                 </td>
-                                <td style="border-right: 1px solid black; font-size:25px; padding-top:50px;"> <strong>TOTAL $ </strong></td>
+                                <td style="border-right: 1px solid black; font-size:25px; padding-top:50px;"></td>
                                 
-                                <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}} </strong></div></td>
+                                <td class="text-center"  style="font-size:25px;" ><div><strong><p>TOTAL:</strong></p></div><div style="border: 1px solid black; border-radius: 15px;"> <strong>$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}} </strong></div></td>
                             </tr>
 
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="row" style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif;">
+            <div  style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif; margin-top:5px;">
                 <div class="col">
+               
                 <p class="p-2" style="margin-left: 20px;"><strong>Fecha de Entrega: </strong>{{Carbon::now()->modify('+1 day')->format('d-m-Y')}}  </p>
                 </div>
             </div>
             
         </div>
        
-    </div>                                      
+</div>
 </body>
-
 </html>
-
-

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Proveedor;
 use App\Cerveza;
-use NahidulHasan\Html2pdf\Facades\Pdf;
+use App\Mensaje;
+use PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageReceived;
 
@@ -87,10 +88,14 @@ class PDFController extends Controller
         //
     }
 
-    public function enviarEmail(Cerveza $cerveza, Proveedor $proveedor)
+    public function enviarEmail(Cerveza $cerveza, Proveedor $proveedor, Mensaje $mensaje)
     {
-        $ordenCompra =   Pdf :: generatePdf ( view ( 'Administrador.ordenCompra' , [ 'cerveza' => $cerveza , 'proveedor' => $proveedor ]));
-        Mail::to('mulassimatias-0730fa@inbox.mailtrap.io')->queue(new MessageReceived($ordenCompra));
-        return 'Mensaje Enviado';
+        
+        $ordenCompra =   PDF :: loadView ('Administrador.ordenCompra' , [ 'cerveza' => $cerveza , 'proveedor' => $proveedor ])->setPaper('a4', 'landscape')->setWarnings(false);
+        Mail::to($proveedor->email)->send(new MessageReceived($ordenCompra->output(),$proveedor));
+        $message = 'Solicitud de abastecimiento enviada al proveedor '.$proveedor->razonSocial;
+        $mensaje->delete();
+        return \Redirect::route('home')->with('message', $message);
     }
+
 }
