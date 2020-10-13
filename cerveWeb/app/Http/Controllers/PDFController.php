@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Proveedor;
 use App\Cerveza;
 use App\Mensaje;
+use App\ProductoCerveza;
 use PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageReceived;
@@ -99,13 +100,30 @@ class PDFController extends Controller
     }
 
 
-    public function enviarVariosEmails(Cerveza $cervezas, Mensaje $mensajes)
+    public function enviarVariosEmails()
     {
-        /*
+    
+        $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
+        $mensajes = Mensaje::all();
+        $cervezas=array();
+        foreach($mensajes as $mensaje)
+        {
+            foreach($cervezasCerveWeb as $cerveza)
+            {
+                $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                if($pos==true)
+                {
+                    $cerveza->proveedor=$this->getMejorProveedor($cerveza);
+                    array_push($cervezas,$cerveza);
+                }
+            }         
+        }
+
+
         $proveedores = Proveedor::all()->where('deleted_at',null);
         for ($i = 0; $i <= count($proveedores)-1; $i++)
         {
-            ${"cervezaProveedor_".$proveedores[i]->razonSocial}=array();
+            ${"cervezasProveedor_".$proveedores[$i]->razonSocial}=array();
         }
 
         foreach($proveedores as $proveedor)
@@ -114,16 +132,41 @@ class PDFController extends Controller
             {
                 if($proveedor->razonSocial == $cerveza->proveedor->razonSocial)
                 {
-                    array_push(${"cervezaProveedor_".$proveedor->razonSocial},$cerveza);
+                    array_push(${"cervezasProveedor_".$proveedor->razonSocial},$cerveza);
                 }
             }
         }
 
         foreach($proveedores as $proveedor)
         {
-
+            if(count(${"cervezasProveedor_".$proveedor->razonSocial})>0)
+            {
+                $ordenCompra =   PDF :: loadView ('Administrador.ordenCompraVarios' , [ 'cervezas' => ${"cervezasProveedor_".$proveedor->razonSocial} , 'proveedor' => $proveedor ])->setPaper('a4', 'landscape')->setWarnings(false);
+                Mail::to($proveedor->email)->send(new MessageReceived($ordenCompra->output(),$proveedor));
+            }
         }
-        */
+        foreach($mensajes as $mensaje)
+        {
+            $mensaje->delete();
+        }
+        $message = 'Solicitud de abastecimiento enviada a todos los proveedores ';
+        return \Redirect::route('home')->with('message', $message);
     }
     
+    static function getMejorProveedor(Cerveza $cerveza)
+    {
+        $cervezaProveedor = ProductoCerveza::where('deleted_at',null)->where('nombre','=',$cerveza->nombre)->get()->first();
+        $litroMasBarato=$cerveza->precio;
+        $mejorProveedor=null;
+        foreach($cervezaProveedor->proveedores as $proveedor)
+        {
+            if($proveedor->pivot->costo <$litroMasBarato)
+            {
+                $litroMasBarato=$proveedor->pivot->costo;
+                $mejorProveedor=$proveedor;
+            }
+        }
+        return $mejorProveedor;
+
+    }
 }

@@ -58,6 +58,7 @@
                             </tr>
                             </thead>
                             <tbody style="background-color:white;" class="text-right">
+                                    @foreach($cervezas as $cerveza)    
                                         <tr>
                                             <td scope="row" class="text-right" style="border: 1px solid black;">{{$cerveza->loteOptimo}} lts</th>
                                             <td class="text-center" style="border: 1px solid black;">Cerveza {{$cerveza->nombre}}</td>
@@ -65,12 +66,13 @@
                                             @foreach($proveedor->productos_cervezas as $cervezaProveedor)
                                             
                                                 @if($cervezaProveedor->nombre==$cerveza->nombre)
-                                                <p hidden>{{$costoCerveza=$cervezaProveedor->pivot->costo}}</p>
+                                                <p hidden>{{${"costoCerveza_".$cerveza->nombre}=$cervezaProveedor->pivot->costo}}</p>
                                                 @endif
                                             @endforeach
-                                            <td class="text-right" style="border: 1px solid black;">$ {{number_format($costoCerveza,2)}}</td>
-                                            <td class="text-right" style="border-top: 1px solid black; border-bottom: 1px solid black;">$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}}</td>
+                                            <td class="text-right" style="border: 1px solid black;">$ {{number_format(${"costoCerveza_".$cerveza->nombre},2)}}</td>
+                                            <td class="text-right" style="border-top: 1px solid black; border-bottom: 1px solid black;">$ {{number_format(${"costoCerveza_".$cerveza->nombre} * $cerveza->loteOptimo,2)}}</td>
                                         </tr>
+                                    @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -85,8 +87,11 @@
                                     <strong>FORMA DE PAGO: </strong> CONTADO
                                 </td>
                                 <td style="border-right: 1px solid black; font-size:25px; padding-top:50px;"></td>
-                                
-                                <td class="text-center"  style="font-size:25px;" ><div><strong><p>TOTAL:</strong></p></div><div style="border: 1px solid black; border-radius: 15px;"> <strong>$ {{number_format($costoCerveza * $cerveza->loteOptimo,2)}} </strong></div></td>
+                                <p hidden>{{$total=0}}</p>
+                                @foreach($cervezas as $cerveza)
+                                <p hidden>{{$total+=${"costoCerveza_".$cerveza->nombre} * $cerveza->loteOptimo}}</p>
+                                @endforeach
+                                <td class="text-center"  style="font-size:25px;" ><div><strong><p>TOTAL:</strong></p></div><div style="border: 1px solid black; border-radius: 15px;"> <strong>$ {{number_format($total,2)}} </strong></div></td>
                             </tr>
 
                         </tbody>

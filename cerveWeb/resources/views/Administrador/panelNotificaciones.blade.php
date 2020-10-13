@@ -11,6 +11,7 @@
     </div>
   </div>
 
+  @if(count($mensajes)>0)
   <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">Ultimas Notificaciones</h6>
     @foreach($mensajes as $mensaje)
@@ -39,9 +40,26 @@
     </div>
     @endfor
     <small class="d-block text-right mt-3">
-      <a href="{{route('confirmarTodosAbastecimientos',['cerveza'=>$cervezas,'mensajes'=>$mensajes)}}">Realizar todas las compras</a>
+      <a href="{{route('procesarAbastecimiento')}}">Realizar todas las compras</a>
     </small>
   </div>
+  @else
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Ultimas Notificaciones</h6>
+    <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> No hay notificaciones por procesar!
+									
+    </div>
+  </div>
+
+  <div class="my-3 p-3 bg-white rounded shadow-sm">
+    <h6 class="border-bottom border-gray pb-2 mb-0">Sugerencias</h6>
+    <div class="col mt-4 alert alert-info alert-dismissible fade show" role="alert">
+							<strong><i class="fa fa-info-circle"></i></strong> No hay sugerencias por el momento!
+									
+    </div>
+  </div>
+  @endif
 </main>
 
 @endsection
