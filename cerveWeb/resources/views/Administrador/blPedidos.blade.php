@@ -1,6 +1,10 @@
 @extends('templates.templateAdmin')
 
 @section('content')
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
  <center>
       <div class="col-md-12 mt-4">
                 <div class="card">
@@ -35,7 +39,8 @@
                                             <td>{{$pedido->estado}}</td>                                                                              
                                             <td>{{$pedido->usuario->nombre}} , {{$pedido->usuario->apellido}} </td>
                                             @foreach($pedido->itemsPedidos as $item)
-                                                <p hidden>{{$total+=$item->cantidad * $item->cerveza->precio}}</p>
+                                            <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
+                                                <p hidden>{{$total+=$item->cantidad * $precioCerveza}}</p>
                                             @endforeach
                                             <td>$ {{number_format($total,2)}}</td>
                                             <td scope="col">
@@ -141,12 +146,13 @@
                                             </thead>
                                             <tbody>
                                             @foreach($pedido->itemsPedidos as $item)
+                                            <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
                                                 <tr>
                                                     <th scope="row"><img style= "height:100px; width:100px" src="{{ $item->cerveza->image }}"></th>
                                                     <td>{{$item->cerveza->nombre}}</td>
                                                     <td>{{$item->cantidad}} litros</td>
-                                                    <td>${{number_format($item->cerveza->precio * $item->cantidad,2)}}</td>
-                                                    <p hidden>{{$total+=$item->cantidad * $item->cerveza->precio}}</p>
+                                                    <td>${{number_format($precioCerveza * $item->cantidad,2)}}</td>
+                                                    <p hidden>{{$total+=$item->cantidad * $precioCerveza}}</p>
                                                 </tr>
                                             @endforeach
                                             </tbody>

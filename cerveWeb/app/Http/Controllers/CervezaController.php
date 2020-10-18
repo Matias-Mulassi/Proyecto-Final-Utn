@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cerveza;
 use App\Categoria;
+use App\HistoricoPrecio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Builder;
 use Cookie;
 use Illuminate\Database\QueryException;
+use Carbon\Carbon;
 
 class CervezaController extends Controller
 {
@@ -86,18 +88,27 @@ class CervezaController extends Controller
             $cerveza = new Cerveza();
             $cerveza->nombre = $request['nombre'];
             $cerveza->descripcion = $request['descripcion'];
-            $cerveza->precio = $request['precio'];
             $cerveza->cantidadStock = $request['stockDisponible'];
             $cerveza->puntoPedido = $request['puntoPedido'];
             $cerveza->image = $ruta;
             $cerveza->id_categoria = $request['id_categoria'];
             $cerveza->loteOptimo=300;
             $cerveza->save(); 
+            $this->registrarPrecio($cerveza->id,$request['precio']);
             
         });
         return redirect('abmlCervezas')->with('success','Cerveza registrada con éxito.');
      }          
     }
+
+    protected function registrarPrecio($id_cerveza,$precio)
+	{
+        $historico_precio = new HistoricoPrecio();
+        $historico_precio->fecha_vigencia =Carbon::now()->format('Y-m-d H:i:s');
+        $historico_precio->precio=$precio;
+        $historico_precio->id_cerveza=$id_cerveza;
+        $historico_precio->save();
+	}
 
     /**
      * Display the specified resource.
@@ -188,11 +199,11 @@ class CervezaController extends Controller
                     $cerveza->image = $ruta;
                     $cerveza->nombre = $request['nombre'];
                     $cerveza->descripcion = $request['descripcion'];
-                    $cerveza->precio = $request['precio'];
                     $cerveza->cantidadStock = $request['stockDisponible'];
                     $cerveza->puntoPedido = $request['puntoPedido'];
                     $cerveza->id_categoria = $request['id_categoria'];
                     $cerveza->update();
+                    $this->registrarPrecio($cerveza->id,$request['precio']);
                 }
                    
                 
@@ -279,6 +290,18 @@ class CervezaController extends Controller
         {
             return redirect()->route('infoStock')->with('error','Ingrese una cantidad de litros a pedir.');
         }
+    }
+
+    public function getUltimoPrecio($idCerveza)
+    {
+        $historico_precio=HistoricoPrecio::where('id_cerveza','=',$idCerveza)->orderBy('fecha_vigencia', 'DESC')->get()->first();
+        return $historico_precio->precio;
+    }
+
+    public function getPrecioVigente($idCerveza,$fechaPedido)
+    {
+        $historico_precio=HistoricoPrecio::where('id_cerveza','=',$idCerveza)->where('fecha_vigencia','<=',$fechaPedido)->orderBy('fecha_vigencia', 'DESC')->get()->first();
+        return $historico_precio->precio;
     }
 }
 

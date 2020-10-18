@@ -1,6 +1,10 @@
 @extends('templates.templateAdmin')
 
 @section('content')
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
  <center>
        <div class="col-md-12 mt-4">
                 <div class="card">
@@ -36,7 +40,7 @@
                                                 </center>
                                             </td>
                                             <td>{{$cerveza->descripcion}}</td>
-                                            <td>{{$cerveza->precio}}</td>
+                                            <td>{{$cervezaController->getUltimoPrecio($cerveza->id)}}</td>
                                             <td>{{$cerveza->cantidadStock}}</td>
                                             <td>{{$cerveza->puntoPedido}}</td>
                                             <td>{{$cerveza->categoria->nombre}}</td>

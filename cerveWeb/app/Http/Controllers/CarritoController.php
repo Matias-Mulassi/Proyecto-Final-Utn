@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cerveza;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\CervezaController;
 
 class CarritoController extends Controller
 {
@@ -167,8 +168,9 @@ class CarritoController extends Controller
     {
         $carrito = \Session::get('carrito');
         $total = 0;
+        $cervezaController = new CervezaController();
         foreach($carrito as $item){
-            $total += $item->precio * $item->cantidad; 
+            $total += $cervezaController->getUltimoPrecio($item->id) * $item->cantidad; 
         }
     
         return $total;

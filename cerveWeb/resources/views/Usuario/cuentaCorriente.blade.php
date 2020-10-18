@@ -1,4 +1,8 @@
 @extends('templates.template')
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
 
 @section('content')
 
@@ -38,8 +42,9 @@
                                             <th scope="row">{{$pedido->id}}</th>
                                             <td>{{Carbon::parse($pedido->fecha_entrega)->format('d-m-Y')}}</td>
                                             <p hidden>{{$total=0}}</p>
-                                            @foreach($pedido->itemsPedidos as $item)     
-                                                <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}} </p>
+                                            @foreach($pedido->itemsPedidos as $item)
+                                            <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>     
+                                                <p hidden>{{$total+= $item->cantidad * $precioCerveza}} </p>
                                             @endforeach
                                             <td class="text-right">{{number_format($total,2)}}</td>
                                             <td scope="col">
@@ -86,11 +91,12 @@
                             <strong>Nro: </strong>{{$pedido->id}}<br> <br>
                             <p hidden>{{$total=0}}</p>
                             @foreach($pedido->itemsPedidos as $item)
+                            <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
                                 <br>
                                 <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br> <br>
                                 <img style= "height:100px; width:100px" src="{{ $item->cerveza->image }}"> <br> <br>
                                 <strong>Cantidad : </strong>{{$item->cantidad}} litros<br>
-                                <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}} </p>
+                                <p hidden>{{$total+= $item->cantidad * $precioCerveza}} </p>
                             @endforeach
                             <hr>
                             

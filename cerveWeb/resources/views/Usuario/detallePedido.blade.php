@@ -1,5 +1,8 @@
 @extends('templates.template')
-
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
 @section('content')
 
     <div class="container text-center">
@@ -30,11 +33,12 @@
                         <th>SubTotal</th>
                     </tr>
                     @foreach($carrito as $item)
+                    <p hidden>{{$precioCerveza=$cervezaController->getUltimoPrecio($item->id)}}</p>
                         <tr>
                             <td>{{$item->nombre}}</td>
-                            <td>${{number_format($item->precio,2)}}</td>
+                            <td>${{number_format($precioCerveza,2)}}</td>
                             <td>{{$item->cantidad}}</td>
-                            <td>${{number_format($item->precio * $item->cantidad,2)}}</td>
+                            <td>${{number_format($precioCerveza * $item->cantidad,2)}}</td>
                         </tr>
                     @endforeach
                 </table><hr>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Pedido;
 use Carbon\Carbon;
+use App\Http\Controllers\CervezaController;
 
 class CuentaCorrienteController extends Controller
 {
@@ -87,14 +88,15 @@ class CuentaCorrienteController extends Controller
 
     public function estadoCuenta()
     {
+        $cervezaController = new CervezaController();
         $pedidos= Pedido::where('id_usuario','=',Auth::user()->id)->where('deleted_at',null)->where('pagado',false)->get();
         $totalAbonar=0;
 
         foreach($pedidos as $pedido)
         {
             foreach($pedido->itemsPedidos as $item)
-            {
-                $totalAbonar+= $item->cantidad * $item->cerveza->precio;
+            {   $precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at);
+                $totalAbonar+= $item->cantidad * $precioCerveza;
             }
         }
 

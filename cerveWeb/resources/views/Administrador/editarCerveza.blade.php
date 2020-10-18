@@ -1,6 +1,10 @@
 @extends('templates.templateAdmin')
 
 @section('content')
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
 		<div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -40,7 +44,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Precio x lt</label>
-                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" step="any" name="precio" value="{{$cerveza->precio }}" id="precio" >
+                                <input type="number" class="form-control  @error('precio') is-invalid @enderror" step="any" name="precio" value="{{$cervezaController->getUltimoPrecio($cerveza->id)}}" id="precio" >
                                 @error('precio')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>

@@ -1,5 +1,8 @@
 @extends('templates.template')
-
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
 @section('content')
 <div class="container text-center">
     <div class="page-header">
@@ -18,7 +21,7 @@
                 <div class="cerveza-info panel">
                     <p>{{$cerveza->descripcion}}</p>
                     <h3>
-                        <span class="span label-success">Precio: $ {{number_format($cerveza->precio,2)}}</span>
+                        <span class="span label-success">Precio: $ {{number_format($cervezaController->getUltimoPrecio($cerveza->id),2)}}</span>
                      </h3>
                     <p>
                         <a class="btn btn-warning btn-block" href="{{ route('agregarItemCarrito',$cerveza->id) }}">Añadir al carrito <i class="fa fa-cart-plus fa-2x"></i></a>

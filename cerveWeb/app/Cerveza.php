@@ -12,7 +12,6 @@ class Cerveza extends Model
                             'id',
                             'nombre',
                             'descripcion',
-                            'precio',
                             'cantidadStock',
                             'puntoPedido',
                             'loteOptimo',
@@ -27,7 +26,12 @@ class Cerveza extends Model
       //return $this->belongsTo('Name of the model that is related to',"foreign key"-attribute");
       return $this->belongsTo('App\Categoria',"id_categoria");
 
-  }                
+  }           
+  
+  public function historico_precios()
+  {
+    return $this->hasMany('App\HistoricoPrecio','id_cerveza');
+  }
 }
 
 

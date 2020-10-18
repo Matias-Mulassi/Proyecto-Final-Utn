@@ -1,7 +1,10 @@
 @extends('templates.templateOperator')
 
 @section('content')
-
+@php
+use App\Http\Controllers\CervezaController;
+$cervezaController = new CervezaController();
+@endphp
     <div class="jumbotron">
         <h1 class="display-4 text-center">Factura Electronica</h1>
         <hr class="my-4">
@@ -87,17 +90,18 @@
                             </tr>
                             </thead>
                             <tbody style="background-color:white; border: 0px solid white;" class="text-right">
-                                @foreach($pedido->itemsPedidos as $item)    
+                                @foreach($pedido->itemsPedidos as $item)   
+                                <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p> 
                                     <tr>
                                         <th scope="row">{{$item->cerveza->id}}</th>
                                         <td class="text-left">{{$item->cerveza->nombre}}</td>
                                         <td>{{$item->cantidad}}</td>
                                         <td class="text-left">litros</td>
-                                        <td>{{number_format($item->cerveza->precio /1.21,2)}}</td>
+                                        <td>{{number_format($precioCerveza /1.21,2)}}</td>
                                         <td>0.00</td>
-                                        <td>{{number_format(($item->cerveza->precio /1.21) * $item->cantidad,2)}}</td>
+                                        <td>{{number_format(($precioCerveza /1.21) * $item->cantidad,2)}}</td>
                                         <td>21%</td>
-                                        <td>{{number_format(($item->cerveza->precio * $item->cantidad),2)}}</td>
+                                        <td>{{number_format(($precioCerveza * $item->cantidad),2)}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -160,7 +164,8 @@
                         <tr>
                             <p hidden>{{$total=0}}</p>
                             @foreach($pedido->itemsPedidos as $item)
-                                <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}}</p>
+                            <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p> 
+                                <p hidden>{{$total+= $item->cantidad * $precioCerveza}}</p>
                             @endforeach 
                             <p hidden>{{$discriminado=$total/1.21}}</p>
                             <td><strong>Importe Neto Gravado : $</strong></td>
