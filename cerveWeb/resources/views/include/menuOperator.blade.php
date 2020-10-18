@@ -7,7 +7,7 @@
                  <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="col-md-9">                 
+                    <div class="col-md-8">                 
                         <nav class="navbar navbar-light bg-light">
                             <span class="navbar-text">
                             <script src='https://kit.fontawesome.com/a076d05399.js'></script>
@@ -52,7 +52,7 @@
 
                                                     <a class="dropdown-item" href="{{ route('listadoPedidos') }}">Mis pedidos</a>
                                                     <a class="dropdown-item" href="{{ route('catalogoCervezas') }}">Realizar Pedidos</a>  
-                                                    <a class="dropdown-item" href="#">Cuenta Corriente</a>                                        
+                                                    <a class="dropdown-item" href="{{ route('cuentaCorriente') }}">Cuenta Corriente</a>                                        
                                                 </span>
                                                 @break
 

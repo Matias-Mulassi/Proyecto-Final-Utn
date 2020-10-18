@@ -13,6 +13,7 @@ class Pedido extends Model
                             'estado',
                             'fecha_entrega',
                             'fecha_facturacion',
+                            'pagado',
                             'id_usuario',
                             'deleted_at'
 ];

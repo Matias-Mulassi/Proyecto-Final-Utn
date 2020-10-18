@@ -222,3 +222,11 @@ Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logis
 
 Route::get('/cambiarContraseña','UserController@editarContraseña' )->name('cambiarContraseña');
 Route::post('/actualizarContraseña','UserController@actualizarContraseña' )->name('actualizarContraseña');
+
+
+
+//CUENTA CORRIENTE USUARIOS
+
+Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('cuentaCorriente');
+Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
+Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');

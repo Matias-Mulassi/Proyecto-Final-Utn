@@ -18,6 +18,7 @@ class CreatePedidosTable extends Migration
             $table->string('estado')->default('pendiente');
             $table->dateTime('fecha_entrega');
             $table->dateTime('fecha_facturacion')->nullable();
+            $table->boolean('pagado')->nullable();
             $table->integer('id_usuario')->unsigned();
             $table->dateTime('deleted_at')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');

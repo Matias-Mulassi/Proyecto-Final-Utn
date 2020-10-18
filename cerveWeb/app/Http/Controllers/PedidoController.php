@@ -117,6 +117,7 @@ class PedidoController extends Controller
         }
         
         $pedido->id_usuario=\Auth::user()->id;
+        $pedido->pagado=false;
         $pedido->save();
 
 		foreach($carrito as $cerveza){
