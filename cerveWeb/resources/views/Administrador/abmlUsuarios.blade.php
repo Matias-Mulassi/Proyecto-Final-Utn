@@ -2,7 +2,7 @@
 
 @section('content')
  <center>
-      <div class="col-md-10 mt-4">
+      <div class="col-md-12 mt-4">
                 <div class="card">
                   <div class="card-header">
                         Usuarios <i class="fa fa-user"></i>

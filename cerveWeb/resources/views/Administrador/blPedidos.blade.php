@@ -2,7 +2,7 @@
 
 @section('content')
  <center>
-      <div class="col-md-10 mt-4">
+      <div class="col-md-12 mt-4">
                 <div class="card">
                   <div class="card-header">
                   <script src='https://kit.fontawesome.com/a076d05399.js'></script>

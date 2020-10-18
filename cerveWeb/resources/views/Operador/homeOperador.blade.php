@@ -16,7 +16,7 @@
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
-                    <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning btn-block btn-home-admin">PROXIMOS PEDIDOS A ENTREGAR</a>
+                    <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning btn-block btn-home-admin">ENTREGAS PROXIMAS</a>
                 </div>
             </div>
 
@@ -24,33 +24,12 @@
             <div class="col-md-6">
                 <div class="panel">
 
-                    <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">PEDIDOS PENDIENTES</a>
+                    <img class="home" src="https://img.icons8.com/fluent/60/000000/partially-shipped.png"/>
+                    <a href="#" class="btn btn-warning btn-block btn-home-admin">LOGISTICA</a>
                 </div>
             </div>
 
         </div>
-        
-        <div class="row mt-5">
-
-            <div class="col-md-6">
-                <div class="panel">
-
-                    <img src="https://img.icons8.com/dusk/60/000000/move-stock.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">STOCK</a>
-                </div>
-            </div>
-
-            <div class="col-md-6">
-                <div class="panel">
-
-                    <img src="https://img.icons8.com/plasticine/60/000000/info.png"/>
-                    <a href="#" class="btn btn-warning btn-block btn-home-admin">NOTIFICACIONES</a>
-                </div>
-            </div>
-
-        </div>
-
     </div>
     
 

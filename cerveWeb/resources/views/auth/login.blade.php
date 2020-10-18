@@ -31,13 +31,13 @@
                           <div class="form-check float-left">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
+                                    <label style="color:blue;" class="form-check-label" for="remember">
                                         {{ __('Recordarme') }}
                                     </label>
                         </div>
                         <br>
                  <div class="row">
-                     <div class="col">
+                     <div class="col-md-9">
                         <sub class="float-left mt-1">
                              @if (Route::has('password.request'))
                                 <a href="{{ route('password.request') }}">

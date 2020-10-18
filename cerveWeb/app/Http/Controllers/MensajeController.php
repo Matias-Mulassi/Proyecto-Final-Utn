@@ -120,8 +120,8 @@ class MensajeController extends Controller
 
     public function showAllNotificaciones()
     {
-        $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
-        $mensajes = Mensaje::all()->where('procesado',false);
+        $cervezasCerveWeb = Cerveza::where('deleted_at',null)->get();
+        $mensajes = Mensaje::where('procesado',false)->get();
         $cervezas=array();
         foreach($mensajes as $mensaje)
         {

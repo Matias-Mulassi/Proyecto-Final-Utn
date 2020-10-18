@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return redirect('catalogoCervezas');
+    return redirect('home');
 });
 
 Route::get('/main', function () {
@@ -27,8 +27,14 @@ Auth::routes();
 
 Route::get('/home', function()
 {
-	switch (Auth::user()->id_tipo_usuario)
+	if(Auth::guest())
 	{
+		return redirect('catalogoCervezas');
+	}
+	else
+	{
+		switch (Auth::user()->id_tipo_usuario)
+		{
 			case 1:
 				if(isset(Auth::user()->deleted_at))
 				{
@@ -50,9 +56,11 @@ Route::get('/home', function()
 			    return view('Operador.homeOperador');
 				break;		
 			
-	}   
+		}   
  
-})->name('home');
+
+	}})->name('home');
+	
 
 
 /*
