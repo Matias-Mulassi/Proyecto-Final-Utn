@@ -229,6 +229,12 @@
                             <a href="{{route('mostrarRemito',$pedido->id)}}" class="btn btn-outline-warning">
                                 Ver Remito
                             </a>
+                            <a href="{{route('mostrarFacturamail',$pedido)}}" class="btn btn-outline-secondary">
+                                Factura Mail
+                            </a>
+                            <a href="{{route('enviarFactura',$pedido)}}" class="btn btn-outline-info">
+                                Enviar Factura
+                            </a>
                             
                             
                             </center>
@@ -431,6 +437,7 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
               <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-3">Despachar Camión <i class="fa fa-truck"></i></a>
               @endif
               <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
+              <a href="{{route('enviarFacturas')}}" class="btn btn-warning  btn-lg float-left mt-3"> Enviar Facturas</a>
              
             </p>
 

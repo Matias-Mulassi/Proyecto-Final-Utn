@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\PDFController;
 use Illuminate\Http\Request;
 use App\User;
 use App\Pedido;
@@ -598,12 +599,15 @@ class PedidoController extends Controller
         }
         
         $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        $pdfController= new PDFController();
+        $pdfController->envioFacturas();
         foreach($pedidos as $pedido)
         {
             $pedido->estado='entregado';
             $pedido->update();
         }
-        return redirect('home')->with('message','Pedidos despachados con exito');
+
+        return redirect('home')->with('message','Pedidos despachados y facturas enviados con exito');
     }
 
 

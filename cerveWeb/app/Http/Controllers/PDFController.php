@@ -11,6 +11,9 @@ use App\ProductoCerveza;
 use PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageReceived;
+use App\Mail\BillReceived;
+use Carbon\Carbon;
+
 
 class PDFController extends Controller
 {
@@ -174,5 +177,73 @@ class PDFController extends Controller
 
     }
 
+    public function envioFactura(Pedido $pedido)
+    {   set_time_limit (500);
 
+        
+      
+            switch ($pedido->usuario->condicionIVA) 
+            {
+                case "Responsable Inscripto":
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaAmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
+                    break;
+                default:
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaBmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
+                    break;
+
+            }
+        $message = 'Facturas enviada a '.$pedido->usuario->razonSocial;
+        return \Redirect::route('home')->with('message', $message);
+    }
+    public function envioFacturas()
+    {   set_time_limit (500);
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+
+        foreach($pedidos as $pedido)
+        {
+            switch ($pedido->usuario->condicionIVA) 
+            {
+                case "Responsable Inscripto":
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaAmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
+                    break;
+                default:
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaBmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
+                    break;
+
+            }
+        }
+    
+        $message = 'Todas las facturas fueron enviadas a sus respectivos clientes ';
+        return \Redirect::route('home')->with('message', $message);
+    }
+
+
+    public function mostrarFactura(Pedido $pedido)
+    {
+        switch ($pedido->usuario->condicionIVA) 
+            {
+                case "Responsable Inscripto":
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaAmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    return $factura->stream();
+     
+                    break;
+                default:
+                    $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
+                    $factura =   PDF :: loadView ('Usuario.facturaBmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    return $factura->stream();
+                   
+                    break;
+
+            }
+        
+    }
 }

@@ -233,6 +233,14 @@ Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('
 Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
 Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');
 
+//ENVIO FACTURAS VIA MAIL
+Route::get('/enviarFactura/{pedido}','PDFController@envioFactura' )->name('enviarFactura');
+Route::get('/enviarFacturas','PDFController@envioFacturas' )->name('enviarFacturas');
+
+Route::get('/mostrarFacturamail/{pedido}','PDFController@mostrarFactura' )->name('mostrarFacturamail');
+
+
+
 
 
 

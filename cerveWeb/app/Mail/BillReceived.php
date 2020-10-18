@@ -6,25 +6,23 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Pedido;
 
-class MessageReceived extends Mailable
+class BillReceived extends Mailable
 {
-    
-    
     use Queueable, SerializesModels;
-    public $subject= 'Abastecimiento CerveWeb S.A';
+    public $subject= 'Entrega del pedido CerveWeb S.A';
     public $pdf;
-    public $proveedor;
-
+    public $pedido;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($pdf,$proveedor)
+    public function __construct($pdf,$idPedido)
     {
         $this->pdf=$pdf;
-        $this->proveedor=$proveedor;
+        $this->pedido=Pedido::find($idPedido);
     }
 
     /**
@@ -34,6 +32,6 @@ class MessageReceived extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.message-received',compact('proveedor'))->attachData($this->pdf, 'OrdenCompra.pdf');
+        return $this->view('emails.bill-received',compact('pedido'))->attachData($this->pdf, 'FacturaPedido.pdf');
     }
 }
