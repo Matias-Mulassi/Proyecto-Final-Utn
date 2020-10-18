@@ -58,7 +58,11 @@
                         @endif
                     <hr>
                     <p>
+                        
                         <a href="{{route('abmlProveedores')}}" class="btn btn-warning"><i class="fa fa-chevron-circle-left"></i> Volver</a>
+                        @if(count($proveedor->productos_cervezas)>0)
+                        <a href="{{route('cambioprecioProveedor',$proveedor->id)}}" class="btn btn-danger"> Aumentar Precios</a>
+                        @endif
                     </p>
                     @if(session('success'))
                     <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
@@ -107,5 +111,5 @@
                 </div>
             </div>
             <!-- -->  
-         @endforeach                                                
+         @endforeach          
 @endsection

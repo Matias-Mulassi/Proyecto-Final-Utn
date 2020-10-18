@@ -118,6 +118,10 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/deleteCervezaProveedor/{idProveedor}/{idCerveza}','CervezaProveedorController@destroy' )->name('deleteCervezaProveedor');
 	
 	
+	//PORCENTAJE PRECIOS
+
+	Route::get('/cambioprecioProveedor/{idProveedor}','CervezaProveedorController@cambioPreciosProveedor' )->name('cambioprecioProveedor');
+	Route::post('/updateprecioProveedor','CervezaProveedorController@updatePreciosProveedor' )->name('updateprecioProveedor');
 
 	//Administración de pedidos
 
@@ -238,6 +242,8 @@ Route::get('/enviarFactura/{pedido}','PDFController@envioFactura' )->name('envia
 Route::get('/enviarFacturas','PDFController@envioFacturas' )->name('enviarFacturas');
 
 Route::get('/mostrarFacturamail/{pedido}','PDFController@mostrarFactura' )->name('mostrarFacturamail');
+
+
 
 
 

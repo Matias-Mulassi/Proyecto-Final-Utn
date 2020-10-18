@@ -27,7 +27,7 @@
                         <tr>
                             <th>Imagen</th>
                             <th>Producto</th>
-                            <th>Precio</th>
+                            <th>Precio final x lt</th>
                             <th>Cantidad en Litros</th>
                             <th>Subtotal</th>
                             <th>Quitar</th>

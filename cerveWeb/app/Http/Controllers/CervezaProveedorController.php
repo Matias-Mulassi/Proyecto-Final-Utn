@@ -191,4 +191,60 @@ class CervezaProveedorController extends Controller
           return back()->with('error','Cerveza no encontrada.');
         }
     }
+
+    public function cambioPreciosProveedor($idProveedor)
+    {
+        $proveedor = Proveedor::find($idProveedor);
+        
+
+        if(isset($proveedor))
+        {
+            return view('Administrador.cambioPorcentaje',compact('proveedor'));  
+        }
+        else
+        {
+          return back()->with('error','Error al intentar cambiar precio de cervezas.');
+        }    
+        
+    }
+
+
+    public function updatePreciosProveedor(Request $request)
+    {
+        $rules = [
+            
+            'porcentaje' => ['required', 'numeric','min:1','max:200'],
+            
+           ];   
+
+        $messages = [ 
+        'porcentaje.required'=>'Complete el campo requerido.',
+        'porcentaje.numeric'=>'El porcentaje debe ser numerico.',
+        'porcentaje.min'=>'El porcentaje debe ser positivo.',
+        'porcentaje.max'=>'El porcentaje de aumento no debe ser superior a 200%.',
+       
+        ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+
+        if($validacion)
+        {
+            $proveedor = Proveedor::find($request['idProveedor']);
+            if(isset($proveedor))
+            {
+                foreach($proveedor->productos_cervezas as $cervezaProveedor)
+                {
+                   
+                    $proveedor->productos_cervezas()->updateExistingPivot($cervezaProveedor->id, ['costo' => number_format(($cervezaProveedor->pivot->costo + $cervezaProveedor->pivot->costo* ($request['porcentaje']/100)),1)]);
+                    
+                 
+                }
+                return redirect()->route('abmlCervezasProveedores',$proveedor->id)->with('success','Precios actualizados con exito.');
+            }
+            else
+            {           
+                return redirect()->route('abmlCervezasProveedores',$request['idProveedor'])->with('error','Error al intentar cambiar precios.'); 
+            }
+        }
+    }
 }
