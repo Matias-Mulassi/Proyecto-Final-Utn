@@ -7,6 +7,7 @@ use App\Mensaje;
 use App\Proveedor;
 use App\Cerveza;
 use App\ProductoCerveza;
+use App\Http\Controllers\CervezaController;
 
 class MensajeController extends Controller
 {
@@ -103,8 +104,9 @@ class MensajeController extends Controller
 
     static function getMejorProveedor(Cerveza $cerveza)
     {
+        $cervezaController = new CervezaController();
         $cervezaProveedor = ProductoCerveza::where('deleted_at',null)->where('nombre','=',$cerveza->nombre)->get()->first();
-        $litroMasBarato=$cerveza->precio;
+        $litroMasBarato=$cervezaController->getUltimoPrecio($cerveza->id);
         $mejorProveedor=null;
         foreach($cervezaProveedor->proveedores as $proveedor)
         {

@@ -10,7 +10,7 @@
 
         <h2 style="color:goldenrod;">Bienvenido(a) {{Auth::user()->nombre}} al Panel de Operaciones diarias de la tienda Online</h2>
         
-       
+    
         <div class="row mt-5">
 
             <div class="col-md-6">
@@ -20,16 +20,8 @@
                     <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning btn-block btn-home-admin">ENTREGAS PROXIMAS</a>
                 </div>
             </div>
-
-            <div class="col-md-6">
-                <div class="panel">
-
-                    <img class="mb-2" src="https://i.ibb.co/cXbm1Zs/logo-afip.jpg" alt="logo-afip" width="60" height="60">
-                    <a href="http://www.afip.gob.ar/sitio/externos/default.asp" target="_blank" class="btn btn-warning btn-block btn-home-admin">GENERAR FACTURA AFIP</a>
-                </div>
-            </div>
-
         </div>
+    
     </div>
     
 

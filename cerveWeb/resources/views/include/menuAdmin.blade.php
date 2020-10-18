@@ -87,6 +87,8 @@
                                                    <a class="dropdown-item" href="{{ route('abmlCategorias') }}">Categorias</a>
                                                    <a class="dropdown-item" href="{{ route('abmlProveedores') }}">Proveedores</a>
                                                    <a class="dropdown-item" href="{{ route('blPedidos') }}">Pedidos</a>
+                                                   <a class="dropdown-item" href="{{ route('infoStock') }}">Stock</a>
+                                                   <a class="dropdown-item" href="{{ route('informes') }}">Informes</a>
                                                </span>
                                                 @break
                                                 

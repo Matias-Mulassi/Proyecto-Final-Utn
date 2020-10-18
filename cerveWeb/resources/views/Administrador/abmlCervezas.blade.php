@@ -45,9 +45,8 @@ $cervezaController = new CervezaController();
                                             @csrf
                                             <input size=40 style="float:left; width:100px" class="form-control @error('precio') is-invalid @enderror text-center"
                                                 type="number"
-                                                step="1"
+                                                step="any"
                                                 name="precio"
-                                                pattern="\d*"
                                                 value="{{$cervezaController->getUltimoPrecio($cerveza->id)}}"
                                                 id="cerveza_{{$cerveza->id}}"
                                                 >                                                
