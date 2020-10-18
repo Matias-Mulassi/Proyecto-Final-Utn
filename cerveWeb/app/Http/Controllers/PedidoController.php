@@ -760,4 +760,17 @@ class PedidoController extends Controller
         $pedidos = Pedido::where('id_usuario','=',$idCliente)->where('deleted_at',null)->where('estado','=','entregado')->orderBy('fecha_entrega', 'ASC')->get();
         return $pedidos;
     }
+
+    public function imprimirFacturas()
+    {
+        $fechaActual= Carbon::now()->format('d-m-Y');
+        $fechaPago= Carbon::now()->addDays(15)->format('d-m-Y');
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        return view('Operador.facturas',compact('pedidos','fechaActual','fechaPago'));
+    }
+    public function imprimirRemitos()
+    {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        return view('Operador.remitos',compact('pedidos'));
+    }
 }

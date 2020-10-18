@@ -243,6 +243,8 @@ Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mos
 Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
 Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
 Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
+Route::get('/imprimirFacturas','PedidoController@imprimirFacturas' )->name('imprimirFacturas');
+Route::get('/imprimirRemitos','PedidoController@imprimirRemitos' )->name('imprimirRemitos');
 
 
 //CAMBIO DE CONTRASEÑAS

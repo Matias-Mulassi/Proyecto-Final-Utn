@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\MessageReceived;
 use App\Mail\BillReceived;
 use Carbon\Carbon;
+use App\Http\Controllers\CervezaController;
 
 
 class PDFController extends Controller
@@ -162,8 +163,9 @@ class PDFController extends Controller
     
     static function getMejorProveedor(Cerveza $cerveza)
     {
+        $cervezaController = new CervezaController();
         $cervezaProveedor = ProductoCerveza::where('deleted_at',null)->where('nombre','=',$cerveza->nombre)->get()->first();
-        $litroMasBarato=$cerveza->precio;
+        $litroMasBarato=$cervezaController->getUltimoPrecio($cerveza->id);
         $mejorProveedor=null;
         foreach($cervezaProveedor->proveedores as $proveedor)
         {

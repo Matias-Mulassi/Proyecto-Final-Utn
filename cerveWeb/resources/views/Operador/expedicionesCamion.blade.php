@@ -427,12 +427,16 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
 
             <p>
  
+              @if(count($pedidos)>0)
               
+              <a href="{{route('imprimirFacturas')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Facturas</a>
+              <a href="{{route('imprimirRemitos')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Remitos</a>
+              @endif
               @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
               <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-3">Despachar Camión <i class="fa fa-truck"></i></a>
               @endif
               <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
-             
+              
             </p>
 
 

@@ -125,3 +125,10 @@ background-color: #F5F5F5; /*background-scroll color*/
     width:600px;
     z-index: -1;
   }
+
+@media print 
+    {
+        .new-page {
+        page-break-before: always;
+        }
+    }
