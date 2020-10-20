@@ -39,13 +39,15 @@
                 </div>
             </div>
             <div class="row" style="border: 1px solid black;">
-                <div class="col-md-4 text-left" style="border-left: 1px solid black;">
+                <div class="col-md-6 text-left" style="border-left: 1px solid black;">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Periodo Facturado Desde: </strong>{{$fechaActual}}</h5>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-6 text-center">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Hasta: </strong>{{$fechaActual}}</h5>
                 </div>
-                <div class="col-md-5 text-right" style="border-right: 1px solid black;">
+            </div>
+            <div class="row" style="border: 1px solid black;">
+                <div class="col-md-12 text-left" style="border-right: 1px solid black;">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif; margin-right:30px;">
                         <strong> Fecha de Vto. para el pago: </strong> {{$fechaPago}}
                     </h5>

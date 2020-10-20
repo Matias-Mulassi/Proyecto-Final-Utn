@@ -30,9 +30,9 @@
 
                                 <tr>
                                     <td style="border: 1px solid black;"><strong>FECHA</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->day}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->month}}</strong></td>
-                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::now()->year}}</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::parse($pedido->fecha_facturacion)->day}}</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::parse($pedido->fecha_facturacion)->month}}</strong></td>
+                                    <td class="text-center" style="border: 1px solid black;"><strong>{{Carbon::parse($pedido->fecha_facturacion)->year}}</strong></td>
                                 </tr>
                                 <tr>
                                     <td colspan=4>

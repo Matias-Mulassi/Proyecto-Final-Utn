@@ -312,6 +312,7 @@ class PedidoController extends Controller
                 {
                     $this->actualizarStock($pedido);
                     $pedido->estado = "en expedicion";
+                    $pedido->fecha_facturacion=Carbon::now()->format('Y-m-d H:i:s');
                     $pedido->update();
                 }
                 
@@ -462,6 +463,7 @@ class PedidoController extends Controller
                 }
             }
             $pedido->estado = "en expedicion";
+            $pedido->fecha_facturacion=Carbon::now()->format('Y-m-d H:i:s');
             $pedido->update(); 
             return redirect()->route('expedicionCamion');
 
@@ -600,7 +602,7 @@ class PedidoController extends Controller
             $pedido->estado='entregado';
             $pedido->update();
         }
-        return view('Operador.logisticaCamion');
+        return redirect('home')->with('message','Pedidos despachados con exito');
     }
 
 

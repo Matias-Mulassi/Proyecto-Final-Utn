@@ -29,7 +29,7 @@
                         <img style="border: 1px solid black; float:left; margin-left:20px; margin-top:10px;" src="{{ asset('imagenes/facturaA.png') }}"> <br> <br>
                         <p style="margin-top:30px;">
                             <strong> Nro.Comprobante=0001-000000075</strong> <br>
-                            <strong>Fecha de Emisión: {{$fechaActual}} </strong> <br> <br>
+                            <strong>Fecha de Emisión: {{$pedido->fecha_facturacion}} </strong> <br> <br>
                             <strong>CUIT :</strong> 30-76545678-7 <br>
                             <strong>Ingresos Brutos:</strong> 30-76545678-7 <br>
                             <strong>Fecha de inicio de actividades:</strong> 05/09/2020
@@ -39,13 +39,15 @@
                 </div>
             </div>
             <div class="row" style="border: 1px solid black;">
-                <div class="col-md-4 text-left" style="border-left: 1px solid black;">
+                <div class="col-md-6 text-left" style="border-left: 1px solid black;">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Periodo Facturado Desde: </strong>{{$fechaActual}}</h5>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-6 text-center">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Hasta: </strong>{{$fechaActual}}</h5>
                 </div>
-                <div class="col-md-5 text-right" style="border-right: 1px solid black;">
+            </div>
+            <div class="row" style="border: 1px solid black;">
+                <div class="col-md-12 text-left" style="border-right: 1px solid black;">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif; margin-right:30px;">
                         <strong> Fecha de Vto. para el pago: </strong> {{$fechaPago}}
                     </h5>

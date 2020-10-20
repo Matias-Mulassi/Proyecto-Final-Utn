@@ -20,7 +20,7 @@
                                             <th class="sticky-top bg-light" scope="col">Nro Pedido</th>
                                             <th class="sticky-top bg-light" scope="col">Estado</th>
                                             <th class="sticky-top bg-light" scope="col">Fecha de entrega</th>
-                                            <th colspan="3" class="sticky-top bg-light" scope="col"></th>
+                                            <th colspan="2" class="sticky-top bg-light" scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -31,12 +31,11 @@
                                             <td>{{$pedido->fecha_entrega}}</td>
                                             <td scope="col">
                                                 <center>
+                                                    @if($pedido->estado == "pendiente")
                                                     <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#_{{$pedido->id}}">
                                                     Eliminar
-                                                    </button> 
-                                                    <a href="#" class="btn btn-outline-primary">
-                                                    Editar
-                                                    </a>
+                                                    </button>
+                                                    @endif
                                                     <button type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#__{{$pedido->id}}">
                                                     Ver Más
                                                     </button>
