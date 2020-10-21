@@ -167,3 +167,11 @@ ul.redes li a{
 
     z-index: 1;
 }
+
+.logeo-card
+{
+    background-image:url("../imagenes/login.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}

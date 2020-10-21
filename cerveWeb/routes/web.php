@@ -217,3 +217,8 @@ Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostr
 Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
 Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
 
+
+//CAMBIO DE CONTRASEÑAS
+
+Route::get('/cambiarContraseña','UserController@editarContraseña' )->name('cambiarContraseña');
+Route::post('/actualizarContraseña','UserController@actualizarContraseña' )->name('actualizarContraseña');

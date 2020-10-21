@@ -2,7 +2,7 @@
               @if (Auth::check())
               <a class="navbar-brand"  href="{{ route('home') }}"><!--{{ config('app.name', 'CerveWeb') }}-->CerveWeb</a>
               @else
-              <a class="navbar-brand"  href="{{ 'main' }}"><!--{{ config('app.name', 'CerveWeb') }}-->CerveWeb</a>
+              <a class="navbar-brand"  href="{{ '/' }}"><!--{{ config('app.name', 'CerveWeb') }}-->CerveWeb</a>
               @endif
                  <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" >
                         <span class="navbar-toggler-icon"></span>
@@ -82,7 +82,7 @@
                                            
                                         @endswitch
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="">Cambiar Contraseña</a>
+                                        <a class="dropdown-item" href="{{route('cambiarContraseña')}}">Cambiar Contraseña</a>
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">

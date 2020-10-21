@@ -261,4 +261,68 @@ class UserController extends Controller
     }
 
 
+    public function editarContraseña()
+    {
+      switch (Auth::user()->id_tipo_usuario) 
+      {
+        case 1:
+            return view('auth.passwords.change');
+            break;
+        case 2:
+            return view('auth.passwords.changeAdmin');
+            break;
+        case 3:
+            return view('auth.passwords.changeOperator');
+            break;
+      }
+      
+      
+    }
+
+    public function actualizarContraseña(Request $request)
+    {
+      $rules = [
+        'password' => ['required', 'string', 'min:8', 'confirmed'],
+      ];   
+
+      $messages = [ 
+              'password.min'=>'La contraseña debe tener almenos 8 caracteres',
+              'password.required'=>'Complete el campo requerido',
+              'password.confirmed'=>'Las contraseñas no coinciden',
+            ];
+
+    
+      $validacion = $this->validate($request,$rules,$messages);
+
+      if($validacion)
+      {
+        $us = User::find(Auth::id());
+        if($us)
+        {
+          $us->password = Hash::make($request['password']);
+          $us->update();
+          switch (Auth::user()->id_tipo_usuario) 
+          {
+            case 1:
+                return redirect('catalogoCervezas')->with('message','Contraseña Cambiada con exito');
+                break;
+            case 2:
+                return redirect('home')->with('message','Contraseña Cambiada con exito');
+                break;
+            case 3:
+                return redirect('home')->with('message','Contraseña Cambiada con exito');
+                break;
+          }
+        }
+        else
+        {
+          return back()->with('messageError','Usuario no encontrado.');
+        }
+          
+         
+          
+          
+          
+      }
+    }
 }
