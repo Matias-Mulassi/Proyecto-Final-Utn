@@ -2,6 +2,7 @@
 
 @section('content')
 
+
 <center>
        <div class="col-md-12 mt-4">
        @php
@@ -31,8 +32,7 @@
                                         <tbody>
                                     
                                         
-                                
-                                           @foreach($pedidos as $pedido)    
+                                                
                                         <tr>
                                             <th scope="row">{{$pedido->id}}</th>
                                             <td>{{Carbon::parse($pedido->fecha_entrega)->format('d-m-Y')}}</td>
@@ -46,9 +46,6 @@
                                                         Remito
                                                     </a>
                                                     @endif
-                                                    <a href="#" class="btn btn-outline-success">
-                                                        Pagar
-                                                    </a>
 
                                                 </center>                                  
                                             </td>
