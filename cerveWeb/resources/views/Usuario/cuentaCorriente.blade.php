@@ -30,7 +30,7 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                    
+                                        @foreach($pedidos as $pedido)
                                         
                                                 
                                         <tr>
@@ -46,7 +46,9 @@
                                                         Remito
                                                     </a>
                                                     @endif
-
+                                                    <a href="#" class="btn btn-outline-success">
+                                                        Pagar
+                                                    </a>
                                                 </center>                                  
                                             </td>
                                         </tr>
