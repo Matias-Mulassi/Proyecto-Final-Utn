@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Rules\FormatoCuit;
 
 class UserController extends Controller
 {
@@ -60,19 +61,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+      if(!\Session::has('cuitcuil')) \Session::put('cuitcuil',$request['cuitcuil']);
+      
+      
+ 
         $rules = [
-            'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
-            'apellido' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/' , 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'id_tipo_usuario' => ['required','integer'],
-            'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/', 'min:13','max:13'],
-            'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
-            'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
-            'direcciónEntrega' => ['nullable','string'],
-            'prioridad' => ['nullable','integer'],
-            'telefono' => ['nullable','numeric'],
-          ];   
+          'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
+          'apellido' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/' , 'max:255'],
+          'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+          'password' => ['required', 'string', 'min:8', 'confirmed'],
+          'id_tipo_usuario' => ['required','integer'],
+          'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/',new FormatoCuit(), 'min:13','max:13'],
+          'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
+          'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
+          'direcciónEntrega' => ['nullable','string'],
+          'prioridad' => ['nullable','integer'],
+          'telefono' => ['nullable','numeric'],
+        ];   
 
         $messages = [ 'nombre.regex'=>'Formato de nombre incorrecto',
                 'nombre.required'=>'Complete el campo requerido',
@@ -103,24 +108,26 @@ class UserController extends Controller
 
               ];          
         $validacion = $this->validate($request,$rules,$messages);
- 
+
         if($validacion)
         {
-            $us = new User();
-            $us->nombre = $request['nombre']; 
-            $us->apellido = $request['apellido'];
-            $us->email = $request['email'];
-            $us->password = Hash::make($request['password']);
-            $us->id_tipo_usuario= $request['id_tipo_usuario'];
-            $us->razonSocial= $request['razonSocial'];
-            $us->condicionIVA= $request['condicionIVA'];
-            $us->direcciónEntrega= $request['direcciónEntrega'];
-            $us->prioridad= $request['prioridad'];
-            $us->telefono= $request['telefono'];
-            $us->cuitcuil= $request['cuitcuil'];
-            $us->save(); 
-            return redirect('abmlUsuarios')->with('success','Usuario registrado con éxito');
+          $us = new User();
+          $us->nombre = $request['nombre']; 
+          $us->apellido = $request['apellido'];
+          $us->email = $request['email'];
+          $us->password = Hash::make($request['password']);
+          $us->id_tipo_usuario= $request['id_tipo_usuario'];
+          $us->razonSocial= $request['razonSocial'];
+          $us->condicionIVA= $request['condicionIVA'];
+          $us->direcciónEntrega= $request['direcciónEntrega'];
+          $us->prioridad= $request['prioridad'];
+          $us->telefono= $request['telefono'];
+          $us->cuitcuil= $request['cuitcuil'];
+          $us->save(); 
+          return redirect('abmlUsuarios')->with('success','Usuario registrado con éxito');
         }     
+
+        
     }
 
     /**
@@ -165,6 +172,7 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+      if(!\Session::has('cuitcuil')) \Session::put('cuitcuil',$request['cuitcuil']);
       $usuarios = User::where('id','=',$request['id'])->where('email','=',$request['email'])->get();
       if(count($usuarios)>0)
       {
@@ -179,7 +187,7 @@ class UserController extends Controller
             'apellido' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/' , 'max:255'],
             'email' => $ruleMail,
             'id_tipo_usuario' => ['required','integer'],
-            'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/'],
+            'cuitcuil' => ['nullable','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/',new FormatoCuit(),'min:13','max:13'],
             'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
             'direcciónEntrega' => ['nullable','string'],

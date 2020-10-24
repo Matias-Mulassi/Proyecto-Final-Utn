@@ -68,7 +68,7 @@
                     </tbody>
                 </table><hr>
                 <h3><div class="alert alert-success" role="alert">
-                    Total: ${{number_format($total,2)}}
+                    Total a pagar: ${{number_format($total,2)}}
                 </div>
                 </h3>
             </div>

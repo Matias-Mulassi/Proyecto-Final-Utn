@@ -105,9 +105,12 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Condicion IVA [Solo Usuarios]') }}</label>
-                             <select id="condicionIVA" name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror" value="{{$us->condicionIVA }}" autocomplete="" placeholder="">
-                             
-                             <option value="" selected disabled hidden> {{$us->condicionIVA}}</option>
+                             <select id="condicionIVA" style="padding:5px;"name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror" value="{{$us->condicionIVA }}" autocomplete="" placeholder="">
+                                @if(old('condicionIVA'))
+                                    <option value="{{old('condicionIVA') }}" selected hidden> {{old('condicionIVA')}}</option>
+                                @else
+                                 <option value="" selected disabled hidden> {{$us->condicionIVA}}</option>
+                                @endif
                              	 <option value="Responsable Inscripto">Responsable Inscripto</option>
                                  <option value="Monotributista">Monotributista</option>
                                  <option value="Exento">Exento</option>
@@ -124,7 +127,25 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Prioridad [Solo Usuarios]') }}</label>
-                             <select id="prioridad" name="prioridad" class="form-control @error('prioridad') is-invalid @enderror" value="{{$us->prioridad }}" autocomplete="" placeholder="">
+                             <select id="prioridad" style="padding:5px;" name="prioridad" class="form-control @error('prioridad') is-invalid @enderror" autocomplete="" placeholder="">
+                                @if(old('prioridad'))
+                                    @switch(old('prioridad'))
+                                        @case(1)
+                                            <option value="1" selected hidden> Baja</option>
+                                            @break
+
+                                        @case(2)
+                                            <option value="2" selected hidden> Mediana</option>
+                                            @break
+
+                                        @case(3)
+                                            <option value="3" selected hidden> Alta</option>
+                                            @break
+                                    @endswitch
+                                    <option value="1">Baja</option>
+                                    <option value="2">Mediana</option>
+                                    <option value="3">Alta</option>
+                                @else
                                  @switch($us->prioridad)
                                     @case(1)
                                     <option value="" selected disabled hidden>Baja</option>
@@ -155,7 +176,7 @@
                                      @break
                                  @endswitch
                                  
-            
+                                @endif
                              </select>
                              @error('prioridad')
                                     <span class="invalid-feedback" role="alert">
@@ -167,14 +188,33 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Tipo Usuario') }}</label>
-                             <select id="id_tipo_usuario" name="id_tipo_usuario" class="form-control @error('id_tipo_usuario') is-invalid @enderror" placeholder="Usuario" required>
+                             <select id="id_tipo_usuario" style="padding:5px;" name="id_tipo_usuario" class="form-control @error('id_tipo_usuario') is-invalid @enderror" placeholder="Usuario" required>
+                                @if(old('id_tipo_usuario'))
+                                    @switch(old('id_tipo_usuario'))
+                                        @case(1)
+                                            <option value="1" selected hidden> Usuario</option>
+                                            @break
+
+                                        @case(2)
+                                            <option value="2" selected hidden> Administrador</option>
+                                            @break
+
+                                        @default
+                                            <option value="3" selected hidden> Operador</option>
+                                            @break
+                                    @endswitch
+                                    @foreach($tiposUsuarios as $tipoUsuario)
+                             	        <option value="{{$tipoUsuario->id}}">{{$tipoUsuario->descripcion}}</option>
+                             	    @endforeach
+                                @else
                                 @foreach($tiposUsuarios as $tipoUsuario)
                                     @if($tipoUsuario->id == $us->id_tipo_usuario)
                                     <option selected value="{{$tipoUsuario->id}}">{{$tipoUsuario->descripcion}}</option>
                                     @else
                                     <option value="{{$tipoUsuario->id}}">{{$tipoUsuario->descripcion}}</option>
-                                    @endif                             	
+                                    @endif                            	
                                 @endforeach
+                                @endif
                              </select>
 
                                 @error('id_tipo_usuario')

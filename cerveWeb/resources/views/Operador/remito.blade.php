@@ -24,7 +24,7 @@
                         <div class="col text-left">
                         <h3 style="font-family: Arial, Helvetica, sans-serif; margin-top:20px;"><strong> REMITO: </strong></h3>
                         <p>
-                            <Strong>Fecha:</Strong> {{Carbon::now()->format('d-m-Y')}} <br>
+                            <Strong>Fecha:</Strong> {{Carbon::parse($pedido->fecha_facturacion)->format('d-m-Y')}} <br>
                             <Strong>CUIT :</Strong> 30-76545678-7<br>
                             <Strong>Ing. Brutos: </Strong>30-76545678-7 <br>
 
@@ -89,7 +89,7 @@
             </div>
             <div class="row" style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif;">
                 <div class="col">
-                <p class="p-2" style="margin-left: 20px;"><strong>Fecha de impresión:   </strong>  {{Carbon::now()->format('d-m-Y')}}</p>
+                <p class="p-2" style="margin-left: 20px;"><strong>Fecha de entrega:   </strong>  {{Carbon::parse($pedido->fecha_entrega)->format('d-m-Y')}}</p>
                 </div>
             </div>
             

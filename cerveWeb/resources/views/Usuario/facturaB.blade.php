@@ -120,7 +120,7 @@
                                         <td scope="row">{{$item->cantidad}} lts</th>
                                         <td class="text-center">Cerveza {{$item->cerveza->nombre}}</td>
                                         <td>{{$item->cerveza->precio}}</td>
-                                        <td class="text-right">{{number_format($item->cerveza->precio * $item->cantidad + $item->cerveza->precio * $item->cantidad *0.21,2)}}</td>
+                                        <td class="text-right">{{number_format($item->cerveza->precio * $item->cantidad,2)}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -141,14 +141,8 @@
                                     @foreach($pedido->itemsPedidos as $item)
                                         <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}}</p>
                                     @endforeach
-                                <p hidden>{{$totalIVA=0}}</p>
-                                @foreach($pedido->itemsPedidos as $item)
-                                    <p hidden>
-                                        {{$totalIVA+=$item->cantidad * $item->cerveza->precio *0.21}}
-                                    </p>
-                                @endforeach
                                 
-                                <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>{{number_format($total + $totalIVA,2)}} </strong></div></td>
+                                <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>{{number_format($total,2)}} </strong></div></td>
                             </tr>
 
                         </tbody>

@@ -131,8 +131,10 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Condicion IVA') }}</label>
-                             <select id="condicionIVA" name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror" placeholder="Responsable Inscripto">
-                             	
+                             <select id="condicionIVA" style="padding:5px;" name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror" placeholder="Responsable Inscripto">
+                                @if(old('condicionIVA'))
+                                <option value="{{old('condicionIVA') }}" selected hidden> {{old('condicionIVA')}}</option>
+                                @endif
                              	 <option value="Responsable Inscripto">Responsable Inscripto</option>
                                  <option value="Monotributista">Monotributista</option>
                                  <option value="Exento">Exento</option>

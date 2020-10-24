@@ -68,7 +68,7 @@
                                 <label for="Telefono">
                                     {{ __('Telefono [Solo Usuarios]') }}
                                 </label>
-                                <input type="tel" id="telefono" class="form-control @error('telefono') is-invalid @enderror" name="telefono" autofocus placeholder="30-71031609-9" value="{{ old('telefono') }}" autocomplete="telefono"><br>
+                                <input type="tel" id="telefono" class="form-control @error('telefono') is-invalid @enderror" name="telefono" autofocus placeholder="Telefono" value="{{ old('telefono') }}" autocomplete="telefono"><br>
                                 <small>Formato: 341-71031609</small>
                 
                                     @error('telefono')
@@ -106,7 +106,7 @@
                             <label for="validationDefault01">
                                 {{ __('Contraseña') }}
                             </label>
-                            <input id="contraseña" type="password" class="form-control @error('password') is-invalid @enderror" name="password"   autocomplete="new-password" placeholder="Contraseña">
+                            <input id="contraseña" type="password" class="form-control @error('password') is-invalid @enderror" name="password"   autofocus autocomplete="password" placeholder="Contraseña">
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -117,7 +117,7 @@
                            <label for="validationDefault02">
                                 {{ __('Confirmar contraseña') }}
                            </label>
-                            <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation"  autocomplete="new-password" placeholder="Confirmar"> 
+                            <input id="password-confirm" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" autofocus   autocomplete="password_confirmation" placeholder="Confirmar"> 
                             @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -129,9 +129,12 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Condicion IVA [Solo Usuarios]') }}</label>
-                             <select id="condicionIVA" name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror" autocomplete="" placeholder="">
-                             
+                             <select id="condicionIVA" style="padding:5px;" name="condicionIVA" class="form-control @error('condicionIVA') is-invalid @enderror"  value="{{ old('condicionIVA') }}" autofocus autocomplete="condicionIVA" placeholder="">
+                             @if(old('condicionIVA'))
+                             <option value="{{old('condicionIVA') }}" selected hidden> {{old('condicionIVA')}}</option>
+                             @else
                              <option value="" selected disabled hidden> Selecciona una opción</option>
+                             @endif
                              	 <option value="Responsable Inscripto">Responsable Inscripto</option>
                                  <option value="Monotributista">Monotributista</option>
                                  <option value="Exento">Exento</option>
@@ -148,11 +151,28 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Prioridad [Solo Usuarios]') }}</label>
-                             <select id="prioridad" name="prioridad" class="form-control @error('prioridad') is-invalid @enderror" autocomplete="" placeholder="">
-                                 <option value="" selected disabled hidden> Selecciona una opción</option>
-                             	 <option value="1">Baja</option>
-                                 <option value="2">Mediana</option>
-                                 <option value="3">Alta</option>
+                             <select id="prioridad" style="padding:5px;" name="prioridad" class="form-control @error('prioridad') is-invalid @enderror" autofocus autocomplete="prioridad" placeholder="">
+                                @if(old('prioridad'))
+                                    @switch(old('prioridad'))
+                                        @case(1)
+                                            <option value="1" selected hidden> Baja</option>
+                                            @break
+
+                                        @case(2)
+                                            <option value="2" selected hidden> Mediana</option>
+                                            @break
+
+                                        case(3)
+                                            <option value="3" selected hidden> Alta</option>
+                                            @break
+                                    @endswitch
+                                
+                                @else
+                                <option value="" selected disabled hidden> Selecciona una opción</option>
+                                @endif
+                                <option value="1">Baja</option>
+                                <option value="2">Mediana</option>
+                                <option value="3">Alta</option>
                                  
             
                              </select>
@@ -166,8 +186,23 @@
                       <div class="form-row">
                         <div class="col text-left mt-2">
                            <label for="validationDefault03">{{ __('Tipo Usuario') }}</label>
-                             <select id="id_tipo_usuario" name="id_tipo_usuario" class="form-control @error('id_tipo_usuario') is-invalid @enderror" placeholder="Usuario" required>
-                             	@foreach($tiposUsuarios as $tipoUsuario)
+                             <select id="id_tipo_usuario" style="padding:5px;" name="id_tipo_usuario" class="form-control @error('id_tipo_usuario') is-invalid @enderror" value="{{ old('id_tipo_usuario') }}" autofocus autocomplete="id_tipo_usuario" placeholder="Usuario" required>
+                                @if(old('id_tipo_usuario'))
+                                        @switch(old('id_tipo_usuario'))
+                                            @case(1)
+                                                <option value="1" selected hidden> Usuario</option>
+                                                @break
+
+                                            @case(2)
+                                                <option value="2" selected hidden> Administrador</option>
+                                                @break
+
+                                            @default
+                                                <option value="3" selected hidden> Operador</option>
+                                                @break
+                                        @endswitch
+                                @endif
+                                 @foreach($tiposUsuarios as $tipoUsuario)
                              	 <option value="{{$tipoUsuario->id}}">{{$tipoUsuario->descripcion}}</option>
                              	@endforeach
                              </select>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Proveedor;
 use App\Cerveza;
+use App\Rules\FormatoCuit;
 
 class ProveedorController extends Controller
 {
@@ -37,9 +38,10 @@ class ProveedorController extends Controller
      */
     public function store(Request $request)
     {
+        if(!\Session::has('cuitcuil')) \Session::put('cuitcuil',$request['cuit']);
         $rules = [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'],
-            'cuit' => ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores'],
+            'cuit' => ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'],
             'razonSocial' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'],
             'telefono' => ['required','numeric'],
           ];
@@ -115,6 +117,7 @@ class ProveedorController extends Controller
      */
     public function update(Request $request)
     {
+        if(!\Session::has('cuitcuil')) \Session::put('cuitcuil',$request['cuit']);
         $proveedores = Proveedor::where('id','=',$request['id'])->where('email','=',$request['email'])->where('cuit','=',$request['cuit'])->where('razonSocial','=',$request['razonSocial'])->get();
         if(count($proveedores)>0)
         {
@@ -138,7 +141,7 @@ class ProveedorController extends Controller
                 if(count($proveedores)>0)
                 {
                     $ruleMail = [];
-                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores'];
+                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
                     $ruleRazonSocial = [];
                 }
                 else
@@ -156,7 +159,7 @@ class ProveedorController extends Controller
                         if(count($proveedores)>0)
                         {
                             $ruleMail = [];
-                            $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores'];
+                            $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
                             $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
                         }
                         else
@@ -174,13 +177,13 @@ class ProveedorController extends Controller
                                 if(count($proveedores)>0)
                                 {
                                     $ruleMail = ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'];
-                                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores'];
+                                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
                                     $ruleRazonSocial = [];
                                 }
                                 else
                                 {
                                     $ruleMail = ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'];
-                                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores'];
+                                    $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
                                     $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
                                 }
                             }

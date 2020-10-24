@@ -93,11 +93,11 @@
                                         <td class="text-left">{{$item->cerveza->nombre}}</td>
                                         <td>{{$item->cantidad}}</td>
                                         <td class="text-left">litros</td>
-                                        <td>{{$item->cerveza->precio}}</td>
+                                        <td>{{number_format($item->cerveza->precio /1.21,2)}}</td>
                                         <td>0.00</td>
-                                        <td>{{number_format($item->cerveza->precio * $item->cantidad,2)}}</td>
+                                        <td>{{number_format(($item->cerveza->precio /1.21) * $item->cantidad,2)}}</td>
                                         <td>21%</td>
-                                        <td>{{number_format(($item->cerveza->precio * $item->cantidad + $item->cerveza->precio * $item->cantidad *0.21),2)}}</td>
+                                        <td>{{number_format(($item->cerveza->precio * $item->cantidad),2)}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -162,9 +162,10 @@
                             @foreach($pedido->itemsPedidos as $item)
                                 <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}}</p>
                             @endforeach 
+                            <p hidden>{{$discriminado=$total/1.21}}</p>
                             <td><strong>Importe Neto Gravado : $</strong></td>
                             
-                            <td style="float:right;" class="text-right"><strong>{{number_format($total,2)}}</strong></td>
+                            <td style="float:right;" class="text-right"><strong>{{number_format($discriminado,2)}}</strong></td>
                         </tr>
                         <tr>
                             <td class="text-right"><strong>IVA 27%: $</strong></td>
@@ -174,13 +175,8 @@
                             <td class="text-right"><strong>IVA 21%: $</strong></td>
                             <td style="float:right">
                                 <p hidden>
-                                    {{$totalIVA=0}}
+                                    {{$totalIVA=$total-$discriminado}}
                                 </p>
-                                @foreach($pedido->itemsPedidos as $item)
-                                    <p hidden>
-                                        {{$totalIVA+=$item->cantidad * $item->cerveza->precio *0.21}}
-                                    </p>
-                                @endforeach
                                 <strong>{{number_format($totalIVA,2)}}</strong>
                             </td>
                         </tr>
@@ -206,7 +202,7 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Importe Total: $</strong></td>
-                            <td class="text-right" style="float:right"><strong><strong>{{$total + $totalIVA}}</strong></strong></td>
+                            <td class="text-right" style="float:right"><strong><strong>{{number_format($total,2)}}</strong></strong></td>
                         </tr>
                     </table>
                 </div>
