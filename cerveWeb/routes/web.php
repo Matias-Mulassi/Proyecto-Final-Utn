@@ -138,7 +138,9 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');
 	
-	
+	//INFOSTOCK
+
+	Route::get('/infoStock','CervezaController@infoStock' )->name('infoStock');
 
 });
 
@@ -230,3 +232,4 @@ Route::post('/actualizarContraseña','UserController@actualizarContraseña' )->n
 Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('cuentaCorriente');
 Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
 Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');
+

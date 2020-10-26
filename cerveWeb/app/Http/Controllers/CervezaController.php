@@ -243,6 +243,10 @@ class CervezaController extends Controller
 
 
 
-
+    public function infoStock()
+    {
+        $cervezas = Cerveza::all()->where('deleted_at',null);     
+        return view('Administrador.infoStock',compact('cervezas'));
+    }
 }
 

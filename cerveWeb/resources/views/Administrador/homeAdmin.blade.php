@@ -70,6 +70,18 @@
 
         </div>
 
+        <div class="row mt-5">
+
+            <div class="col-md-6">
+                <div class="panel">
+
+                    <img class="home" src="https://img.icons8.com/dusk/60/000000/move-stock.png"/>
+                    <a href="{{route('infoStock')}}" class="btn btn-warning btn-block btn-home-admin">STOCK</a>
+                </div>
+            </div>
+
+        </div>
+
 
         @if(session('success'))
             <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">

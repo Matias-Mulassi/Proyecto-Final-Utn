@@ -11,7 +11,7 @@
                        <label for="inputEmail" class="sr-only">
                             {{ __('E-Mail') }}
                        </label>
-                           <input type="email" id="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                           <input type="email" id="email" placeholder="Email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -20,8 +20,8 @@
                        <label for="inputPassword" class="sr-only">
                              {{ __('Contraseña') }}
                        </label>
-                       <input id="password" type="password" class="form-control @error('password') is-invalid @enderror mt-3 mb-3" name="password" required autocomplete="current-password" placeholder="Contraseña">
-                                @error('contraseña')
+                       <input id="password" type="password" class="form-control @error('password') is-invalid @enderror mt-3 mb-3" name="password" autocomplete="current-password" placeholder="Contraseña">
+                                @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
