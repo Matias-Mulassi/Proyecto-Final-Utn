@@ -34,7 +34,21 @@
                                             </td>
                                             <td>{{$cerveza->cantidadStock}}</td>
                                             <td>{{$cerveza->puntoPedido}}</td>
-                                            <td>{{$cerveza->loteOptimo}}</td>
+                                            <td>
+                                            <form method="POST" action="{{ route('updateloteOptimo',$cerveza->id) }}">
+                                            @csrf
+                                            <input 
+                                                type="number"
+                                                step="1"
+                                                name="cantidad"
+                                                pattern="\d*"
+                                                value="{{$cerveza->loteOptimo}}"
+                                                id="cerveza_{{$cerveza->id}}"
+                                                >
+
+                                                <button class="btn btn-warning btn-update-item"><i class="fa fa-refresh"></i></button> 
+                                                </form>
+                                            </td>
                                         </tr>
                                         @endforeach
                                         </tbody>
@@ -50,7 +64,21 @@
                 </div>
                 @endif              
                 <a href="{{route('home')}}" class="btn btn-warning btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Volver</a>
-                    
+                @if(session('success'))
+                    <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
+                          <strong>{{session('success')}}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                    </div>
+                    @elseif(session('error'))
+                    <div class=" col-md-6 float-left mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                          <strong>{{session('error')}}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                @endif    
             </div>        
         </center>                                     
 @endsection

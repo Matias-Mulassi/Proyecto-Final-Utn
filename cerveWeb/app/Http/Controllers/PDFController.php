@@ -220,9 +220,6 @@ class PDFController extends Controller
 
             }
         }
-    
-        $message = 'Todas las facturas fueron enviadas a sus respectivos clientes ';
-        return \Redirect::route('home')->with('message', $message);
     }
 
 

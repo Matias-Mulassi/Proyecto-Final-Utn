@@ -145,6 +145,10 @@ Route::group(['middleware' => ['auth']], function()
 	//INFOSTOCK
 
 	Route::get('/infoStock','CervezaController@infoStock' )->name('infoStock');
+	Route::post('/updateloteOptimo/{cerveza}', [
+		'as' => 'updateloteOptimo',
+		'uses' => 'CervezaController@updateloteOptimo'
+	]);
 
 });
 

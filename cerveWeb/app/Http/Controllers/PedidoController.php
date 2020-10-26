@@ -727,7 +727,7 @@ class PedidoController extends Controller
             $ptoPedido= (($demandaPromedio/5) * ($leedTime/5) + $tStudent * ($desvioEstandar/5) * sqrt($leedTime/5))*2;
 
             $loteOptimo= (sqrt((2*($demandaPromedio/5)*$costoFijoCompra)/($costoMantenimientoInventario*$tasaMantenimientoExistencial)))*10;
-
+            $loteOptimo= round($loteOptimo/1000,1)*1000;
             $cerveza->puntoPedido= (int)$ptoPedido;
             $cerveza->loteOptimo= (int)$loteOptimo;
             $cerveza->update();

@@ -248,5 +248,37 @@ class CervezaController extends Controller
         $cervezas = Cerveza::all()->where('deleted_at',null);     
         return view('Administrador.infoStock',compact('cervezas'));
     }
+
+    public function updateloteOptimo(Request $request,Cerveza $cerveza)
+    {
+        if(isset($request['cantidad']))
+        {
+            if(ctype_digit($request['cantidad']))
+            {
+                if($request['cantidad']==0)
+                {
+                    return redirect()->route('infoStock')->with('error','La cantidad minima a pedir es de 1 litro');
+                }
+                if($request['cantidad']<=2000)
+                {
+                    $cerveza->loteOptimo=$request['cantidad'];
+                    $cerveza->update();
+                    return redirect('infoStock')->with('success','Lote Optimo actualizado con éxito.');
+                }
+                else
+                {
+                    return redirect()->route('infoStock')->with('error','La cantidad en litros no puede ser mayor a 2000.');
+                }
+            }
+            else
+            {
+                return redirect()->route('infoStock')->with('error','La cantidad en litros debe ser entera y positiva.'); 
+            }
+        }
+        else
+        {
+            return redirect()->route('infoStock')->with('error','Ingrese una cantidad de litros a pedir.');
+        }
+    }
 }
 
