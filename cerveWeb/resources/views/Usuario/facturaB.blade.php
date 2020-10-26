@@ -1,10 +1,12 @@
-@extends('templates.templateOperator')
+@extends('templates.templateEstilos')
 
 @section('content')
 
+<body onload="imprimir()">
+    
+
     <div class="jumbotron">
-        <h1 class="display-4 text-center">Factura Electronica</h1>
-        <hr class="my-4">
+      
         <div class="container">
             <div class="row" style="border: 1px solid black;">
                 <div class="col" style="border: 1px solid black;">
@@ -103,7 +105,7 @@
             </div>
             <div class="row" style="border: 1px solid black; margin-top:5px;">
                 <div class="table-responsive" style="font-family: Arial, Helvetica, sans-serif;">
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    
                         <table class="table mb-0">
                             <thead>
                             <tr class="table-bordered">
@@ -125,7 +127,6 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
                 </div>    
             </div>
             <div class="row" style="border: 1px solid black;">
@@ -153,11 +154,12 @@
         </div>
        
     </div>
-
-    <p>
-
-        <a href="{{route('cuentaCorriente')}}" class="btn btn-warning btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Volver</a>
-
-    </p>
-
+    
+<script type="text/javascript">
+function imprimir()
+{
+    window.print();
+}
+</script>
+</body>
 @endsection

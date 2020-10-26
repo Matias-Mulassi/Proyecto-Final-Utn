@@ -233,3 +233,7 @@ Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('
 Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
 Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');
 
+
+
+
+

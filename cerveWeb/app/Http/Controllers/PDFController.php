@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proveedor;
+use App\Pedido;
 use App\Cerveza;
 use App\Mensaje;
 use App\ProductoCerveza;
@@ -172,4 +173,6 @@ class PDFController extends Controller
         return $mejorProveedor;
 
     }
+
+
 }

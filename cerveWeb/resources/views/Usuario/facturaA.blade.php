@@ -1,12 +1,13 @@
-@extends('templates.templateOperator')
+@extends('templates.templateEstilos')
+
+<body onload="imprimir()">
+    
 
 @section('content')
     @php
         use Carbon\Carbon;
     @endphp
     <div class="jumbotron">
-        <h1 class="display-4 text-center">Factura Electronica</h1>
-        <hr class="my-4">
         <div class="container">
             <div class="row" style="border: 1px solid black;">
                 <div class="col text-center" style="border: 1px solid black;">
@@ -42,16 +43,16 @@
             </div>
             <div class="row" style="border: 1px solid black;">
                 <div class="col-md-6 text-left" style="border-left: 1px solid black;">
-                    <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Periodo Facturado Desde: </strong>{{$pedido->fecha_facturacion}}</h5>
+                    <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Periodo Facturado Desde: </strong>{{Carbon::parse($pedido->fecha_facturacion)->format('d-m-Y')}}</h5>
                 </div>
                 <div class="col-md-6 text-center">
-                    <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Hasta: </strong>{{$pedido->fecha_facturacion}}</h5>
+                    <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif;"><strong> Hasta: {{Carbon::parse($pedido->fecha_facturacion)->format('d-m-Y')}}</strong></h5>
                 </div>
             </div>
             <div class="row" style="border: 1px solid black;">
                 <div class="col-md-12 text-left" style="border-right: 1px solid black;">
                     <h5 class="mt-2" style="font-family: Arial, Helvetica, sans-serif; margin-right:30px;">
-                        <strong> Fecha de Vto. para el pago: </strong> {{$fechaPago}}
+                        <strong> Fecha de Vto. para el pago: </strong> {{Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y')}}
                     </h5>
                 </div>
             </div>
@@ -72,7 +73,7 @@
             </div>
             <div class="row" style="border: 1px solid black; margin-top:5px;">
                 <div class="table-responsive" style="font-family: Arial, Helvetica, sans-serif;">
-                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                    
                         <table class="table mb-0">
                             <thead>
                             <tr class="table-bordered">
@@ -104,11 +105,11 @@
                                 @endforeach
                             </tbody>
                         </table>
-                    </div>
+                
                 </div>    
             </div>
             <div class="row" style="border: 1px solid black; font-family: Arial, Helvetica, sans-serif;">
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <strong>Otros Tributos</strong>
                     <table class="table mb-0">
                         <thead>
@@ -157,8 +158,8 @@
                             </tbody>
                     </table>
                 </div>
-                <div class="col-md-4">
-                    <table  style="margin-top:100px; margin-left:100px;">
+                <div class="col-md-5">
+                    <table  style="margin-top:100px; margin-left:80px;">
                         <tr>
                             <p hidden>{{$total=0}}</p>
                             @foreach($pedido->itemsPedidos as $item)
@@ -204,7 +205,7 @@
                         </tr>
                         <tr>
                             <td class="text-right"><strong>Importe Total: $</strong></td>
-                            <td class="text-right" style="float:right"><strong><strong>{{number_format($total,2)}}</strong></strong></td>
+                            <td class="text-right" style="float:right; margin-left:15px;"><strong><strong>{{number_format($total,2)}}</strong></strong></td>
                         </tr>
                     </table>
                 </div>
@@ -218,16 +219,20 @@
                 </center>
             </div>
         </div>
-        <div class="row">
+        <div class="row mt-3">
             <img src="{{ asset('imagenes/imagenAfip.png') }}" width="500">
         </div>
         </div>
     </div>
 
-    <p>
+<script type="text/javascript">
+    function imprimir()
+    {
+        window.print();
+    }
+</script>
 
-        <a href="{{route('cuentaCorriente')}}" class="btn btn-warning btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Volver</a>
-
-    </p>
+</body>
+    
 
 @endsection
