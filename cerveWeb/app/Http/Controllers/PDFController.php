@@ -91,11 +91,12 @@ class PDFController extends Controller
 
     public function enviarEmail(Cerveza $cerveza, Proveedor $proveedor, Mensaje $mensaje)
     {
-        
+        set_time_limit (120);
         $ordenCompra =   PDF :: loadView ('Administrador.ordenCompra' , [ 'cerveza' => $cerveza , 'proveedor' => $proveedor ])->setPaper('a4', 'landscape')->setWarnings(false);
         Mail::to($proveedor->email)->send(new MessageReceived($ordenCompra->output(),$proveedor));
         $message = 'Solicitud de abastecimiento enviada al proveedor '.$proveedor->razonSocial;
-        $mensaje->delete();
+        $mensaje->procesado=true;
+        $mensaje->update();
         return \Redirect::route('home')->with('message', $message);
     }
 
@@ -103,6 +104,7 @@ class PDFController extends Controller
     public function enviarVariosEmails()
     {
     
+        set_time_limit (120);
         $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
         $mensajes = Mensaje::all();
         $cervezas=array();
@@ -147,7 +149,8 @@ class PDFController extends Controller
         }
         foreach($mensajes as $mensaje)
         {
-            $mensaje->delete();
+            $mensaje->procesado=true;
+            $mensaje->update();
         }
         $message = 'Solicitud de abastecimiento enviada a todos los proveedores ';
         return \Redirect::route('home')->with('message', $message);

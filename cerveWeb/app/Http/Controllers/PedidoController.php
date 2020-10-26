@@ -663,7 +663,7 @@ class PedidoController extends Controller
         }
 
         // SUMATORIA LITROS PEDIDO VIERNES
-        $pedidosJueves = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-2 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
+        $pedidosViernes = Pedido::where('deleted_at',null)->whereDate('fecha_entrega','=',Carbon::now()->modify('-2 day')->format('Y-m-d'))->where('estado','=','entregado')->get();
         $ltViernes=0;
         foreach($pedidosViernes as $pedido)
         {
@@ -704,24 +704,28 @@ class PedidoController extends Controller
             }
         }
 
-        $sumaParte1=$ltLunes + $ltMartes + $ltMiercoles;
-        $sumapromedioParte2= ($ltJueves + $ltViernes + $ltSabado + $ltDomingo) / 4;
-        $demandaPromedio = $sumaParte1+$sumapromedioParte2;
+        if(count($pedidosLunes)>0 & count($pedidosMartes)>0 & count($pedidosMiercoles)>0 & count($pedidosJueves)>0 & count($pedidosViernes)>0 & count($pedidosSabado)>0 & count($pedidosDomingo)>0)
+        {
+            $sumaParte1=$ltLunes + $ltMartes + $ltMiercoles;
+            $sumapromedioParte2= ($ltJueves + $ltViernes + $ltSabado + $ltDomingo) / 4;
+            $demandaPromedio = $sumaParte1+$sumapromedioParte2;
 
-        $devioEstandar= sqrt((pow($ltLunes-$demandaPromedio,2)+pow($ltMartes-$demandaPromedio,2)+pow($ltMiercoles-$demandaPromedio,2)+pow($ltJueves-$demandaPromedio,2)+pow($ltViernes-$demandaPromedio,2)+pow($ltSabado-$demandaPromedio,2)+pow($ltDomingo-$demandaPromedio,2))/3);
-        $leedTime=1;
-        $tStudent=2.3534; //Valor hallado de la tabla
-        $costoFijoCompra=1500; //Por flete
-        $costoMantenimientoInventario=1071; //Por dia
-        $tasaMantenimientoExistencial=0.11; //Por dia
+            $desvioEstandar= sqrt((pow($sumaParte1-$demandaPromedio,2)+pow($ltJueves-$demandaPromedio,2)+pow($ltViernes-$demandaPromedio,2)+pow($ltSabado-$demandaPromedio,2)+pow($ltDomingo-$demandaPromedio,2))/4);
+            $leedTime=1;
+            $tStudent=2.1318; //Valor hallado de la tabla
+            $costoFijoCompra=1500; //Por flete
+            $costoMantenimientoInventario=1071; //Por dia
+            $tasaMantenimientoExistencial=0.11; //Por dia
+            
+            $ptoPedido= (($demandaPromedio/5) * ($leedTime/5) + $tStudent * ($desvioEstandar/5) * sqrt($leedTime/5))*2;
+
+            $loteOptimo= (sqrt((2*($demandaPromedio/5)*$costoFijoCompra)/($costoMantenimientoInventario*$tasaMantenimientoExistencial)))*10;
+
+            $cerveza->puntoPedido= (int)$ptoPedido;
+            $cerveza->loteOptimo= (int)$loteOptimo;
+            $cerveza->update();
+        }
         
-        $ptoPedido= $demandaPromedio * $leedTime + $tStudent * $desvioEstandar * sqrt($leedTime);
-
-        $loteOptimo= sqrt((2*$demandaPromedio*$costoFijoCompra)/($costoMantenimientoInventario*$tasaMantenimientoExistencial));
-
-        $cerveza->puntoPedido= $ptoPedido;
-        $cerveza->loteOptimo= $loteOptimo;
-        $cerveza->update();
     }
 
     static function notificaciónPuntoPedido($cerveza)
@@ -733,6 +737,7 @@ class PedidoController extends Controller
             $mensaje->id_usuario=$admin->id;
             $mensaje->cuerpo='Stock: Se necesita comprar '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre;
             $mensaje->leido=false;
+            $mensaje->procesado=false;
             $mensaje->save();
         }
     }

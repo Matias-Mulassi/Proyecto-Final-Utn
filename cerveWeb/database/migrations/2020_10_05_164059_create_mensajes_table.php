@@ -17,6 +17,7 @@ class CreateMensajesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedInteger('id_usuario');
             $table->boolean('leido');
+            $table->boolean('procesado');
             $table->text('cuerpo');
             $table->timestamps();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
