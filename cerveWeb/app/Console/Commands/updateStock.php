@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use App\Mensaje;
 use App\Cerveza;
+use App\User;
 
 class updateStock extends Command
 {
@@ -55,11 +56,22 @@ class updateStock extends Command
                     }
                 }         
             }
-
+            $administradores = User::where('id_tipo_usuario', '=',2)->get();
             foreach($cervezas as $cerveza)
             {
                 $cerveza->cantidadStock+= $cerveza->loteOptimo;
                 $cerveza->update();
+                
+                foreach($administradores as $admin)
+                {
+                    $mensaje = new Mensaje();
+                    $mensaje->id_usuario=$admin->id;
+                    $mensaje->cuerpo='Stock: Ingresaron '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre;
+                    $mensaje->leido=false;
+                    $mensaje->procesado=false;
+                    $mensaje->informativo=true;
+                    $mensaje->save();
+                }
             }
 
             foreach($mensajes as $mensaje)

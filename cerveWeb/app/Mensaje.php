@@ -13,6 +13,7 @@ class Mensaje extends Model
                             'id_usuario',
                             'leido',
                             'procesado',
+                            'informativo',
                             'cuerpo'
 
                         ];

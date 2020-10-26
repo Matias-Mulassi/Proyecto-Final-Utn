@@ -738,6 +738,7 @@ class PedidoController extends Controller
             $mensaje->cuerpo='Stock: Se necesita comprar '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre;
             $mensaje->leido=false;
             $mensaje->procesado=false;
+            $mensaje->informativo=false;
             $mensaje->save();
         }
     }

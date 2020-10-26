@@ -118,10 +118,21 @@ class MensajeController extends Controller
 
     }
 
+    public function showInformacion()
+    {
+        $mensajes = Mensaje::where('informativo',true)->get();
+        foreach($mensajes as $mensaje)
+        {
+            $mensaje->leido=true;
+            $mensaje->update();
+        }
+        return view('Administrador.panelInformacion',compact('mensajes'));
+    }
+    
     public function showAllNotificaciones()
     {
         $cervezasCerveWeb = Cerveza::where('deleted_at',null)->get();
-        $mensajes = Mensaje::where('procesado',false)->get();
+        $mensajes = Mensaje::where('procesado',false)->where('informativo',false)->get();
         $cervezas=array();
         foreach($mensajes as $mensaje)
         {
@@ -138,6 +149,26 @@ class MensajeController extends Controller
             }         
         }
         return view('Administrador.panelNotificaciones',compact('mensajes','cervezas'));
+
+    }
+
+    public function eliminarInformacion(Mensaje $mensaje)
+    {
+        $mensaje->delete();
+        return redirect('home')->with('message','Mensaje Eliminado con exito.');
+
+    }
+
+    public function eliminarMensajesInfo()
+    {
+        $mensajes = Mensaje::where('informativo',true)->get();
+        foreach($mensajes as $mensaje)
+        {
+            $mensaje->delete();
+        }
+        return redirect('panelInformacion')->with('success','Todos los mensajes fueron eliminados con exito.');
+        
+        
 
     }
 

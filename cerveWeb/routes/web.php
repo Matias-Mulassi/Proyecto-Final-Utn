@@ -128,6 +128,13 @@ Route::group(['middleware' => ['auth']], function()
 	//NOTIFICACIONES
 	Route::get('/notificaciones/{mensaje}','MensajeController@show' )->name('notificacion');
 	Route::get('/panelNotificaciones','MensajeController@showAllNotificaciones' )->name('panelNotificaciones');
+	Route::get('/panelInformacion','MensajeController@showInformacion' )->name('panelInformacion');
+	Route::get('/eliminarNotificacionStock/{mensaje}','MensajeController@eliminarInformacion' )->name('eliminarNotificacionStock');
+	Route::get('/eliminarMensajes','MensajeController@eliminarMensajesInfo' )->name('eliminarMensajes');
+	
+
+	
+	
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');
 	
