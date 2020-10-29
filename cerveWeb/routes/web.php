@@ -120,8 +120,14 @@ Route::group(['middleware' => ['auth']], function()
 	
 	//PORCENTAJE PRECIOS
 
+	//Proveedores
 	Route::get('/cambioprecioProveedor/{idProveedor}','CervezaProveedorController@cambioPreciosProveedor' )->name('cambioprecioProveedor');
 	Route::post('/updateprecioProveedor','CervezaProveedorController@updatePreciosProveedor' )->name('updateprecioProveedor');
+
+	//Clientes
+
+	Route::get('/cambioprecioCervezas','CervezaController@cambioPrecios' )->name('cambioprecioCervezas');
+	Route::post('/updateprecioCervezas','CervezaController@updatePrecios' )->name('updateprecioCervezas');
 
 	//Administración de pedidos
 

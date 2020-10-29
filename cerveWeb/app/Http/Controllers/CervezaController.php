@@ -303,5 +303,57 @@ class CervezaController extends Controller
         $historico_precio=HistoricoPrecio::where('id_cerveza','=',$idCerveza)->where('fecha_vigencia','<=',$fechaPedido)->orderBy('fecha_vigencia', 'DESC')->get()->first();
         return $historico_precio->precio;
     }
+
+
+    public function cambioPrecios()
+    {
+        return view('Administrador.cambioPreciosCerveza');
+    }
+
+    public function updatePrecios(Request $request)
+    {
+        $rules = [
+            
+            'porcentaje' => ['required', 'numeric','min:1','max:200'],
+            
+           ];   
+
+        $messages = [ 
+        'porcentaje.required'=>'Complete el campo requerido.',
+        'porcentaje.numeric'=>'El porcentaje debe ser numerico.',
+        'porcentaje.min'=>'El porcentaje debe ser positivo.',
+        'porcentaje.max'=>'El porcentaje de aumento no debe ser superior a 200%.',
+       
+        ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+
+        if($validacion)
+        {
+            $cervezas = Cerveza::all()->where('deleted_at',null);
+            if(count($cervezas)>0)
+            {
+                foreach($cervezas as $cerveza)
+                {
+                    $this->registrarPrecioPorcentaje($cerveza->id,$request['porcentaje']);      
+                }
+                return redirect('abmlCervezas')->with('success','Precios actualizados con exito.');
+            }   
+            else
+            {           
+                return redirect()->route('abmlCervezas')->with('error','Error al intentar cambiar precios.'); 
+            }
+        }
+    }
+
+    public function registrarPrecioPorcentaje($idCerveza,$porcentaje)
+    {
+        $historico_precio = new HistoricoPrecio();
+        $ultimoprecio= $this->getUltimoPrecio($idCerveza);
+        $historico_precio->fecha_vigencia =Carbon::now()->format('Y-m-d H:i:s');
+        $historico_precio->precio=number_format(($ultimoprecio + $ultimoprecio* ($porcentaje/100)),1);
+        $historico_precio->id_cerveza=$idCerveza;
+        $historico_precio->save();
+    }
 }
 

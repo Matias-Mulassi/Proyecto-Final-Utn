@@ -72,8 +72,12 @@ $cervezaController = new CervezaController();
                     </div>                         
                     </div>
                     @endif              
-                    <a href="{{route('agregarCerveza')}}" class="float-right mt-4 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
+                    @if(count($cervezas)>0)
+                        <a href="{{route('cambioprecioCervezas')}}" class="float-right mt-4 btn btn-danger"> Aumentar Precios</a>
+                    @endif
+                    <a href="{{route('agregarCerveza')}}" class="float-right mt-4 mr-2 btn btn-success ">      <i class="fa fa-plus-circle"></i> Agregar
                     </a>
+                    
                     @if(session('success'))
                     <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
                           <strong>{{session('success')}}</strong>
