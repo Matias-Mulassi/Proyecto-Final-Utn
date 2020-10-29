@@ -80,6 +80,14 @@
                 </div>
             </div>
 
+            <div class="col-md-6">
+                <div class="panel">
+
+                    <img src="https://img.icons8.com/nolan/60/business-report.png"/>
+                    <a href="{{route('informes')}}" class="btn btn-warning btn-block btn-home-admin">INFORMES</a>
+                </div>
+            </div>
+
         </div>
 
 

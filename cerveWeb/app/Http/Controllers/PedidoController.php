@@ -754,4 +754,10 @@ class PedidoController extends Controller
     {
         return view('Administrador.ordenCompra',compact('cerveza','proveedor'));
     }
+
+    public function getPedidosVendidosCliente($idCliente)
+    {
+        $pedidos = Pedido::where('id_usuario','=',$idCliente)->where('deleted_at',null)->where('estado','=','entregado')->orderBy('fecha_entrega', 'ASC')->get();
+        return $pedidos;
+    }
 }

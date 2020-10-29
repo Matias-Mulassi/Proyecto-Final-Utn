@@ -148,7 +148,13 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/eliminarMensajes','MensajeController@eliminarMensajesInfo' )->name('eliminarMensajes');
 	
 
-	
+	//INFORMES
+
+	Route::get('/informes','InformesController@showMain' )->name('informes');
+	Route::get('/informeVentas','InformesController@showVentasMenu' )->name('informeVentas');
+	Route::get('/informeVentasClientes','InformesController@showVentasClientes' )->name('informeVentasClientes');
+	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');
+
 	
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');

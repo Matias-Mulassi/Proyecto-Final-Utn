@@ -32,6 +32,11 @@ class Cerveza extends Model
   {
     return $this->hasMany('App\HistoricoPrecio','id_cerveza');
   }
+
+  public function itemsPedidos()
+  {
+    return $this->hasMany('App\ItemPedido','id_cerveza');
+  }
 }
 
 
