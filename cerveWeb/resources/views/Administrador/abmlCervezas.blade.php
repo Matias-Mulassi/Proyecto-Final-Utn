@@ -40,7 +40,22 @@ $cervezaController = new CervezaController();
                                                 </center>
                                             </td>
                                             <td>{{$cerveza->descripcion}}</td>
-                                            <td>{{$cervezaController->getUltimoPrecio($cerveza->id)}}</td>
+                                            <td width="200">
+                                            <form method="POST" action="{{ route('updateprecioCervezaManual',$cerveza->id) }}">
+                                            @csrf
+                                            <input size=40 style="float:left; width:100px" class="form-control @error('precio') is-invalid @enderror text-center"
+                                                type="number"
+                                                step="1"
+                                                name="precio"
+                                                pattern="\d*"
+                                                value="{{$cervezaController->getUltimoPrecio($cerveza->id)}}"
+                                                id="cerveza_{{$cerveza->id}}"
+                                                >                                                
+                                                <button style="float:left;"class="btn btn-warning btn-update-item ml-3 mr-3"><i class="fa fa-refresh"></i></button> 
+                                                 
+                                                </form>
+                                            
+                                            </td>
                                             <td>{{$cerveza->cantidadStock}}</td>
                                             <td>{{$cerveza->puntoPedido}}</td>
                                             <td>{{$cerveza->categoria->nombre}}</td>

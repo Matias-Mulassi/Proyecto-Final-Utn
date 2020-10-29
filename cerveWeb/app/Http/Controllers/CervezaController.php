@@ -355,5 +355,40 @@ class CervezaController extends Controller
         $historico_precio->id_cerveza=$idCerveza;
         $historico_precio->save();
     }
+
+    public function updatePrecioCerveza(Request $request, $idCerveza)
+    {
+        if(isset($request['precio']))
+        {
+            if(ctype_digit($request['precio']))
+            {
+                if($request['precio']==0)
+                {
+                    return redirect()->route('abmlCervezas')->with('error','El precio no puede ser igual a cero');
+                }
+                if($request['precio']<=1000)
+                {
+                    $this->registrarPrecio($idCerveza,$request['precio']);      
+                    return redirect('abmlCervezas')->with('success','Precio de cerveza actualizado con exito.');
+                }
+                else
+                {
+                    return redirect()->route('abmlCervezas')->with('error','El precio de la cerveza no puede ser mayor a $1000.');
+                }
+            }
+            else
+            {
+                return redirect()->route('abmlCervezas')->with('error','El precio de la cerveza debe ser numerico y positivo.'); 
+            }
+        }
+        else
+        {
+            return redirect()->route('abmlCervezas')->with('error','Ingrese precio de cerveza.');
+        }
+    
+        
+    
+        
+    }
 }
 

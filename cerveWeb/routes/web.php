@@ -129,6 +129,11 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/cambioprecioCervezas','CervezaController@cambioPrecios' )->name('cambioprecioCervezas');
 	Route::post('/updateprecioCervezas','CervezaController@updatePrecios' )->name('updateprecioCervezas');
 
+	//CAMBIO PRECIOS A MANO
+
+	Route::post('/updateprecioCervezaManual/{idCerveza}','CervezaController@updatePrecioCerveza' )->name('updateprecioCervezaManual');
+	
+
 	//Administración de pedidos
 
 	Route::get('/blPedidos','PedidoController@obtenerPedidos' )->name('blPedidos');
