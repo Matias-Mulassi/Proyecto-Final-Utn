@@ -153,9 +153,16 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/informes','InformesController@showMain' )->name('informes');
 	Route::get('/informeVentas','InformesController@showVentasMenu' )->name('informeVentas');
 	Route::get('/informeVentasClientes','InformesController@showVentasClientes' )->name('informeVentasClientes');
+	Route::get('/informeVentasClientesSeleccionados','InformesController@showVentasClientesSelect' )->name('informeVentasClientesSeleccionados');
 	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');
+	Route::get('/informeVentasCervezasSeleccionados','InformesController@showVentasCervezasSelect' )->name('informeVentasCervezasSeleccionados');
 
 	
+	//BUSCAR CLIENTE
+	Route::get('/buscarCliente','InformesController@buscarCliente' )->name('buscarCliente');
+	Route::get('/buscarCerveza','InformesController@buscarCerveza' )->name('buscarCerveza');
+
+
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');
 	

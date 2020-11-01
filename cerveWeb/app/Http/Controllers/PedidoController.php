@@ -755,9 +755,9 @@ class PedidoController extends Controller
         return view('Administrador.ordenCompra',compact('cerveza','proveedor'));
     }
 
-    public function getPedidosVendidosCliente($idCliente)
+    public function getPedidosVendidosCliente($idCliente,$fechaDesde,$fechaHasta)
     {
-        $pedidos = Pedido::where('id_usuario','=',$idCliente)->where('deleted_at',null)->where('estado','=','entregado')->orderBy('fecha_entrega', 'ASC')->get();
+        $pedidos = Pedido::where('id_usuario','=',$idCliente)->where('deleted_at',null)->where('estado','=','entregado')->whereDate('fecha_entrega','>=',$fechaDesde)->whereDate('fecha_entrega','<=',$fechaHasta)->orderBy('fecha_entrega', 'ASC')->get();
         return $pedidos;
     }
 
@@ -772,5 +772,23 @@ class PedidoController extends Controller
     {
         $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
         return view('Operador.remitos',compact('pedidos'));
+    }
+
+
+    public function getItemPedidosFecha(Cerveza $cerveza,$fechaDesde,$fechaHasta)
+    {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','entregado')->whereDate('fecha_entrega','>=',$fechaDesde)->whereDate('fecha_entrega','<=',$fechaHasta)->orderBy('fecha_entrega', 'ASC')->get();
+        $itemsPedidos=array();
+        foreach($pedidos as $pedido)
+        {
+            foreach($pedido->itemsPedidos as $item)
+            {
+                if($item->cerveza->nombre==$cerveza->nombre)
+                {
+                    array_push($itemsPedidos,$item);
+                }
+            }
+        }
+        return $itemsPedidos;
     }
 }

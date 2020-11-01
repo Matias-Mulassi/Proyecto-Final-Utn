@@ -128,6 +128,9 @@ background-color: #F5F5F5; /*background-scroll color*/
 
 @media print 
     {
+        #noImprime{
+            display: none;
+        }
         .new-page {
         page-break-before: always;
         }

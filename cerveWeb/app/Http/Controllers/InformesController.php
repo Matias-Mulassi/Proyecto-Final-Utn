@@ -95,19 +95,139 @@ class InformesController extends Controller
         return view('Administrador.informesVentasMain');
     }
 
-    public function showVentasClientes()
+    public function showVentasClientes(Request $request)
     {
-        $clientes= User::all()->where('deleted_at',null)->where('id_tipo_usuario',1);  
-        return view('Administrador.informeVentasClientes',compact('clientes'));
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas a clientes.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas a clientes.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta'];
+            $clientes= User::all()->where('deleted_at',null)->where('id_tipo_usuario',1);  
+            return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
+        }
+        
         
     }
 
-    public function showVentasCervezas()
+    public function showVentasCervezas(Request $request)
     {
-        $cervezas= Cerveza::all()->where('deleted_at',null);  
-        return view('Administrador.informeVentasCervezas',compact('cervezas'));
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas de cervezas.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas de cervezas.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta'];
+            $cervezas= Cerveza::all()->where('deleted_at',null);  
+            return view('Administrador.informeVentasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+        }
+
+         
+        
         
     }
 
+
+
+    public function buscarCliente(Request $request)
+    {
+        $fechaDesde = $request['fechaDesde'];
+        $fechaHasta = $request['fechaHasta'];
+        $razonSocial= $request['razonSocial'];
+        $clientes= User::where('deleted_at',null)->where('id_tipo_usuario',1)->where('razonSocial','like',"%$razonSocial%")->get();
+        return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
+    }
+
+    public function buscarCerveza(Request $request)
+    {
+        $fechaDesde = $request['fechaDesde'];
+        $fechaHasta = $request['fechaHasta'];
+        $cerveza= $request['cerveza'];
+        $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
+        return view('Administrador.informeVentasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+    }
+
+
+    public function showVentasClientesSelect(Request $request)
+    {
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+            'cliente' => ['nullable'],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas a clientes.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas a clientes.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $cliente= $request['cliente'];
+            $clientes= User::where('deleted_at',null)->where('id_tipo_usuario',1)->where('razonSocial','like',"%$cliente%")->get();
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta']; 
+            return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
+        }
+        
+        
+    }
+
+    public function showVentasCervezasSelect(Request $request)
+    {
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+            'cerveza' => ['nullable'],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas a clientes.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas a clientes.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $cerveza= $request['cerveza'];
+            $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta']; 
+            return view('Administrador.informeVentasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+        }
+        
+        
+    }
 
 }
