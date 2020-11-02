@@ -15,13 +15,15 @@ $cervezaController = new CervezaController();
                         @if(count($cervezas))
                             <div class="table-responsive">
                                 <div class="table-wrapper-scroll-y my-custom-scrollbar">
-                                    <table class="table table-bordered table-striped mb-0">
+                                    <table class="table table-bordered table-striped mb-0 text-center">
                                         <thead>
                                         <tr>
                                             <th class="sticky-top bg-light" scope="col">Id</th>
                                             <th class="sticky-top bg-light" scope="col">Nombre</th>
                                             <th class="sticky-top bg-light" scope="col">Imagen</th>
                                             <th class="sticky-top bg-light" scope="col">Descripcion</th>
+                                            <th class="sticky-top bg-light" scope="col">Venta Limite</th>
+                                            <th class="sticky-top bg-light" scope="col">Desperdicio</th>
                                             <th class="sticky-top bg-light" scope="col">Precio x lt</th>
                                             <th class="sticky-top bg-light" scope="col">Stock Disponible</th>
                                             <th class="sticky-top bg-light" scope="col">Punto Pedido</th>
@@ -40,6 +42,8 @@ $cervezaController = new CervezaController();
                                                 </center>
                                             </td>
                                             <td>{{$cerveza->descripcion}}</td>
+                                            <td class="text-center">{{$cerveza->ventaLimite}}</td>
+                                            <td class="text-center">% {{$cerveza->desperdicio *100}}</td>
                                             <td width="200">
                                             <form method="POST" action="{{ route('updateprecioCervezaManual',$cerveza->id) }}">
                                             @csrf
@@ -50,13 +54,13 @@ $cervezaController = new CervezaController();
                                                 value="{{$cervezaController->getUltimoPrecio($cerveza->id)}}"
                                                 id="cerveza_{{$cerveza->id}}"
                                                 >                                                
-                                                <button style="float:left;"class="btn btn-warning btn-update-item ml-3 mr-3"><i class="fa fa-refresh"></i></button> 
+                                                <button style="float:left;"class="btn btn-warning btn-update-item ml-2"><i class="fa fa-refresh"></i></button> 
                                                  
                                                 </form>
                                             
                                             </td>
-                                            <td>{{$cerveza->cantidadStock}}</td>
-                                            <td>{{$cerveza->puntoPedido}}</td>
+                                            <td class="text-center">{{$cerveza->cantidadStock}}</td>
+                                            <td class="text-center">{{$cerveza->puntoPedido}}</td>
                                             <td>{{$cerveza->categoria->nombre}}</td>
                                             <td scope="col">
                                                 <center>

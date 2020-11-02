@@ -47,6 +47,8 @@ class CervezaController extends Controller
         $rules = [
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
+            'limite' => ['required','integer','min:1'],
+            'desperdicio' => ['required','integer','min:1','max:5'],
             'precio' => ['required', 'numeric','min:1'],
             'stockDisponible' => ['required','integer','min:1'],
             'puntoPedido' => ['required','integer','min:1'],
@@ -62,6 +64,13 @@ class CervezaController extends Controller
           'precio.required'=>'Complete el campo requerido.',
           'precio.numeric'=>'Formato de precio incorrecto.',
           'precio.min'=>'El precio debe ser positivo.',
+          'limite.required'=>'Complete el campo requerido.',
+          'limite.integer'=>'El limite debe ser entero.',
+          'limite.min'=>'El limite debe ser positivo.',
+          'desperdicio.required'=>'Complete el campo requerido.',
+          'desperdicio.integer'=>'Ingrese el % desperdicio con un numero entero.',
+          'desperdicio.min'=>'El % de desperdicio minimo es 1.',
+          'desperdicio.max'=>'El % de desperdicio maximo es 5.',
           'stockDisponible.required'=>'Complete el campo requerido.',
           'stockDisponible.integer'=>'El stock debe ser entero.',
           'stockDisponible.min'=>'El stock debe ser positivo.',
@@ -87,6 +96,8 @@ class CervezaController extends Controller
             $request->file('image')->move(public_path('../public/imagenes/cervezas'),$nombreImage);       
             $cerveza = new Cerveza();
             $cerveza->nombre = $request['nombre'];
+            $cerveza->ventaLimite = $request['limite'];
+            $cerveza->desperdicio = ($request['desperdicio']/100);
             $cerveza->descripcion = $request['descripcion'];
             $cerveza->cantidadStock = $request['stockDisponible'];
             $cerveza->puntoPedido = $request['puntoPedido'];
@@ -155,6 +166,8 @@ class CervezaController extends Controller
         $rules = [
             'nombre' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'descripcion' => ['required', 'string'],
+            'limite' => ['required','integer','min:1'],
+            'desperdicio' => ['required','integer','min:1','max:5'],
             'precio' => ['required', 'numeric','min:1'],
             'stockDisponible' => ['required','integer','min:1'],
             'puntoPedido' => ['required','integer','min:1'],
@@ -166,6 +179,13 @@ class CervezaController extends Controller
         'nombre.required'=>'Complete el campo requerido',
         'nombre.max'=>'La longitud del nombre supera el máximo requerido',
         'descripcion.required'=>'Complete el campo requerido.',
+        'limite.required'=>'Complete el campo requerido.',
+        'limite.integer'=>'El limite debe ser entero.',
+        'limite.min'=>'El limite debe ser positivo.',
+        'desperdicio.required'=>'Complete el campo requerido.',
+        'desperdicio.integer'=>'Ingrese el % desperdicio con un numero entero.',
+        'desperdicio.min'=>'El % de desperdicio minimo es 1.',
+        'desperdicio.max'=>'El % de desperdicio maximo es 5.',
         'precio.required'=>'Complete el campo requerido.',
         'precio.numeric'=>'Formato de precio incorrecto.',
         'precio.min'=>'El precio debe ser positivo.',
@@ -199,6 +219,8 @@ class CervezaController extends Controller
                     $cerveza->image = $ruta;
                     $cerveza->nombre = $request['nombre'];
                     $cerveza->descripcion = $request['descripcion'];
+                    $cerveza->ventaLimite = $request['limite'];
+                    $cerveza->desperdicio = ($request['desperdicio']/100);
                     $cerveza->cantidadStock = $request['stockDisponible'];
                     $cerveza->puntoPedido = $request['puntoPedido'];
                     $cerveza->id_categoria = $request['id_categoria'];

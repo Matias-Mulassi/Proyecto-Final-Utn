@@ -26,7 +26,7 @@
                         <div class="form-row">
                             <div class="col text-left mt-3">
                                 <label for="validationDefault03">Descripción</label>
-                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion" id="descripcion" placeholder="Ingrese una descripción"></textarea>
+                                <textarea class="form-control  @error('descripcion') is-invalid @enderror" name="descripcion"  id="descripcion" placeholder="Ingrese una descripción">{{ old('descripcion') }}</textarea>
                                 @error('descripcion')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -34,6 +34,33 @@
                                 @enderror 
                             </div>
                         </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
+                                <label for="validationDefault03">Limite de venta (lts/dia)</label>
+                                <input type="number" class="form-control  @error('limite') is-invalid @enderror" name="limite" value="{{ old('limite') }}" id="limite">
+                                @error('limite')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
+                                <label for="validationDefault03">Desperdicio (%)</label>
+                                <input type="number" class="form-control  @error('desperdicio') is-invalid @enderror" name="desperdicio" value="{{ old('desperdicio') }}" id="desperdicio">
+                                @error('desperdicio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
+                        
+
 
                         <div class="form-row">
                             <div class="col text-left mt-3">
@@ -74,7 +101,7 @@
                         <div class="form-row">												
                             <div class="col text-left mt-3">
                                 <label class="control-label" for="fichero1">Imagen</label>
-                                <input style="padding: 5px;" id="image" class="form-control @error('image') is-invalid @enderror" type="file" name="image">
+                                <input style="padding: 5px;" id="image" class="form-control @error('image') is-invalid @enderror" type="file" name="image" value="{{ old('image') }}">
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -86,7 +113,7 @@
                         <div class="form-row">
                                 <div class="col text-left mt-2">
                                     <label for="validationDefault03">{{ __('Categoria') }}</label>
-                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror" placeholder="Categoria">
+                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror p-1" placeholder="Categoria">
                                             @foreach($categorias as $categoria)
                                             <option value="{{$categoria->id}}">{{$categoria->nombre}}</option>
                                             @endforeach

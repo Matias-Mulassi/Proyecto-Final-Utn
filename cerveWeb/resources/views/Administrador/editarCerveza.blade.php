@@ -43,6 +43,30 @@ $cervezaController = new CervezaController();
 
                         <div class="form-row">
                             <div class="col text-left mt-3">
+                                <label for="validationDefault03">Limite de venta (lts/dia)</label>
+                                <input type="number"  class="form-control  @error('limite') is-invalid @enderror" name="limite" value="{{$cerveza->ventaLimite }}" id="limite" >
+                                @error('limite')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
+                                <label for="validationDefault03">Desperdicio (lts)</label>
+                                <input type="number"  class="form-control  @error('desperdicio') is-invalid @enderror" name="desperdicio" value="{{$cerveza->desperdicio*100}}" id="desperdicio" >
+                                @error('desperdicio')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror 
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col text-left mt-3">
                                 <label for="validationDefault03">Precio x lt</label>
                                 <input type="number" class="form-control  @error('precio') is-invalid @enderror" step="any" name="precio" value="{{$cervezaController->getUltimoPrecio($cerveza->id)}}" id="precio" >
                                 @error('precio')
@@ -92,7 +116,7 @@ $cervezaController = new CervezaController();
                         <div class="form-row">
                                 <div class="col text-left mt-2">
                                     <label for="validationDefault03">{{ __('Categoria') }}</label>
-                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror" placeholder="Categoria" >
+                                        <select id="id_categoria" name="id_categoria" class="form-control @error('id_categoria') is-invalid @enderror p-1" placeholder="Categoria" >
                                             @foreach($categorias as $categoria)
                                                 @if($categoria->id == $cerveza->id_categoria)
                                                     <option selected value="{{$categoria->id}}">{{$categoria->nombre}}</option>

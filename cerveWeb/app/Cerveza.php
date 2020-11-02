@@ -12,6 +12,8 @@ class Cerveza extends Model
                             'id',
                             'nombre',
                             'descripcion',
+                            'ventaLimite',
+                            'desperdicio',
                             'cantidadStock',
                             'puntoPedido',
                             'loteOptimo',

@@ -17,6 +17,8 @@ class CreateCervezasTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->text('descripcion');
+            $table->integer('ventaLimite')->unsigned();
+            $table->float('desperdicio',8,2);
             //$table->float('precio', 8, 2);
             $table->string('image',6500);
             $table->integer('cantidadStock')->unsigned();
