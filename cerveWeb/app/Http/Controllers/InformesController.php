@@ -97,6 +97,27 @@ class InformesController extends Controller
 
     public function showVentasClientes(Request $request)
     {
+       
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
+
         $rules = [
                 
             'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
@@ -111,11 +132,13 @@ class InformesController extends Controller
             ];
 
         $validacion = $this->validate($request,$rules,$messages);
+
+
         if($validacion)
         {
             $fechaDesde=$request['fechaDesde'];
             $fechaHasta=$request['fechaHasta'];
-            $clientes= User::all()->where('deleted_at',null)->where('id_tipo_usuario',1);  
+            $clientes= User::all()->where('deleted_at',null)->where('id_tipo_usuario',1); 
             return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
         }
         
@@ -124,6 +147,26 @@ class InformesController extends Controller
 
     public function showVentasCervezas(Request $request)
     {
+
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
         $rules = [
                 
             'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
@@ -174,6 +217,25 @@ class InformesController extends Controller
 
     public function showVentasClientesSelect(Request $request)
     {
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
         $rules = [
                 
             'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
@@ -197,12 +259,33 @@ class InformesController extends Controller
             $fechaHasta=$request['fechaHasta']; 
             return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
         }
+       
         
         
     }
 
     public function showVentasCervezasSelect(Request $request)
     {
+
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeVentas')->with('messageError', $message);
+        }
+
         $rules = [
                 
             'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            

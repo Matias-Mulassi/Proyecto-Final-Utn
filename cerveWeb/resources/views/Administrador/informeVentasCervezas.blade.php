@@ -16,6 +16,8 @@ $cervezaController = new CervezaController();
 </style>
 <h2>Fecha Informe: {{Carbon::now()->format('d-m-Y')}}</h2>
 <center>
+
+<h2>Venta de Cervezas desde: {{Carbon::parse($fechaDesde)->format('d-m-Y')}} hasta {{Carbon::parse($fechaHasta)->format('d-m-Y')}}</h2>
 <div id="noImprime">
 <a href="{{route('informeVentas')}}" class="btn btn-warning mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Volver</a>
     <button type="button"  class="btn btn-outline-primary mt-3 " onclick="imprimir()">
