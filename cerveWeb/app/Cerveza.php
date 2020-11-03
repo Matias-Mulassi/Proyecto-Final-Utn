@@ -39,6 +39,11 @@ class Cerveza extends Model
   {
     return $this->hasMany('App\ItemPedido','id_cerveza');
   }
+
+  public function compras()
+  {
+    return $this->hasMany('App\Compra','id_cerveza');
+  }
 }
 
 

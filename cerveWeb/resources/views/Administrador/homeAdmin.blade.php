@@ -12,7 +12,7 @@
         
         <div class="row mt-5">
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/officel/60/000000/select-users.png"/>
@@ -20,7 +20,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/dusk/60/000000/user-credentials.png"/>
@@ -28,11 +28,7 @@
                 </div>
             </div>
 
-        </div>
-        
-        <div class="row mt-5">
-
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/dotty/60/000000/category.png"/>
@@ -40,7 +36,13 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+        </div>
+        
+        <div class="row mt-5">
+
+            
+
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/fluent/60/000000/beer.png"/>
@@ -48,11 +50,7 @@
                 </div>
             </div>
 
-        </div>
-
-        <div class="row mt-5">
-
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/color/60/000000/purchase-order.png"/>
@@ -60,7 +58,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img class="home" src="https://img.icons8.com/dusk/60/000000/supplier.png"/>
@@ -71,16 +69,16 @@
         </div>
 
         <div class="row mt-5">
+        
+            <div class="col-md-4">
+                    <div class="panel">
 
-            <div class="col-md-6">
-                <div class="panel">
-
-                    <img class="home" src="https://img.icons8.com/dusk/60/000000/move-stock.png"/>
-                    <a href="{{route('infoStock')}}" class="btn btn-warning btn-block btn-home-admin">STOCK</a>
-                </div>
+                        <img class="home" src="https://img.icons8.com/dusk/60/000000/move-stock.png"/>
+                        <a href="{{route('infoStock')}}" class="btn btn-warning btn-block btn-home-admin">STOCK</a>
+                    </div>
             </div>
-
-            <div class="col-md-6">
+            
+            <div class="col-md-4">
                 <div class="panel">
 
                     <img src="https://img.icons8.com/nolan/60/business-report.png"/>
@@ -88,7 +86,18 @@
                 </div>
             </div>
 
+            <div class="col-md-4">
+                <div class="panel">
+
+                    <img src="https://img.icons8.com/officel/60/000000/wooden-beer-keg.png"/>
+                    <a href="{{route('recepcionMercaderia')}}" class="btn btn-warning btn-block btn-home-admin">RECEPCIÓN</a>
+                </div>
+            </div>
+            
+
         </div>
+
+        
 
 
         @if(session('success'))

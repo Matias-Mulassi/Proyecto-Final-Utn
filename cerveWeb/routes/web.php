@@ -160,8 +160,12 @@ Route::group(['middleware' => ['auth']], function()
 	
 	//BUSCAR CLIENTE
 	Route::get('/buscarCliente','InformesController@buscarCliente' )->name('buscarCliente');
+
+	//BUSCAR CERVEZA
 	Route::get('/buscarCerveza','InformesController@buscarCerveza' )->name('buscarCerveza');
 
+	//BUSCAR PROVEEDOR
+	Route::get('/buscarCompraProveedor','CompraController@buscarCompraProveedor' )->name('buscarCompraProveedor');
 
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');
@@ -174,6 +178,11 @@ Route::group(['middleware' => ['auth']], function()
 		'uses' => 'CervezaController@updateloteOptimo'
 	]);
 
+
+
+	//RECEPCION MERCADERIA
+
+	Route::get('/recepcionMercaderia','CompraController@recepcionMercaderia' )->name('recepcionMercaderia');
 });
 
 

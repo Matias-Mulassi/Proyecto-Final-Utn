@@ -31,4 +31,9 @@ public function itemsPedidos()
   return $this->hasMany('App\ItemPedido','id_pedido');
 }
 
+public function compras()
+  {
+    return $this->hasMany('App\Compra','id_pedido');
+  }
+
 }

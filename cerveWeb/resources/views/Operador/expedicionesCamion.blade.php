@@ -78,7 +78,7 @@
     @elseif($litrosTotales==1500)
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno.Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               

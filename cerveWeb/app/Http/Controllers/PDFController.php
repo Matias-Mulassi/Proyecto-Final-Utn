@@ -14,6 +14,7 @@ use App\Mail\MessageReceived;
 use App\Mail\BillReceived;
 use Carbon\Carbon;
 use App\Http\Controllers\CervezaController;
+use App\Http\Controllers\CompraController;
 
 
 class PDFController extends Controller
@@ -96,22 +97,25 @@ class PDFController extends Controller
 
     public function enviarEmail(Cerveza $cerveza, Proveedor $proveedor, Mensaje $mensaje)
     {
+        $compraController= new CompraController();
         set_time_limit (120);
         $ordenCompra =   PDF :: loadView ('Administrador.ordenCompra' , [ 'cerveza' => $cerveza , 'proveedor' => $proveedor ])->setPaper('a4', 'landscape')->setWarnings(false);
         Mail::to($proveedor->email)->send(new MessageReceived($ordenCompra->output(),$proveedor));
         $message = 'Solicitud de abastecimiento enviada al proveedor '.$proveedor->razonSocial;
         $mensaje->procesado=true;
         $mensaje->update();
+        $compraController->registrarCompra($cerveza,$proveedor);
+
         return \Redirect::route('home')->with('message', $message);
     }
 
 
     public function enviarVariosEmails()
     {
-    
+        $compraController= new CompraController();
         set_time_limit (120);
         $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
-        $mensajes = Mensaje::all();
+        $mensajes = Mensaje::where('procesado',false)->get();
         $cervezas=array();
         foreach($mensajes as $mensaje)
         {
@@ -121,6 +125,7 @@ class PDFController extends Controller
                 if($pos==true)
                 {
                     $cerveza->proveedor=$this->getMejorProveedor($cerveza);
+                    $compraController->registrarCompra($cerveza,$cerveza->proveedor);
                     array_push($cervezas,$cerveza);
                 }
             }         
