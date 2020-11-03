@@ -248,6 +248,8 @@ Route::get('/expedicionCamion','PedidoController@getPedidosExpedicion' )->name('
 Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mostrarFactura');
 Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
 Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
+Route::get('/informeCargaCamion','PedidoController@informeCargaCamion' )->name('informeCargaCamion');
+Route::get('/hojaRuta','PedidoController@showHojaRuta' )->name('hojaRuta');
 Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
 Route::get('/imprimirFacturas','PedidoController@imprimirFacturas' )->name('imprimirFacturas');
 Route::get('/imprimirRemitos','PedidoController@imprimirRemitos' )->name('imprimirRemitos');
@@ -271,7 +273,6 @@ Route::get('/enviarFactura/{pedido}','PDFController@envioFactura' )->name('envia
 Route::get('/enviarFacturas','PDFController@envioFacturas' )->name('enviarFacturas');
 
 Route::get('/mostrarFacturamail/{pedido}','PDFController@mostrarFactura' )->name('mostrarFacturamail');
-
 
 
 

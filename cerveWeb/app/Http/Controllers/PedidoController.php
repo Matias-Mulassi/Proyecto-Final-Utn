@@ -791,4 +791,19 @@ class PedidoController extends Controller
         }
         return $itemsPedidos;
     }
+
+
+
+    public function informeCargaCamion()
+    {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        return view('Operador.informeCargaCamion',compact('pedidos'));
+    }
+
+
+    public function showHojaRuta()
+    {
+        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
+        return view('Operador.hojaRuta',compact('pedidos'));
+    }
 }
