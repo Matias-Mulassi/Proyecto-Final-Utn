@@ -102,9 +102,7 @@
                             <a href="{{route('mostrarRemito',$pedido->id)}}" class="btn btn-outline-warning">
                                 Ver Remito
                             </a>
-                            
-                            
-                            
+                          
                             </center>
                        </div>
                        <div class="modal-footer">

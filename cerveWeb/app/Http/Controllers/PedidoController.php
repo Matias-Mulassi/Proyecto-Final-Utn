@@ -562,8 +562,8 @@ class PedidoController extends Controller
         }
         
         $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
-        //$pdfController= new PDFController();
-        //$pdfController->envioFacturas();
+        $pdfController= new PDFController();
+        $pdfController->envioFacturas();
         foreach($pedidos as $pedido)
         {
             $pedido->estado='entregado';

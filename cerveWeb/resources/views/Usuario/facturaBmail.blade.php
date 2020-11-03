@@ -12,6 +12,8 @@
 <body>
 @php
     use Carbon\Carbon;
+    use App\Http\Controllers\CervezaController;
+    $cervezaController = new CervezaController();
 @endphp
 
 <div style="border:2px solid black;">
@@ -181,11 +183,12 @@
                             </thead>
                             <tbody style="background-color:white; border: 0px solid white;" class="text-right">
                                 @foreach($pedido->itemsPedidos as $item)    
+                                <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
                                     <tr>
                                         <td scope="row">{{$item->cantidad}} lts</th>
                                         <td class="text-center">Cerveza {{$item->cerveza->nombre}}</td>
-                                        <td>{{$item->cerveza->precio}}</td>
-                                        <td class="text-right">{{number_format($item->cerveza->precio * $item->cantidad,2)}}</td>
+                                        <td>{{number_format($precioCerveza,2)}}</td>
+                                        <td class="text-right">{{number_format($precioCerveza * $item->cantidad,2)}}</td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -200,7 +203,8 @@
                                         <td style="border-right: 1px solid black; font-size:25px; padding-top:50px;"> <strong>TOTAL $ </strong></td>
                                         <p hidden>{{$total=0}}</p>
                                             @foreach($pedido->itemsPedidos as $item)
-                                                <p hidden>{{$total+= $item->cantidad * $item->cerveza->precio}}</p>
+                                                <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
+                                                <p hidden>{{$total+= $item->cantidad * $precioCerveza}}</p>
                                             @endforeach
                                         
                                         <td class="text-center" style="padding-top:50px; font-size:25px;" ><div style="border: 1px solid black; border-radius: 15px;"><strong>{{number_format($total,2)}} </strong></div></td>
