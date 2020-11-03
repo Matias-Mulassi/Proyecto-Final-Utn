@@ -214,6 +214,13 @@ class CarritoController extends Controller
             $pedidos = Pedido::whereDate('fecha_entrega','=',$fechaEntrega)->where('deleted_at',null)->get();
             $cervezas = Cerveza::all()->where('deleted_at',null);
             $cervezasExcedidas=array();
+
+            if(Carbon::now()->format('H:i:s')>='20:00:00' & $request['fechaPedido']===Carbon::now()->addDays(1)->format('Y-m-d'))
+            {
+                $message='No se toman pedidos para el dia siguiente despues de las 20 hs. Escoja otra fecha';
+                return redirect()->route('mostrarCarrito')->with('messageError',$message);
+            }
+
             foreach($cervezas as $cerveza)
             {
                 ${"litros_".$cerveza->nombre}=0;
