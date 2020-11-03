@@ -28,11 +28,11 @@
       </div>
     </nav>
 
-    <h1 style="color:goldenrod; margin-right:220px;" class="h3 mt-5 font-weight-normal text-center"> Información del camion <img src="https://img.icons8.com/plasticine/80/000000/truck.png"/> </h1>
+    <h1 class="text-center mt-5"  style="color:goldenrod;"><img src="https://img.icons8.com/doodle/48/000000/business-report.png"/></i> SECCIÓN LOGISTICA</h1>
     @if($litrosTotales!=1500)
     <h4 style="color:goldenrod; margin-right:220px;" class="text-center">(Quedan {{1500-$litrosTotales}} lts de capacidad)</h4>
     @else
-    <h4 style="color:goldenrod; margin-right:220px;" class="text-center">(El camión se encuentra lleno!)</h4>
+    <h4 style="color:goldenrod;" class="text-center">(El camión se encuentra lleno!)</h4>
     @endif
      
     <center>
@@ -140,26 +140,60 @@
         @endif
 
         
+        <div class="container text-center">
+
+          @if(count($pedidos)>0)
+          <div class="row mt-5">
+
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Facturas</h5>
+                              <hr>
+                              <p class="card-text">Imprimir todas las facturas de los pedidos a entregar.</p>
+                              <a href="{{route('imprimirFacturas')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Facturas</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Remitos</h5>
+                              <hr>
+                              <p class="card-text">Imprimir todas los remitos para respaldar la mercaderia entregada.</p>
+                              <a href="{{route('imprimirRemitos')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Remitos</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Hoja de ruta</h5>
+                              <hr>
+                              <p class="card-text">Listado con todos los destinos y cantidad a entregar de cada pedido.</p>
+                              <a href="{{route('hojaRuta')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-map"></i> Hoja de ruta</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              
+          </div>
+          @endif
       
-        
-        
+        </div>
 
-
-            <p>
- 
-              @if(count($pedidos)>0)
-              
-              <a href="{{route('imprimirFacturas')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Facturas</a>
-              <a href="{{route('imprimirRemitos')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Remitos</a>
-              <a href="{{route('hojaRuta')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Hoja de ruta</a>
-              @endif
-              @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
-              <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-3">Despachar Camión <i class="fa fa-truck"></i></a>
-              @endif
-              <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
-              
-            </p>
-
-
+        @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
+        <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-5">Despachar Camión <i class="fa fa-truck"></i></a>  
+        @endif
+        <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
 
 @endsection

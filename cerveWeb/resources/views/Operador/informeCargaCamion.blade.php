@@ -19,10 +19,9 @@
         </p>
 
 
-<!-- Se agrega desperdicio -->
+<!-- Se obtiene total litros por cerveza -->
         
         @foreach($cervezas as $cerveza)
-        <p hidden>{{${"litros_".$cerveza->nombre}+=round(${"litros_".$cerveza->nombre}*$cerveza->desperdicio)}}</p>
         @php ${"totalLitros_".$cerveza->nombre}=${"litros_".$cerveza->nombre};@endphp
         
         @endforeach

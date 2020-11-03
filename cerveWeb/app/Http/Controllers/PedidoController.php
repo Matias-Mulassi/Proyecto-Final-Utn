@@ -334,7 +334,7 @@ class PedidoController extends Controller
                 $cerveza = Cerveza::find($item->cerveza->id);
                 if(isset($cerveza))
                 { 
-                    $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
+                    $cerveza->cantidadStock = round($cerveza->cantidadStock - $item->cantidad - $item->cantidad * $cerveza->desperdicio);
                     $cerveza->update();
                 }
                 else{
@@ -457,7 +457,7 @@ class PedidoController extends Controller
                 $cerveza = Cerveza::find($item->cerveza->id);
                 if(isset($cerveza))
                 { 
-                    $cerveza->cantidadStock = $cerveza->cantidadStock - $item->cantidad;
+                    $cerveza->cantidadStock = round($cerveza->cantidadStock - $item->cantidad- $item->cantidad * $cerveza->desperdicio);
                     $cerveza->update();
                 }
                 else{
@@ -803,7 +803,6 @@ class PedidoController extends Controller
 
     public function showHojaRuta()
     {
-        $pedidos = Pedido::where('deleted_at',null)->where('estado','=','en expedicion')->get();
-        return view('Operador.hojaRuta',compact('pedidos'));
+        return view('Operador.hojaRuta');
     }
 }
