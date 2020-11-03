@@ -48,28 +48,14 @@
         </div>
     @endif
     </center> <br>
-    <center>
-    @if(count($pedidosPostergadosCapacidad)>0)
-        <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>Debido a exceso de capacidad del camion, estos son los pedidos postergados para mañana :</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                      <span aria-hidden="true">&times;</span> 
-                    </button>
-                    @foreach($pedidosPostergadosCapacidad as $number)
-                      <h3>Pedido n° {{$number}}</h3>
-                    @endforeach                   
-        </div>
-    @endif
-    </center>
-
-
+    
     <center>
     @php
       use Carbon\Carbon;
     @endphp
     @if($litrosTotales==1500 & Carbon::now()->format('H:i:s')>='20:00:00')
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos. Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia.Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos para mañana.Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -87,7 +73,7 @@
     @elseif(Carbon::now()->format('H:i:s')>='20:00:00')
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos para mañana. Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -192,8 +178,49 @@
         </div>
 
         @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
-        <a href="{{route('logisticaCamion')}}" class="btn btn-success  btn-lg float-right mr-3 mt-5">Despachar Camión <i class="fa fa-truck"></i></a>  
+        
+        <button type="button"  class="btn btn-success btn-lg float-right mt-5 mr-3" data-toggle="modal" data-target="#__{{1}}">
+              Despachar Camión <i class="fa fa-truck"></i>
+        </button> 
         @endif
         <a href="{{route('listadoPedidosEntrega')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-5"><i class="fa fa-chevron-circle-left"></i> Ver pedidos</a>
+        
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="__{{1}}" tabindex="-1" role="dialog" aria-labelledby="_{{1}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Despacho de camión</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             Antes de despachar el camión, se aseguró de imprimir todos los comprobantes necesarios para el despacho?
+                             <ul class="text-left">
+                              <li>Facturas</li>
+                              <li>Remitos</li>
+                              <li>Hoja de ruta</li>
+                             </ul>
+                              <br> <br>
+
+                          <strong>
+                            <center>
+                                <p><span class="text-danger text-center"> <i class="fa fa-info-circle"></i> Tenga en cuenta que una vez despachado el camión no podrá volver a imprimir dichos comprobantes.</span></p>
+                            </center>
+                          </strong>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                           <a href="{{route('logisticaCamion')}}" class="btn btn-primary">Confirmar</a>   
+                           
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->
 
 @endsection

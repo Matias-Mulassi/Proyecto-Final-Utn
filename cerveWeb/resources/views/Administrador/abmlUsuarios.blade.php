@@ -182,21 +182,6 @@
                                   <strong>Razon Social: </strong>{{$usuario->razonSocial}}<br>   
                                   <strong>Condición IVA: </strong>{{$usuario->condicionIVA}}<br> 
                                   <strong>Recibe pedidos en : </strong>{{$usuario->direcciónEntrega}}<br>            
-                                  @switch($usuario->prioridad)
-                                    @case(1)
-                                        <strong>Prioridad : </strong>Baja<br>
-                                        @break
-
-                                    @case(2)
-                                        <strong>Prioridad : </strong>Mediana<br>
-                                        @break
-
-                                    @case(3)
-                                        <strong>Prioridad : </strong>Alta<br>
-                                        @break
-                                    @default
-                                        <strong>Prioridad : </strong>No aplica<br>
-                                  @endswitch
                                 @endif
                               </center>
                        </div>

@@ -60,7 +60,6 @@ class RegisterController extends Controller
             'razonSocial' => ['required','regex:/^[A-Za-z\s-_]+$/', 'max:255'],
             'condicionIVA' => ['required','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
             'direcciónEntrega' => ['required','string'],
-            'prioridad' => ['required','integer'],
             'telefono' => ['required','numeric'],
             
             
@@ -86,7 +85,6 @@ class RegisterController extends Controller
             'razonSocial'=> $data['razonSocial'],
             'condicionIVA'=> $data['condicionIVA'],
             'direcciónEntrega'=> $data['direcciónEntrega'],
-            'prioridad'=> $data['prioridad'],
             'telefono'=> $data['telefono'],
         ]);
     }

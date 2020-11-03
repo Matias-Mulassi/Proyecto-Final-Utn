@@ -75,7 +75,6 @@ class UserController extends Controller
           'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
           'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
           'direcciónEntrega' => ['nullable','string'],
-          'prioridad' => ['nullable','integer'],
           'telefono' => ['nullable','numeric'],
         ];   
 
@@ -100,7 +99,6 @@ class UserController extends Controller
                 'razonSocial.regex'=>'Formato de razon Social incorrecto',
                 'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
                 'condicionIVA.in'=>'Valor Incorrecto, Vuelta a intentarlo',
-                'prioridad.integer'=>'Debe ser un valor entero',
                 'telefono.numeric'=>'El telefono debe ser numerico',
 
                 
@@ -120,7 +118,6 @@ class UserController extends Controller
           $us->razonSocial= $request['razonSocial'];
           $us->condicionIVA= $request['condicionIVA'];
           $us->direcciónEntrega= $request['direcciónEntrega'];
-          $us->prioridad= $request['prioridad'];
           $us->telefono= $request['telefono'];
           $us->cuitcuil= $request['cuitcuil'];
           $us->save(); 
@@ -191,7 +188,6 @@ class UserController extends Controller
             'razonSocial' => ['nullable','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255'],
             'condicionIVA' => ['nullable','in:Responsable Inscripto,Monotributista,Exento,Consumidor Final'],
             'direcciónEntrega' => ['nullable','string'],
-            'prioridad' => ['nullable','integer'],
             'telefono' => ['nullable','numeric'],
                ];   
 
@@ -212,7 +208,7 @@ class UserController extends Controller
                   'razonSocial.regex'=>'Formato de razon Social incorrecto',
                   'razonSocial.max'=>'La longitud de la Razon Social supera el máximo requerido',
                   'condicionIVA.in'=>'Valor Incorrecto, Vuelta a intentarlo',
-                  'prioridad.integer'=>'Debe ser un valor entero',
+          
                   'telefono.numeric'=>'El telefono debe ser numerico',
                   ];          
 

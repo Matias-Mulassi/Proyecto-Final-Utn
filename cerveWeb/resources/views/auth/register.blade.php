@@ -36,7 +36,6 @@
                         </div>
                     </div>                        
                     <input type="hidden" name="id_tipo_usuario" value="1" required>
-                    <input type="hidden" name="prioridad" value="1" required>
                     <div class="form-row">
                         <div class="col-md-6 mt-4 text-left">
                                 <label for="Razon Social">

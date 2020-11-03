@@ -9,7 +9,7 @@
         
         
         
-        <div class="col-md-10 mt-4">
+        <div class="col-md-12 mt-4">
             <div class="card text-center mt-5">
             <div class="card-header">
                 <ul class="nav nav-tabs card-header-tabs">
@@ -40,7 +40,7 @@
         <hr>
         <ul class="nav flex-column mb-2 text-center">
           <li class="nav-item">
-            <a type="button" class="text-info" data-toggle="modal" data-target="#_informe">
+            <a href="{{route('informeCargaCamion')}}" class="text-info">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
               Informe cervezas
             </a>
@@ -49,7 +49,7 @@
       </div>
     </nav>
 
-    <h1 style="color:goldenrod; margin-right:220px;" class="h3 mt-5 font-weight-normal text-center"> Información del camion <img src="https://img.icons8.com/plasticine/80/000000/truck.png"/> </h1>
+    <h1 class="text-center mt-5"  style="color:goldenrod;"><img src="https://img.icons8.com/doodle/48/000000/business-report.png"/></i> SECCIÓN LOGISTICA</h1>
     @if($litrosTotales!=1500)
       <h4 style="color:goldenrod; margin-right:220px;" class="text-center">(Quedan {{1500-$litrosTotales}} lts de capacidad)</h4>
     @else
@@ -62,7 +62,7 @@
     @endphp
     @if($litrosTotales==1500 & Carbon::now()->format('H:i:s')>='20:00:00')
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos. Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia.Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno y no se toman mas pedidos.Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -71,7 +71,7 @@
     @elseif($litrosTotales==1500)
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>El camión se encuentra lleno. Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -80,7 +80,7 @@
     @elseif(Carbon::now()->format('H:i:s')>='20:00:00')
     <center>
         <div class=" col-md-6 mt-2 mb-3 alert alert-info alert-dismissible fade show" role="alert">
-                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos.Todos los nuevos pedidos que ingresar a partir de ahora son postergados 1 dia. Presione "Despachar camión" para enviar todos los pedidos</strong>
+                    <i class="fa fa-info-circle fa-4x float-left"></i> <br>  <strong>No se toman más pedidos. Presione "Despachar camión" para enviar todos los pedidos</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span> 
                     </button>               
@@ -130,181 +130,67 @@
             </div>
         @endif
 
-        
+        <div class="container text-center">
+
+          @if(count($pedidos)>0)
+          <div class="row mt-5">
+
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Facturas</h5>
+                              <hr>
+                              <p class="card-text">Imprimir todas las facturas de los pedidos a entregar.</p>
+                              <a href="{{route('imprimirFacturas')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Facturas</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Remitos</h5>
+                              <hr>
+                              <p class="card-text">Imprimir todas los remitos para respaldar la mercaderia entregada.</p>
+                              <a href="{{route('imprimirRemitos')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-print"></i> Imprimir Remitos</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              <div class="col-md-4">
+                <div class="card" style="width: 18rem;">
+                          <div class="card-body">
+                      
+                              <h5 class="card-title">Hoja de ruta</h5>
+                              <hr>
+                              <p class="card-text">Listado con todos los destinos y cantidad a entregar de cada pedido.</p>
+                              <a href="{{route('hojaRuta')}}" class="btn btn-warning  btn-lg float-right mr-3 mt-3"><i class="fa fa-map"></i> Hoja de ruta</a>
+                          </div>
+                  </div>
+                
+              </div>
+
+              
+          </div>
+          @endif
       
-        @php
-        use App\Cerveza;
-        $cervezas = Cerveza::all()->where('deleted_at',null);
-        @endphp
-        @foreach($cervezas as $cerveza)
-          <p hidden> {{${"litros_".$cerveza->nombre}=0}} </p>
-        @endforeach
-        <p hidden>
-          @foreach($pedidos as $pedido)
-            @foreach($pedido->itemsPedidos as $item)
-              {{${"litros_".$item->cerveza->nombre} +=$item->cantidad}}
-            @endforeach
-          @endforeach
-        </p>
-        <!-- Modal Informe -->
-        <div class="modal fade" id="_informe" tabindex="-1" role="dialog" aria-labelledby="_informe" aria-hidden="true">
-                  <div class="modal-dialog modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Cervezas Por Litro</h5>
-                        
-                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                 <span aria-hidden="true">&times;</span>
-                              </button>
-                       </div>
-                       <div class="modal-body">
-                           <!-- Styles -->
-<style>
-#chartdiv2 {
-  width: 100%;
-  height: 500px;
-}
-
-</style>
-
-<!-- Resources -->
-<script src="https://cdn.amcharts.com/lib/4/core.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/charts.js"></script>
-<script src="https://cdn.amcharts.com/lib/4/themes/animated.js"></script>
-
-<!-- Chart code -->
-<script>
-am4core.ready(function() {
-
-// Themes begin
-am4core.useTheme(am4themes_animated);
-// Themes end
-
-/**
- * Chart design taken from Samsung health app
- */
-
-var chart = am4core.create("chartdiv2", am4charts.XYChart);
-chart.hiddenState.properties.opacity = 0; // this creates initial fade-in
-
-chart.paddingBottom = 30;
-
-chart.data = [
-  
-  @foreach($cervezas as $cerveza)
-  {
-    "name": "{{$cerveza->nombre}}",
-    "steps":  @json(${"litros_".$cerveza->nombre}),
-    "href": "{{$cerveza->image}}"
-  },
-  @endforeach
-];
-
-var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-categoryAxis.dataFields.category = "name";
-categoryAxis.renderer.grid.template.strokeOpacity = 0;
-categoryAxis.renderer.minGridDistance = 10;
-categoryAxis.renderer.labels.template.dy = 35;
-categoryAxis.renderer.tooltip.dy = 35;
-
-var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-valueAxis.renderer.inside = true;
-valueAxis.renderer.labels.template.fillOpacity = 0.3;
-valueAxis.renderer.grid.template.strokeOpacity = 0;
-valueAxis.min = 0;
-valueAxis.cursorTooltipEnabled = false;
-valueAxis.renderer.baseGrid.strokeOpacity = 0;
-
-var series = chart.series.push(new am4charts.ColumnSeries);
-series.dataFields.valueY = "steps";
-series.dataFields.categoryX = "name";
-series.tooltipText = "{valueY.value}";
-series.tooltip.pointerOrientation = "vertical";
-series.tooltip.dy = - 6;
-series.columnsContainer.zIndex = 100;
-
-var columnTemplate = series.columns.template;
-columnTemplate.width = am4core.percent(50);
-columnTemplate.maxWidth = 66;
-columnTemplate.column.cornerRadius(60, 60, 10, 10);
-columnTemplate.strokeOpacity = 0;
-
-series.heatRules.push({ target: columnTemplate, property: "fill", dataField: "valueY", min: am4core.color("#e5dc36"), max: am4core.color("#5faa46") });
-series.mainContainer.mask = undefined;
-
-var cursor = new am4charts.XYCursor();
-chart.cursor = cursor;
-cursor.lineX.disabled = true;
-cursor.lineY.disabled = true;
-cursor.behavior = "none";
-
-var bullet = columnTemplate.createChild(am4charts.CircleBullet);
-bullet.circle.radius = 30;
-bullet.valign = "bottom";
-bullet.align = "center";
-bullet.isMeasured = true;
-bullet.mouseEnabled = false;
-bullet.verticalCenter = "bottom";
-bullet.interactionsEnabled = false;
-
-var hoverState = bullet.states.create("hover");
-var outlineCircle = bullet.createChild(am4core.Circle);
-outlineCircle.adapter.add("radius", function (radius, target) {
-    var circleBullet = target.parent;
-    return circleBullet.circle.pixelRadius + 10;
-})
-
-var image = bullet.createChild(am4core.Image);
-image.width = 60;
-image.height = 60;
-image.horizontalCenter = "middle";
-image.verticalCenter = "middle";
-image.propertyFields.href = "href";
-
-image.adapter.add("mask", function (mask, target) {
-    var circleBullet = target.parent;
-    return circleBullet.circle;
-})
-
-var previousBullet;
-chart.cursor.events.on("cursorpositionchanged", function (event) {
-    var dataItem = series.tooltipDataItem;
-
-    if (dataItem.column) {
-        var bullet = dataItem.column.children.getIndex(1);
-
-        if (previousBullet && previousBullet != bullet) {
-            previousBullet.isHover = false;
-        }
-
-        if (previousBullet != bullet) {
-
-            var hs = bullet.states.getKey("hover");
-            hs.properties.dy = -bullet.parent.pixelHeight + 30;
-            bullet.isHover = true;
-
-            previousBullet = bullet;
-        }
-    }
-})
-
-}); // end am4core.ready()
-</script>
-
-<!-- HTML -->
-<div id="chartdiv2"></div>
-                       </div>
-                       <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
-                       </div>
-                    </div>
-                </div>
-            </div>
-            <!-- -->
+        </div>
 
 
+      
             </div>
             </div>
+        @if($litrosTotales==1500 || (Carbon::now()->format('H:i:s')>='20:00:00'))
+        
+          <button type="button"  class="btn btn-success btn-lg float-right mt-5 mr-3" data-toggle="modal" data-target="#__{{1}}">
+                Despachar Camión <i class="fa fa-truck"></i>
+          </button> 
+        @endif
         </div>
     </center>
 
@@ -317,7 +203,40 @@ chart.cursor.events.on("cursorpositionchanged", function (event) {
 
 
 
+<!-- Modal -->
+<div class="modal fade" id="__{{1}}" tabindex="-1" role="dialog" aria-labelledby="_{{1}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Despacho de camión</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             Antes de despachar el camión, se aseguró de imprimir todos los comprobantes necesarios para el despacho?
+                             <ul class="text-left">
+                              <li>Facturas</li>
+                              <li>Remitos</li>
+                              <li>Hoja de ruta</li>
+                             </ul>
+                              <br> <br>
 
+                          <strong>
+                            <center>
+                                <p><span class="text-danger text-center"> <i class="fa fa-info-circle"></i> Tenga en cuenta que una vez despachado el camión no podrá volver a imprimir dichos comprobantes.</span></p>
+                            </center>
+                          </strong>
+                       </div>
+                       <div class="modal-footer">
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                           <a href="{{route('logisticaCamion')}}" class="btn btn-primary">Confirmar</a>   
+                           
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->
 
 
 
