@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cerveza;
+use App\Pedido;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\CervezaController;
+use App\Http\Controllers\PedidoController;
 
 class CarritoController extends Controller
 {
@@ -201,12 +203,77 @@ class CarritoController extends Controller
                 ];
 
 
+
             $validacion = $this->validate($request,$rules,$messages);
 
             if($validacion)
             {
             $fechaEntrega = Carbon::parse($request['fechaPedido'])->format('Y-m-d');
             $carrito = \Session::get('carrito');
+            
+            $pedidos = Pedido::whereDate('fecha_entrega','=',$fechaEntrega)->where('deleted_at',null)->get();
+            $cervezas = Cerveza::all()->where('deleted_at',null);
+            $cervezasExcedidas=array();
+            foreach($cervezas as $cerveza)
+            {
+                ${"litros_".$cerveza->nombre}=0;
+                ${"limite_".$cerveza->nombre}=$cerveza->ventaLimite;
+    
+                foreach($pedidos as $pedido)
+                {
+                         
+                    foreach($pedido->itemsPedidos as $item)
+                    {
+                        if($item->cerveza->nombre==$cerveza->nombre)
+                        {
+                            ${"litros_".$cerveza->nombre}+=$item->cantidad;
+                        }
+            
+                    }
+                }
+    
+            }
+    
+    
+            $c=0;
+            foreach($cervezas as $cerveza)
+            {
+                if(${"litros_".$cerveza->nombre}==$cerveza->ventaLimite)
+                {
+                    $c++;
+                }
+            }
+    
+            if($c==count($cervezas))
+            {
+                $message='Dia de entrega completo. Escoja otra fecha para la entrega de su pedido';
+                return redirect()->route('mostrarCarrito')->with('messageError',$message);
+    
+            }
+           
+            foreach($carrito as $item)
+            {
+                if(${"litros_".$item->nombre}+$item->cantidad>${"limite_".$item->nombre})
+                {
+                    $item->cantidadExcedida=${"litros_".$item->nombre}+$item->cantidad-${"limite_".$item->nombre};
+                    array_push($cervezasExcedidas,$item);
+                }
+            }
+    
+    
+            if(count($cervezasExcedidas)>0)
+            {
+                $message="Dia de entrega completo. Escoja otra fecha o modifique su pedido:";
+                
+                foreach($cervezasExcedidas as $cerveza)
+                {
+                    $message.="
+Litros excedidos cerveza ".$cerveza->nombre." a sacar : ".$cerveza->cantidadExcedida." lts";
+                    
+                }
+                return redirect()->route('mostrarCarrito')->with('messageError2',$message);
+            }
+
             $total = $this->getTotal();
 
             return view('Usuario.detallePedido',compact('carrito','total','fechaEntrega'));
@@ -219,4 +286,6 @@ class CarritoController extends Controller
         
 
     }
+
+
 }

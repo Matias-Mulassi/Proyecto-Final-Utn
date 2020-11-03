@@ -217,7 +217,6 @@ Route::get('/estadoPago',array(
 //Registrar un pedido sin pagar
 
 Route::get('/registroSinPago/{fechaEntrega}',[
-	'middleware' =>'prioridad',
 	'as' => 'registroSinPago',
 	'uses' => 'PedidoController@registrarPedido'
 ]);

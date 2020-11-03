@@ -61,9 +61,7 @@ $cervezaController = new CervezaController();
                 <p>
                     <a href="{{route('mostrarCarrito')}}" class="btn btn-primary"> <i class="fa fa-chevron-circle-left"></i> Regresar</a>
 
-                    <a href="{{route('pago')}}" class="btn btn-warning"> Pagar con <i class="fa fa-paypal fa-2x"></i></a> 
-
-                    <a href="{{route('registroSinPago',$fechaEntrega)}}" class="btn btn-warning"> Realizar Pedido sin Abonar </a>                  
+                    <a href="{{route('registroSinPago',$fechaEntrega)}}" class="btn btn-warning"> Realizar Pedido </a>                  
                 </p>
             </div>
         </div>
