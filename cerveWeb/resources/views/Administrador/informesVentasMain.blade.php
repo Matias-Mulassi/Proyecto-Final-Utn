@@ -15,6 +15,7 @@
 
 
             <div class="col-md-6">
+                <center>
                 <div class="card" style="width: 18rem;">
                 
                 <img src="https://i.ibb.co/YBk9g60/clientes.jpg" alt="clientes" alt="compra-Proveedor" class="card-img-top">
@@ -28,10 +29,11 @@
                         
                     </div>
                 </div>
+                </center>
             </div>
 
             <div class="col-md-6">
-                
+                <center>
                 <div class="card" style="width: 18rem;">
  
                 <img src="https://i.ibb.co/BcMH8Mg/cervezas.jpg" alt="cervezas" class="card-img-top">
@@ -44,12 +46,15 @@
                             </button>
                         </div>
                 </div>
+                </center>
             </div>
 
 
         </div>
         
         
+
+        <a href="{{route('informes')}}" class="btn btn-warning mr-3 mt-3"><i class="fa fa-chevron-circle-left"></i> Volver</a>
     </div>
     
 

@@ -216,12 +216,12 @@ class PDFController extends Controller
             {
                 case "Responsable Inscripto":
                     $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
-                    $factura =   PDF :: loadView ('Usuario.facturaAmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    $factura =   PDF:: loadView ('Usuario.facturaAmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
                     Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
                     break;
                 default:
                     $fechapago= Carbon::parse($pedido->fecha_facturacion)->addDays(15)->format('d-m-Y');
-                    $factura =   PDF :: loadView ('Usuario.facturaBmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
+                    $factura =   PDF:: loadView ('Usuario.facturaBmail' , [ 'pedido' => $pedido , 'fechaPago' => $fechapago ])->setPaper('a3', 'portrait')->setWarnings(false);
                     Mail::to('fernandoalbertengo5@gmail.com')->send(new BillReceived($factura->output(),$pedido->id));
                     break;
 
