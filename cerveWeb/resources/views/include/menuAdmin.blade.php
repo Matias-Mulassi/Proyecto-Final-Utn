@@ -95,9 +95,7 @@
                                                 
                                             @case(3)
                                                 <span>
-                                                    <a class="dropdown-item" href="#">Pedidos</a>
-                                                    <a class="dropdown-item" href="#">Stock</a>
-                                                    <a class="dropdown-item" href="#">Logistica</a>
+                                                    <a class="dropdown-item" href="{{ route('listadoPedidosEntrega') }}">Pedidos</a>
                                                 </span>
                                                 @break    
                                            

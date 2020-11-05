@@ -211,7 +211,7 @@ Route::group(['middleware' => ['auth']], function()
 });
 
 
-
+//USUARIO
 
 Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
 Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');

@@ -5,7 +5,7 @@
 @php
         use App\Cerveza;
         use Carbon\Carbon;
-        $cervezas = Cerveza::all()->where('deleted_at',null);
+        $cervezas = Cerveza::all();
         @endphp
         @foreach($cervezas as $cerveza)
           <p hidden> {{${"litros_".$cerveza->nombre}=0}} </p>

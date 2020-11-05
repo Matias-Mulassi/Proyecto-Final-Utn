@@ -7,8 +7,8 @@
           use App\User;
           use Carbon\Carbon;
           use App\Pedido;
-          $cervezas = Cerveza::all()->where('deleted_at',null);
-          $clientes = User::where('deleted_at',null)->where('id_tipo_usuario',1)->get();
+          $cervezas = Cerveza::all();
+          $clientes = User::where('id_tipo_usuario',1)->get();
   @endphp
 
 <!-- se declaran litros por cerveza de cada cliente y cantidad garrafas por cerveza -->

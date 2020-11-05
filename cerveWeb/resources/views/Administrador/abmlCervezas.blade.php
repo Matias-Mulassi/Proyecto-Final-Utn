@@ -133,7 +133,8 @@ $cervezaController = new CervezaController();
                         
                             <strong>Descripción: </strong>{{$cerveza->descripcion}}<br> <br><br>
 
-                            <strong>Precio x lt: </strong>{{$cerveza->precio}}<br> <br>
+
+                            <strong>Precio x lt: </strong>{{$cervezaController->getUltimoPrecio($cerveza->id)}}<br> <br>
                             <br>
 
 
