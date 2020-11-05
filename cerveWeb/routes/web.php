@@ -202,7 +202,8 @@ Route::group(['middleware' => ['auth']], function()
 	
 
 	// ANULACIÓN DE COMPRA
-	Route::post('/eliminarCompra/{compra}','CompraController@eliminarCompra' )->name('eliminarCompra');
+	Route::get('/eliminarCompra/{compra}','CompraController@eliminarCompra' )->name('eliminarCompra');
+	Route::get('/eliminarTodasCompras','CompraController@eliminarTodasCompras' )->name('eliminarTodasCompras');
 	
 });
 

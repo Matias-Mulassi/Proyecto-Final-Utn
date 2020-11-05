@@ -249,7 +249,7 @@ class CompraController extends Controller
         return $compras;
     }
 
-    public function eliminarCompra($compra)
+    public function eliminarCompra(Compra $compra)
     {
        
         $cerveza = Cerveza::find($compra->cerveza->id);
