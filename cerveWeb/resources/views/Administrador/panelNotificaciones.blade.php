@@ -46,14 +46,21 @@
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
           <strong class="text-gray-dark">@Sistema</strong>
-          <a href="{{route('confirmarAbastecimiento',['cerveza'=>$cervezas[$i],'proveedor'=>$cervezas[$i]->proveedor,'mensaje'=>$mensajes[$i]])}}">Confirmar</a>
+          <p>
+          <a class="mr-3" href="{{route('confirmarAbastecimiento',['cerveza'=>$cervezas[$i],'proveedor'=>$cervezas[$i]->proveedor,'mensaje'=>$mensajes[$i]])}}">Confirmar</a>
+          <a href="{{route('eliminarMensajeAcción',$mensaje)}}">Eliminar</a
+          </p>
+          
         </div>
         <span class="d-block">Realizar compra de {{$cervezas[$i]->loteOptimo}} lts de cerveza {{$cervezas[$i]->nombre}} al proveedor <strong>{{$cervezas[$i]->proveedor->razonSocial}}</strong></span>
       </div>
     </div>
     @endfor
     <small class="d-block text-right mt-3">
-      <a href="{{route('procesarAbastecimiento')}}">Realizar todas las compras</a>
+      <p>
+        <a class="mr-5" href="{{route('procesarAbastecimiento')}}">Realizar todas las compras</a>
+        <a href="{{route('eliminarTodosMensajes')}}">Eliminar todo</a>
+      </p>
     </small>
   </div>
   @else
@@ -75,6 +82,22 @@
   @endif
             </div>
             </div>
+
+            @if(session('success'))
+        <div class=" col-md-6 float-left ml-2 mt-2 alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{session('success')}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    @elseif(session('error'))
+        <div class=" col-md-6 float-left mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{session('error')}}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+        </div>
+    @endif
         </div>
   
 </main>

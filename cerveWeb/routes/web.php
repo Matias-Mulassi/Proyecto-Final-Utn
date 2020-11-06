@@ -146,6 +146,9 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/panelInformacion','MensajeController@showInformacion' )->name('panelInformacion');
 	Route::get('/eliminarNotificacionStock/{mensaje}','MensajeController@eliminarInformacion' )->name('eliminarNotificacionStock');
 	Route::get('/eliminarMensajes','MensajeController@eliminarMensajesInfo' )->name('eliminarMensajes');
+	Route::get('/eliminarMensajeAcción/{mensaje}','MensajeController@eliminarMensaje' )->name('eliminarMensajeAcción');
+	Route::get('/eliminarTodosMensajes','MensajeController@eliminarTodosMensajes' )->name('eliminarTodosMensajes');
+	
 	
 
 	//INFORMES

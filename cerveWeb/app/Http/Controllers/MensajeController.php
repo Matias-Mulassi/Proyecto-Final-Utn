@@ -174,4 +174,30 @@ class MensajeController extends Controller
 
     }
 
+    public function eliminarMensaje(Mensaje $mensaje)
+    {
+        
+        $mensaje->delete();
+     
+        return redirect('home')->with('message','Mensaje eliminado con exito.');
+        
+    }
+
+
+    public function eliminarTodosMensajes()
+    {   $mensajes = Mensaje::where('procesado',false)->where('informativo',false)->get();
+        if(count($mensajes)>0)
+        {
+            foreach($mensajes as $mensaje)
+            {
+                $mensaje->delete();
+            }
+            return redirect('home')->with('message','Mensajes eliminado con exito.');
+        }
+        else
+        {
+            return redirect('home')->with('messageError','No hay mensajes que borrar.');
+        }
+        
+    }
 }
