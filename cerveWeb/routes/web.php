@@ -156,6 +156,8 @@ Route::group(['middleware' => ['auth']], function()
 	
 	Route::get('/informeComprasProveedor','InformesController@showComprasProveedores' )->name('informeComprasProveedor');
 	Route::get('/informeComprasProveedoresSeleccionados','InformesController@showComprasProveedoresSelect' )->name('informeComprasProveedoresSeleccionados');
+	Route::get('/informeComprasCervezas','InformesController@showComprasCervezas' )->name('informeComprasCervezas');
+	Route::get('/informeVentasCervezasSeleccionados','InformesController@showComprasCervezasSelect' )->name('informeVentasCervezasSeleccionados');
 	Route::get('/informeVentasClientes','InformesController@showVentasClientes' )->name('informeVentasClientes');
 	Route::get('/informeVentasClientesSeleccionados','InformesController@showVentasClientesSelect' )->name('informeVentasClientesSeleccionados');
 	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');
@@ -167,9 +169,12 @@ Route::group(['middleware' => ['auth']], function()
 
 	//BUSCAR CERVEZA
 	Route::get('/buscarCerveza','InformesController@buscarCerveza' )->name('buscarCerveza');
+	Route::get('/buscarCompraCerveza','InformesController@buscarCompraCerveza' )->name('buscarCompraCerveza');
+	
 
 	//BUSCAR PROVEEDOR
 	Route::get('/buscarCompraProveedor','CompraController@buscarCompraProveedor' )->name('buscarCompraProveedor');
+
 	Route::get('/buscarProveedor','InformesController@buscarProveedor' )->name('buscarProveedor');
 
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');

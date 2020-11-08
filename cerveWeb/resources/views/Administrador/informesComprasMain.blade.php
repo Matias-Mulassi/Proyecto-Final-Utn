@@ -108,7 +108,7 @@
 
 
              <!-- Modal -->
-             <form method="GET" action="{{route('informeVentasCervezas')}}">
+             <form method="GET" action="{{route('informeComprasCervezas')}}">
             @csrf
              <div class="modal fade" id="_{{2}}" tabindex="-1" role="dialog" aria-labelledby="_{{2}}" aria-hidden="true">
                   <div class="modal-dialog" role="document">

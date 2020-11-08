@@ -200,6 +200,54 @@ class InformesController extends Controller
         
     }
 
+    public function showComprasCervezas(Request $request)
+    {
+
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de compras de cervezas.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de compras de cervezas.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta'];
+            $cervezas= Cerveza::all()->where('deleted_at',null);  
+            return view('Administrador.informesComprasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+        }
+
+        
+    }
+
+
     public function showVentasCervezas(Request $request)
     {
 
@@ -276,6 +324,15 @@ class InformesController extends Controller
         $cerveza= $request['cerveza'];
         $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
         return view('Administrador.informeVentasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+    }
+
+    public function buscarCompraCerveza(Request $request)
+    {
+        $fechaDesde = $request['fechaDesde'];
+        $fechaHasta = $request['fechaHasta'];
+        $cerveza= $request['cerveza'];
+        $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
+        return view('Administrador.informesComprasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
     }
 
 
@@ -407,8 +464,8 @@ class InformesController extends Controller
         ];   
 
         $messages = [
-                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas a clientes.',
-                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas a clientes.',
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de ventas de cervezas.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas a cervezas.',
                 'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
                 'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
             ];
@@ -426,4 +483,55 @@ class InformesController extends Controller
         
     }
 
+
+    public function showComprasCervezasSelect(Request $request)
+    {
+
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+            'cerveza' => ['nullable'],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de compras de cervezas.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de ventas de cervezas.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $cerveza= $request['cerveza'];
+            $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta']; 
+            return view('Administrador.informeComprasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+        }
+        
+        
+    }
+
+    
 }

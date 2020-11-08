@@ -243,5 +243,11 @@ class CompraController extends Controller
         return $compras;
     }
 
+    public function getComprasByCerveza($idCerveza,$fechaDesde,$fechaHasta)
+    {
+        $compras = Compra::where('id_cerveza','=',$idCerveza)->where('efectiva',true)->whereDate('fecha','>=',$fechaDesde)->whereDate('fecha','<=',$fechaHasta)->orderBy('fecha', 'ASC')->get();
+        return $compras;
+    }
+
     
 }
