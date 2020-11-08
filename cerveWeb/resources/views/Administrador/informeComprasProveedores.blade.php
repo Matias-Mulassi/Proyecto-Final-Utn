@@ -99,10 +99,10 @@ $compraController = new CompraController();
 
 
     <div class="alert alert-info col-md-6 mt-5" role="alert">
-    <h2 class="alert-heading">Resumen Informe Detallado</h4>
+    <h2 class="alert-heading">Resumen Informe Detallado</h2>
     <hr>
-    <h4><strong>Total Litros Comprados: </strong> {{$totalLitrosComprados}} Lts</h3>
-    <h4><strong>Total Compra: $</strong> {{number_format($totalCompra,2)}}</h3>
+    <h4><strong>Total Litros Comprados: </strong> {{$totalLitrosComprados}} Lts</h4>
+    <h4><strong>Total Compra: $</strong> {{number_format($totalCompra,2)}}</h4>
     
     
     </div>

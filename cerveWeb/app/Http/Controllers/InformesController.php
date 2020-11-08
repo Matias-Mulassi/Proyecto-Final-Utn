@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Compra;
 use App\Cerveza;
 use App\Proveedor;
 
@@ -531,6 +532,57 @@ class InformesController extends Controller
         }
         
         
+    }
+
+    public function showInformeGerencial(Request $request)
+    
+    {
+
+
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informes')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informes')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informes')->with('messageError', $message);
+        }
+
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis del informe General.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis del informe General.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta'];
+            $proveedores= Proveedor::all()->where('deleted_at',null);
+            $clientes = User::all()->where('deleted_at',null)->where('id_tipo_usuario',1);
+            $cervezas= Cerveza::all()->where('deleted_at',null);
+            return view('Administrador.informeGeneral',compact('proveedores','clientes','cervezas','fechaDesde','fechaHasta'));
+        }
+
+
     }
 
     

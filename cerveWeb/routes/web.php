@@ -153,6 +153,7 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/informes','InformesController@showMain' )->name('informes');
 	Route::get('/informeVentas','InformesController@showVentasMenu' )->name('informeVentas');
 	Route::get('/informeCompras','InformesController@showComprasMenu' )->name('informeCompras');
+	Route::get('/informeGerencial','InformesController@showInformeGerencial' )->name('informeGerencial');
 	
 	Route::get('/informeComprasProveedor','InformesController@showComprasProveedores' )->name('informeComprasProveedor');
 	Route::get('/informeComprasProveedoresSeleccionados','InformesController@showComprasProveedoresSelect' )->name('informeComprasProveedoresSeleccionados');
@@ -162,6 +163,9 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/informeVentasClientesSeleccionados','InformesController@showVentasClientesSelect' )->name('informeVentasClientesSeleccionados');
 	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');
 	Route::get('/informeVentasCervezasSeleccionados','InformesController@showVentasCervezasSelect' )->name('informeVentasCervezasSeleccionados');
+
+
+
 
 	
 	//BUSCAR CLIENTE
