@@ -142,14 +142,35 @@ $pedidoController = new PedidoController();
                        </div>
                        <div class="modal-body">
                              Confirma el ingreso de la siguiente mercaderia? <br> <br>
-                            <strong>Cerveza: </strong>{{$compra->cerveza->nombre}}<br> <br>
+                             <div class="table-responsive">
+                                  
+                                  <table class="table table-bordered table-striped mb-0">
+                                      <thead>
+                                    
+                                      <tr>
+                                          <th class="sticky-top bg-light text-center" scope="col">Fecha compra</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Proveedor</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Cerveza</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Cantidad (lts)</th>  
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        @foreach($compras as $compra)
 
-                            <strong>Cantidad: </strong>{{$compra->cantidad}} lts<br> <br>
+
+                                        <tr>
+                                            <th class="text-left"scope="row">{{Carbon::parse($compra->fecha)->format('d-m-Y')}}</th>
+                                            <td class="text-left">{{$compra->proveedor->razonSocial}}</td>
+                                            <td class="text-left">{{$compra->cerveza->nombre}}</td>
+                                            <td class="text-right">{{$compra->cantidad}} lts</td>
+                                            
+                                        </tr>
+                                        @endforeach
+                                        
+                                      </tbody>
+                              </table>
                         
-                            <strong>Proveedor: </strong>{{$compra->proveedor->razonSocial}}<br> <br>
-
-                             <p class="text-center"> Compra realizada el {{$pedidoController->traducirDia(Carbon::parse($compra->fecha)->format('l'))}} {{Carbon::parse($compra->fecha)->format('d-m-Y')}}
-                             </p>
+                          </div>
 
                           <strong>
                             <center>

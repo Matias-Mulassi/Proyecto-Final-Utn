@@ -20,7 +20,7 @@
                   
                         <h5 class="card-title">Compras</h5>
                         <p class="card-text">Informe detallado acerca de las compras de CerveWeb.</p>
-                        <a href="#" class="btn btn-primary">Ingresar</a>
+                        <a href="{{route('informeCompras')}}" class="btn btn-primary">Ingresar</a>
                     </div>
                 </div>
             </div>

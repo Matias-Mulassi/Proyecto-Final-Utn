@@ -152,6 +152,10 @@ Route::group(['middleware' => ['auth']], function()
 
 	Route::get('/informes','InformesController@showMain' )->name('informes');
 	Route::get('/informeVentas','InformesController@showVentasMenu' )->name('informeVentas');
+	Route::get('/informeCompras','InformesController@showComprasMenu' )->name('informeCompras');
+	
+	Route::get('/informeComprasProveedor','InformesController@showComprasProveedores' )->name('informeComprasProveedor');
+	Route::get('/informeComprasProveedoresSeleccionados','InformesController@showComprasProveedoresSelect' )->name('informeComprasProveedoresSeleccionados');
 	Route::get('/informeVentasClientes','InformesController@showVentasClientes' )->name('informeVentasClientes');
 	Route::get('/informeVentasClientesSeleccionados','InformesController@showVentasClientesSelect' )->name('informeVentasClientesSeleccionados');
 	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');
@@ -166,6 +170,7 @@ Route::group(['middleware' => ['auth']], function()
 
 	//BUSCAR PROVEEDOR
 	Route::get('/buscarCompraProveedor','CompraController@buscarCompraProveedor' )->name('buscarCompraProveedor');
+	Route::get('/buscarProveedor','InformesController@buscarProveedor' )->name('buscarProveedor');
 
 	Route::get('/confirmarAbastecimiento/{cerveza}/{proveedor}/{mensaje}','PDFController@enviarEmail' )->name('confirmarAbastecimiento');
 	Route::get('/procesarAbastecimiento','PDFController@enviarVariosEmails' )->name('procesarAbastecimiento');

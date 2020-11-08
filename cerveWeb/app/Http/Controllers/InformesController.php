@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Cerveza;
+use App\Proveedor;
 
 class InformesController extends Controller
 {
@@ -89,10 +90,64 @@ class InformesController extends Controller
         return view('Administrador.informesMain');
     }
 
+    public function showComprasMenu()
+    {
+        return view('Administrador.informesComprasMain');
+    }
 
     public function showVentasMenu()
     {
         return view('Administrador.informesVentasMain');
+    }
+
+    public function showComprasProveedores(Request $request)
+    {
+       
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de compras a proveedores.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de compras a proveedores.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+
+
+        if($validacion)
+        {
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta'];
+            $proveedores= Proveedor::all()->where('deleted_at',null); 
+            return view('Administrador.informeComprasProveedores',compact('proveedores','fechaDesde','fechaHasta'));
+        }
+        
+        
     }
 
     public function showVentasClientes(Request $request)
@@ -205,6 +260,15 @@ class InformesController extends Controller
         return view('Administrador.informeVentasClientes',compact('clientes','fechaDesde','fechaHasta'));
     }
 
+    public function buscarProveedor(Request $request)
+    {
+        $fechaDesde = $request['fechaDesde'];
+        $fechaHasta = $request['fechaHasta'];
+        $razonSocial= $request['razonSocial'];
+        $proveedores= Proveedor::where('deleted_at',null)->where('razonSocial','like',"%$razonSocial%")->get();
+        return view('Administrador.informeComprasProveedores',compact('proveedores','fechaDesde','fechaHasta'));
+    }
+
     public function buscarCerveza(Request $request)
     {
         $fechaDesde = $request['fechaDesde'];
@@ -214,6 +278,55 @@ class InformesController extends Controller
         return view('Administrador.informeVentasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
     }
 
+
+    public function showComprasProveedoresSelect(Request $request)
+    {
+        if(!($request['fechaDesde']))
+        {
+            $message = 'Error: Por favor ingrese fecha Desde para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        if(!($request['fechaHasta']))
+        {
+            $message = 'Error: Por favor ingrese fecha Hasta para el informe.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+        
+
+        if($request['fechaDesde'] > $request['fechaHasta'])
+        {
+            $message = 'Error: La fecha desde debe ser menor o igual a la fecha hasta.';
+			return redirect('informeCompras')->with('messageError', $message);
+        }
+
+        $rules = [
+                
+            'fechaDesde' => ['required','date','before_or_equal:'.$request['fechaHasta']],            
+            'fechaHasta' => ['required','date','after_or_equal:'.$request['fechaDesde']],
+            'proveedor' => ['nullable'],
+        ];   
+
+        $messages = [
+                'fechaDesde.required'=>'Seleccione desde dónde comenzar el analisis de compras a proveedores.',
+                'fechaHasta.required'=>'Seleccione desde dónde terminar el analisis de compras a proveedores.',
+                'fechaDesde.before_or_equal'=>'La fecha desde debe ser menor o igual a la fecha hasta.',
+                'fechaHasta.after_or_equal'=>'La fecha hasta debe ser mayor o igual a la fecha desde.',
+            ];
+
+        $validacion = $this->validate($request,$rules,$messages);
+        if($validacion)
+        {
+            $proveedor= $request['proveedor'];
+            $proveedores= Proveedor::where('deleted_at',null)->where('razonSocial','like',"%$proveedor%")->get();
+            $fechaDesde=$request['fechaDesde'];
+            $fechaHasta=$request['fechaHasta']; 
+            return view('Administrador.informeComprasProveedores',compact('proveedores','fechaDesde','fechaHasta'));
+        }
+       
+        
+        
+    }
 
     public function showVentasClientesSelect(Request $request)
     {

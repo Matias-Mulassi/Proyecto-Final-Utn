@@ -236,4 +236,12 @@ class CompraController extends Controller
         return redirect('recepcionMercaderia')->with('info','No hay mercaderia a ingresar.');    
     }
     
+
+    public function getComprasByProveedor($idProveedor,$fechaDesde,$fechaHasta)
+    {
+        $compras = Compra::where('id_proveedor','=',$idProveedor)->where('efectiva',true)->whereDate('fecha','>=',$fechaDesde)->whereDate('fecha','<=',$fechaHasta)->orderBy('fecha', 'ASC')->get();
+        return $compras;
+    }
+
+    
 }
