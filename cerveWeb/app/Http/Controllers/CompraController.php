@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Compra;
 use App\Cerveza;
 use App\Proveedor;
+use App\Mensaje;
+use App\User;
 use Carbon\Carbon;
 
 class CompraController extends Controller
@@ -116,18 +118,122 @@ class CompraController extends Controller
     public function buscarCompraProveedor(Request $request)
     {
         $razonSocial= $request['razonSocial'];
-        $proveedor= Proveedor::where('razonSocial','like',"%$razonSocial%")->get()->first();
-        if(isset($proveedor))
+        if($request['razonSocial']!="")
         {
-            $compras= Compra::where('id_proveedor',$proveedor->id)->where('efectiva',false)->get();
-            return view('Administrador.recepcionMercaderia',compact('compras'));
+            $proveedor= Proveedor::where('razonSocial','like',"%$razonSocial%")->get()->first();
+            if(isset($proveedor))
+            {
+                $compras= Compra::where('id_proveedor',$proveedor->id)->where('efectiva',false)->get();
+                return view('Administrador.recepcionMercaderia',compact('compras'));
+            }
+            else
+            {
+                return back()->with('messageError','Proveedor no encontrado.');
+            }
         }
         else
         {
-            return back()->with('messageError','Proveedor no encontrado.');
+            $compras = Compra::where('efectiva',false)->get();
+            return view('Administrador.recepcionMercaderia',compact('compras'));
         }
+        
         
     }
     
 
+    public function registroIngresoMercaderia(Compra $compra)
+    {
+        $cerveza = Cerveza::find($compra->cerveza->id);
+        $mensajes = Mensaje::all()->where('procesado',true);
+
+        if(isset($cerveza))
+        {
+            foreach($mensajes as $mensaje)
+            {
+                $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                if($pos==true)
+                {
+                    $mensaje->delete();
+                    break;
+                }
+                      
+            }
+
+            $administradores = User::where('id_tipo_usuario', '=',2)->get();
+            $cerveza->cantidadStock+= $cerveza->loteOptimo;
+            $cerveza->update();
+
+            foreach($administradores as $admin)
+                {
+                    $mensaje = new Mensaje();
+                    $mensaje->id_usuario=$admin->id;
+                    $mensaje->cuerpo='Stock: Ingresaron '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre. ' el dia '.Carbon::now()->format('d-m-Y').' a las '.Carbon::now()->format('H:i').' hs';
+                    $mensaje->leido=false;
+                    $mensaje->procesado=false;
+                    $mensaje->informativo=true;
+                    $mensaje->save();
+                }
+            $compra->efectiva=true;
+            $compra->update();
+            return redirect('recepcionMercaderia')->with('success','Ingreso de mercaderia registrado con exito.');
+        }
+        else
+        {
+          return back()->with('error','Error al confirmar ingreso mercaderia.');
+        }   
+
+
+        
+    }
+
+
+    public function registroTodoIngresoMercaderia()
+    {
+        $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
+        $mensajes = Mensaje::all()->where('procesado',true);
+        $cervezas=array();
+        if(count($mensajes)>0)
+        {
+            foreach($mensajes as $mensaje)
+            {
+                foreach($cervezasCerveWeb as $cerveza)
+                {
+                    $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                    if($pos==true)
+                    {
+                        array_push($cervezas,$cerveza);
+                    }
+                }         
+            }
+            $administradores = User::where('id_tipo_usuario', '=',2)->get();
+            foreach($cervezas as $cerveza)
+            {
+                $cerveza->cantidadStock+= $cerveza->loteOptimo;
+                $cerveza->update();
+                $compra= Compra::where('id_cerveza',$cerveza->id)->where('efectiva',false)->get()->first();
+                $compra->efectiva=true;
+                $compra->update();
+                
+                foreach($administradores as $admin)
+                {
+                    $mensaje = new Mensaje();
+                    $mensaje->id_usuario=$admin->id;
+                    $mensaje->cuerpo='Stock: Ingresaron '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre.' el dia '.Carbon::now()->format('d-m-Y').' a las '.Carbon::now()->format('H:i').' hs';
+                    $mensaje->leido=false;
+                    $mensaje->procesado=false;
+                    $mensaje->informativo=true;
+                    $mensaje->save();
+                }
+            }
+
+            foreach($mensajes as $mensaje)
+            {
+                $mensaje->delete();       
+            }
+
+            return redirect('recepcionMercaderia')->with('success','Ingreso de toda la mercaderia registrado con exito.');    
+        }
+        return redirect('recepcionMercaderia')->with('info','No hay mercaderia a ingresar.');    
+    }
+    
 }

@@ -183,6 +183,9 @@ Route::group(['middleware' => ['auth']], function()
 	//RECEPCION MERCADERIA
 
 	Route::get('/recepcionMercaderia','CompraController@recepcionMercaderia' )->name('recepcionMercaderia');
+	Route::get('/registroIngresoMercaderia/{compra}','CompraController@registroIngresoMercaderia' )->name('registroIngresoMercaderia');
+	Route::get('/registroTodoIngresoMercaderia','CompraController@registroTodoIngresoMercaderia' )->name('registroTodoIngresoMercaderia');
+	
 });
 
 

@@ -89,6 +89,7 @@
                                                    <a class="dropdown-item" href="{{ route('blPedidos') }}">Pedidos</a>
                                                    <a class="dropdown-item" href="{{ route('infoStock') }}">Stock</a>
                                                    <a class="dropdown-item" href="{{ route('informes') }}">Informes</a>
+                                                   <a class="dropdown-item" href="{{ route('recepcionMercaderia') }}">Recepción</a>
                                                </span>
                                                 @break
                                                 
