@@ -249,5 +249,93 @@ class CompraController extends Controller
         return $compras;
     }
 
+    public function eliminarCompra($compra)
+    {
+       
+        $cerveza = Cerveza::find($compra->cerveza->id);
+        $mensajes = Mensaje::all()->where('procesado',true);
+
+        if(isset($cerveza))
+        {
+            foreach($mensajes as $mensaje)
+            {
+                $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                if($pos==true)
+                {
+                    $mensaje->delete();
+                    break;
+                }
+                      
+            }
+
+            $administradores = User::where('id_tipo_usuario', '=',2)->get();
+
+            foreach($administradores as $admin)
+                {
+                    $mensaje = new Mensaje();
+                    $mensaje->id_usuario=$admin->id;
+                    $mensaje->cuerpo='Compra: Se anuló la compra de '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre.' al proveedor '.$compra->proveedor->razonSocial.' el dia '.Carbon::now()->format('d-m-Y').' a las '.Carbon::now()->format('H:i').' hs';
+                    $mensaje->leido=false;
+                    $mensaje->procesado=false;
+                    $mensaje->informativo=true;
+                    $mensaje->save();
+                }
+            $compra->delete();
+            return redirect('recepcionMercaderia')->with('success','Anulación de compra registrado con exito.');
+        }
+        else
+        {
+          return back()->with('error','Error al anular Compra.');
+        }   
+
+    }
+
+    public function eliminarTodasCompras()
+    {
+        $cervezasCerveWeb = Cerveza::all()->where('deleted_at',null);
+        $mensajes = Mensaje::all()->where('procesado',true);
+        $cervezas=array();
+        if(count($mensajes)>0)
+        {
+            foreach($mensajes as $mensaje)
+            {
+                foreach($cervezasCerveWeb as $cerveza)
+                {
+                    $pos=strpos($mensaje->cuerpo, $cerveza->nombre);
+                    if($pos==true)
+                    {
+                        array_push($cervezas,$cerveza);
+                    }
+                }         
+            }
+            $administradores = User::where('id_tipo_usuario', '=',2)->get();
+            foreach($cervezas as $cerveza)
+            {
+                $compra= Compra::where('id_cerveza',$cerveza->id)->where('efectiva',false)->get()->first();
+                $compra->delete();
+                
+                foreach($administradores as $admin)
+                {
+                    $mensaje = new Mensaje();
+                    $mensaje->id_usuario=$admin->id;
+                    $mensaje->cuerpo='Compra: Se anuló la compra de '.$cerveza->loteOptimo.' lts de la cerveza '.$cerveza->nombre.' al proveedor '.$compra->proveedor->razonSocial.' el dia '.Carbon::now()->format('d-m-Y').' a las '.Carbon::now()->format('H:i').' hs';
+                    $mensaje->leido=false;
+                    $mensaje->procesado=false;
+                    $mensaje->informativo=true;
+                    $mensaje->save();
+                }
+            }
+
+            foreach($mensajes as $mensaje)
+            {
+                $mensaje->delete();       
+            }
+
+            return redirect('recepcionMercaderia')->with('success','Anulación de compras registrado con exito.');    
+        }
+        return redirect('recepcionMercaderia')->with('info','No hay mercaderia a ingresar.');    
+    }
+
     
+
 }

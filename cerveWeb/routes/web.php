@@ -200,6 +200,10 @@ Route::group(['middleware' => ['auth']], function()
 	Route::get('/registroIngresoMercaderia/{compra}','CompraController@registroIngresoMercaderia' )->name('registroIngresoMercaderia');
 	Route::get('/registroTodoIngresoMercaderia','CompraController@registroTodoIngresoMercaderia' )->name('registroTodoIngresoMercaderia');
 	
+
+	// ANULACIÓN DE COMPRA
+	Route::post('/eliminarCompra/{compra}','CompraController@eliminarCompra' )->name('eliminarCompra');
+	
 });
 
 

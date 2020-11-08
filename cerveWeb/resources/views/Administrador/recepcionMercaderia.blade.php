@@ -60,6 +60,9 @@ $pedidoController = new PedidoController();
                                                     <center>
                                                         <button type="button"  class="btn btn-outline-success" data-toggle="modal" data-target="#_{{$compra->id}}">
                                                             Recibida
+                                                        </button>
+                                                        <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#__{{$compra->id}}">
+                                                            Eliminar
                                                         </button> 
                                                         
                                                     </center>                                      
@@ -76,8 +79,11 @@ $pedidoController = new PedidoController();
                           
                       </div>  
                       <p>
-                      <button type="button"  class="btn btn-outline-warning float-right mr-3" data-toggle="modal" data-target="#_{{1}}">
+                      <button type="button"  class="btn btn-outline-warning mr-3" data-toggle="modal" data-target="#_{{1}}">
                         Recibir Todo
+                      </button>
+                      <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#__{{1}}">
+                        Eliminar Todo
                       </button>
                       </p>                          
                   </div>
@@ -186,7 +192,67 @@ $pedidoController = new PedidoController();
                 </div>
             </div>
             <!-- -->  
-         @endforeach       
+         @endforeach   
+
+
+         @foreach($compras as $compra)        
+            <!-- Modal -->
+             <div class="modal fade" id="__{{$compra->id}}" tabindex="-1" role="dialog" aria-labelledby="__{{$compra->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Anulación de la compra</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             Confirma la anulación de la compra con la siguiente mercaderia? <br> <br>
+                             <div class="table-responsive">
+                                  
+                                  <table class="table table-bordered table-striped mb-0">
+                                      <thead>
+                                    
+                                      <tr>
+                                          <th class="sticky-top bg-light text-center" scope="col">Fecha compra</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Proveedor</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Cerveza</th>
+                                          <th class="sticky-top bg-light text-center" scope="col">Cantidad (lts)</th>  
+                                      </tr>
+                                      </thead>
+                                      <tbody>
+                                        @foreach($compras as $compra)
+
+
+                                        <tr>
+                                            <th class="text-left"scope="row">{{Carbon::parse($compra->fecha)->format('d-m-Y')}}</th>
+                                            <td class="text-left">{{$compra->proveedor->razonSocial}}</td>
+                                            <td class="text-left">{{$compra->cerveza->nombre}}</td>
+                                            <td class="text-right">{{$compra->cantidad}} lts</td>
+                                            
+                                        </tr>
+                                        @endforeach
+                                        
+                                      </tbody>
+                              </table>
+                        
+                          </div>
+
+                          <strong>
+                            <center>
+                                <span class="text-danger text-center">La acción no podrá revertirse.</span>
+                            </center>
+                          </strong>
+                       </div>
+                       <div class="modal-footer">
+                           <a href="{{route('eliminarCompra',$compra)}}" class="btn btn-primary">Confirmar</a>   
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+         @endforeach     
 
 
          <!-- Modal -->
@@ -225,7 +291,45 @@ $pedidoController = new PedidoController();
                     </div>
                 </div>
             </div>
-            <!-- -->                     
+            <!-- -->  
+
+            <!-- Modal -->
+             <div class="modal fade" id="__{{1}}" tabindex="-1" role="dialog" aria-labelledby="__{{1}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Anulación de Compras</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                             Confirma la eliminación de las siguientes compras? <br> <br>
+                             @foreach($compras as $compra)
+                            <strong>Cerveza: </strong>{{$compra->cerveza->nombre}}<br> <br>
+
+                            <strong>Cantidad: </strong>{{$compra->cantidad}} lts<br> <br>
+                        
+                            <strong>Proveedor: </strong>{{$compra->proveedor->razonSocial}}<br> <br>
+
+                             <p class="text-center"> Compra realizada el {{$pedidoController->traducirDia(Carbon::parse($compra->fecha)->format('l'))}} {{Carbon::parse($compra->fecha)->format('d-m-Y')}}
+                             </p>
+                            <hr>
+                            @endforeach
+                          <strong>
+                            <center>
+                                <span class="text-danger text-center">La acción no podrá revertirse.</span>
+                            </center>
+                          </strong>
+                       </div>
+                       <div class="modal-footer">
+                           <a href="{{route('eliminarTodasCompras')}}" class="btn btn-primary">Confirmar</a>   
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->                                        
 
 
 @endsection
