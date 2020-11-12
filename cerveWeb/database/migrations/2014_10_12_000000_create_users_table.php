@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('razonSocial')->nullable();
             $table->string('condicionIVA')->nullable();
             $table->string('direcciónEntrega')->nullable();
-            $table->bigInteger('prioridad')->nullable();
             $table->string('telefono')->nullable();
             $table->rememberToken();
             $table->timestamps();

@@ -210,8 +210,7 @@ Route::group(['middleware' => ['auth']], function()
 	
 });
 
-
-//USUARIO
+// USUARIO INVITADO
 
 Route::get('/catalogoCervezas','StoreController@index' )->name('catalogoCervezas');
 Route::get('/detalleCerveza/{id}','StoreController@show' )->name('cerveza-detalle');
@@ -225,47 +224,68 @@ Route::get('/updateItemCarrito/{cerveza}/{cantidad?}', [
 	'uses' => 'CarritoController@updateItem'
 ]);
 
-Route::post('/detallePedido',[
-	'middleware' =>'auth',
-	'as' => 'detallepedido',
-	'uses' => 'CarritoController@detallePedido'
-]);
+//CLIENTE
+
+Route::group(['middleware' => ['onlyCustomers']], function()
+
+{
+	
+
+	Route::post('/detallePedido',[
+		'middleware' =>'auth',
+		'as' => 'detallepedido',
+		'uses' => 'CarritoController@detallePedido'
+	]);
 
 
-//Paypal
+	//Paypal
 
-// Enviamos nuestro pedido a PayPal
+	// Enviamos nuestro pedido a PayPal
 
-Route::get('/pago',array(
-	'as' => 'pago',
-	'uses' => 'PaypalController@registrarPago'
-));
+	Route::get('/pago',array(
+		'as' => 'pago',
+		'uses' => 'PaypalController@registrarPago'
+	));
 
-// Paypal redirecciona a esta ruta
+	// Paypal redirecciona a esta ruta
 
-Route::get('/estadoPago',array(
-	'as' => 'estadoPago',
-	'uses' => 'PaypalController@getEstadoPago'
-));
+	Route::get('/estadoPago',array(
+		'as' => 'estadoPago',
+		'uses' => 'PaypalController@getEstadoPago'
+	));
 
-//Registrar un pedido sin pagar
+	//Registrar un pedido sin pagar
 
-Route::get('/registroSinPago/{fechaEntrega}',[
-	'as' => 'registroSinPago',
-	'uses' => 'PedidoController@registrarPedido'
-]);
+	Route::get('/registroSinPago/{fechaEntrega}',[
+		'as' => 'registroSinPago',
+		'uses' => 'PedidoController@registrarPedido'
+	]);
 
-//Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
+	//Route::get('/registroSinPago/{fechaEntrega}','PedidoController@registrarPedido' )->name('registroSinPago');
 
-//Lista de Pedidos de un Usuario
-Route::get('/listadoPedidos','PedidoController@index')->name('listadoPedidos');
-Route::get('/deletePedidos/{id}','PedidoController@logic_delete' )->name('deletePedidos');
+	//Lista de Pedidos de un Usuario
+	Route::get('/listadoPedidos','PedidoController@index')->name('listadoPedidos');
+	Route::get('/deletePedidos/{id}','PedidoController@logic_delete' )->name('deletePedidos');
 
-// Usuario sin permiso no habilitado.
+	//CUENTA CORRIENTE USUARIOS
 
-Route::get('/noHabilitado', ['as' => 'noHablitado', function() {
-    return view('Usuario.noHabilitado');
-}]);
+	Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('cuentaCorriente');
+	Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
+	Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');
+
+});
+
+
+// USUARIOS NO HABILITADOS.
+
+Route::group(['middleware' => ['noHabilitado']], function()
+{
+
+	Route::get('/noHabilitado', ['as' => 'noHablitado', function() {
+		return view('Usuario.noHabilitado');
+	}]);
+
+});
 
 
 
@@ -273,44 +293,39 @@ Route::get('/noHabilitado', ['as' => 'noHablitado', function() {
 
 // OPERADOR //
 
-Route::get('/listadoPedidosEntrega','PedidoController@getPedidosProxEntrega' )->name('listadoPedidosEntrega');
-Route::get('/procesarTodosPedidos','PedidoController@procesarTodosPedidos' )->name('procesarTodosPedidos');
-Route::get('/controlStock/{id}','PedidoController@controlStock' )->name('controlStock');
+Route::group(['middleware' => ['operations']], function()
 
-Route::get('/expedicionPedido/{id}','PedidoController@expedicionPedido' )->name('expedicionPedido');
-Route::get('/expedicionCamion','PedidoController@getPedidosExpedicion' )->name('expedicionCamion');
-Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mostrarFactura');
-Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
-Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
-Route::get('/informeCargaCamion','PedidoController@informeCargaCamion' )->name('informeCargaCamion');
-Route::get('/hojaRuta','PedidoController@showHojaRuta' )->name('hojaRuta');
-Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
-Route::get('/imprimirFacturas','PedidoController@imprimirFacturas' )->name('imprimirFacturas');
-Route::get('/imprimirRemitos','PedidoController@imprimirRemitos' )->name('imprimirRemitos');
+{
+
+	Route::get('/listadoPedidosEntrega','PedidoController@getPedidosProxEntrega' )->name('listadoPedidosEntrega');
+	Route::get('/procesarTodosPedidos','PedidoController@procesarTodosPedidos' )->name('procesarTodosPedidos');
+	Route::get('/controlStock/{id}','PedidoController@controlStock' )->name('controlStock');
+
+	Route::get('/expedicionPedido/{id}','PedidoController@expedicionPedido' )->name('expedicionPedido');
+	Route::get('/expedicionCamion','PedidoController@getPedidosExpedicion' )->name('expedicionCamion');
+	Route::get('/mostrarFactura/{id}','PedidoController@mostrarFactura' )->name('mostrarFactura');
+	Route::get('/mostrarRemito/{id}','PedidoController@mostrarRemito' )->name('mostrarRemito');
+	Route::get('/estadoCamion','PedidoController@mostrarCamion' )->name('mostrarCamion');
+	Route::get('/informeCargaCamion','PedidoController@informeCargaCamion' )->name('informeCargaCamion');
+	Route::get('/hojaRuta','PedidoController@showHojaRuta' )->name('hojaRuta');
+	Route::get('/logisticaCamion','PedidoController@logisticaPedidos' )->name('logisticaCamion');
+	Route::get('/imprimirFacturas','PedidoController@imprimirFacturas' )->name('imprimirFacturas');
+	Route::get('/imprimirRemitos','PedidoController@imprimirRemitos' )->name('imprimirRemitos');
+
+	//ENVIO FACTURAS VIA MAIL
+	Route::get('/enviarFactura/{pedido}','PDFController@envioFactura' )->name('enviarFactura');
+	Route::get('/enviarFacturas','PDFController@envioFacturas' )->name('enviarFacturas');
+
+});
+
+
+
 
 
 //CAMBIO DE CONTRASEÑAS
 
 Route::get('/cambiarContraseña','UserController@editarContraseña' )->name('cambiarContraseña');
 Route::post('/actualizarContraseña','UserController@actualizarContraseña' )->name('actualizarContraseña');
-
-
-
-//CUENTA CORRIENTE USUARIOS
-
-Route::get('/cuentaCorriente','CuentaCorrienteController@estadoCuenta' )->name('cuentaCorriente');
-Route::get('/verFactura/{pedido}','CuentaCorrienteController@mostrarFactura' )->name('verFactura');
-Route::get('/verRemito/{pedido}','CuentaCorrienteController@mostrarRemito' )->name('verRemito');
-
-//ENVIO FACTURAS VIA MAIL
-Route::get('/enviarFactura/{pedido}','PDFController@envioFactura' )->name('enviarFactura');
-Route::get('/enviarFacturas','PDFController@envioFacturas' )->name('enviarFacturas');
-
-Route::get('/mostrarFacturamail/{pedido}','PDFController@mostrarFactura' )->name('mostrarFacturamail');
-
-
-
-
 
 
 
