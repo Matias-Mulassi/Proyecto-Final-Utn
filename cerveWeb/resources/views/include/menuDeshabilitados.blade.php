@@ -48,13 +48,13 @@
                                     <a class="dropdown-item" href="{{route('cambiarContraseña')}}">Cambiar Contraseña</a>
                                     @switch(Auth::user()->id_tipo_usuario)
                                             @case(1)
-                                                <a class="dropdown-item" href="https://online.flippingbook.com/view/566188/" target="_blank">Guia del Usuario</a>
+                                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#_{{1}}">Guia del Usuario</a>
                                                 @break
                                             @case(2)
-                                                <a class="dropdown-item" href="#" target="_blank">Guia del Usuario</a>
+                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#__{{2}}">Guia del Usuario</a>
                                                 @break
                                             @case(3)
-                                            <a href="https://online.flippingbook.com/view/738469/" class="fbo-embed" data-fbo-id="738469" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Operador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=738469"></script> 
+                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#___{{3}}">Guia del Usuario</a>
                                                 @break
                                         @endswitch
                                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -72,3 +72,73 @@
                         </ul>
                     </div>
 </nav>
+
+
+
+
+<!-- Modal manual cliente -->
+<div class="modal fade" id="_{{1}}" tabindex="-1" role="dialog" aria-labelledby="_{{1}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+
+                       <a href="https://online.flippingbook.com/view/566188/" class="fbo-embed" data-fbo-id="566188" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Usuario</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=566188"></script>
+
+                       </div>
+                       <div class="modal-footer">
+                       <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+
+
+
+<!-- Modal manual Administrador -->
+<div class="modal fade" id="__{{2}}" tabindex="-1" role="dialog" aria-labelledby="__{{2}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                       <a href="https://online.flippingbook.com/view/421457/" class="fbo-embed" data-fbo-id="421457" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Administrador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=421457"></script>
+
+                       </div>
+                       <div class="modal-footer">
+                       <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+
+
+
+<!-- Modal manual Operador -->
+<div class="modal fade" id="___{{3}}" tabindex="-1" role="dialog" aria-labelledby="___{{3}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                       <a href="https://online.flippingbook.com/view/738469/" class="fbo-embed" data-fbo-id="738469" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Operador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=738469"></script>
+                       </div>
+                       <div class="modal-footer">
+                       <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
