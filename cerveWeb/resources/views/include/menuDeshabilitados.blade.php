@@ -48,13 +48,13 @@
                                     <a class="dropdown-item" href="{{route('cambiarContraseña')}}">Cambiar Contraseña</a>
                                     @switch(Auth::user()->id_tipo_usuario)
                                             @case(1)
-                                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#_{{1}}">Guia del Usuario</a>
+                                                <a class="dropdown-item" href="" data-toggle="modal" data-target="#_manualCliente">Guia del Usuario</a>
                                                 @break
                                             @case(2)
-                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#__{{2}}">Guia del Usuario</a>
+                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#_manualAdministrador">Guia del Usuario</a>
                                                 @break
                                             @case(3)
-                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#___{{3}}">Guia del Usuario</a>
+                                            <a class="dropdown-item" href="" data-toggle="modal" data-target="#_manualOperador">Guia del Usuario</a>
                                                 @break
                                         @endswitch
                                         <a class="dropdown-item" href="{{ route('logout') }}"
@@ -77,7 +77,7 @@
 
 
 <!-- Modal manual cliente -->
-<div class="modal fade" id="_{{1}}" tabindex="-1" role="dialog" aria-labelledby="_{{1}}" aria-hidden="true">
+<div class="modal fade" id="_manualCliente" tabindex="-1" role="dialog" aria-labelledby="_manualCliente" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -101,7 +101,7 @@
 
 
 <!-- Modal manual Administrador -->
-<div class="modal fade" id="__{{2}}" tabindex="-1" role="dialog" aria-labelledby="__{{2}}" aria-hidden="true">
+<div class="modal fade" id="_manualAdministrador" tabindex="-1" role="dialog" aria-labelledby="_manualAdministrador" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -124,7 +124,7 @@
 
 
 <!-- Modal manual Operador -->
-<div class="modal fade" id="___{{3}}" tabindex="-1" role="dialog" aria-labelledby="___{{3}}" aria-hidden="true">
+<div class="modal fade" id="_manualOperador" tabindex="-1" role="dialog" aria-labelledby="_manualOperador" aria-hidden="true">
                   <div class="modal-dialog" role="document">
                     <div class="modal-content">
                       <div class="modal-header">
