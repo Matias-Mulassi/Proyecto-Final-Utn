@@ -9,8 +9,8 @@ $cervezaController = new CervezaController();
         use Carbon\Carbon;
     @endphp
     <div class="jumbotron">
-        <h1 class="display-4 text-center">Factura Electronica</h1>
-        <hr class="my-4">
+       
+      
         <div class="container">
             <div class="row" style="border: 1px solid black;">
                 <div class="col text-center" style="border: 1px solid black;">

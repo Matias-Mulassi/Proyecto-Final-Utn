@@ -46,6 +46,17 @@
 
                                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">                                     
                                     <a class="dropdown-item" href="{{route('cambiarContraseña')}}">Cambiar Contraseña</a>
+                                    @switch(Auth::user()->id_tipo_usuario)
+                                            @case(1)
+                                                <a class="dropdown-item" href="https://online.flippingbook.com/view/566188/" target="_blank">Guia del Usuario</a>
+                                                @break
+                                            @case(2)
+                                                <a class="dropdown-item" href="#" target="_blank">Guia del Usuario</a>
+                                                @break
+                                            @case(3)
+                                            <a href="https://online.flippingbook.com/view/738469/" class="fbo-embed" data-fbo-id="738469" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Operador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=738469"></script> 
+                                                @break
+                                        @endswitch
                                         <a class="dropdown-item" href="{{ route('logout') }}"
                                            onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
