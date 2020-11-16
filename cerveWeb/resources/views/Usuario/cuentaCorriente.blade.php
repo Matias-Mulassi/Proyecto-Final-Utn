@@ -60,6 +60,11 @@ $cervezaController = new CervezaController();
                                                     <button type="button"  class="btn btn-outline-info" data-toggle="modal" data-target="#_{{$pedido->id}}">
                                                     Ver Pedido
                                                     </button>
+                                                    @if($pedido->estado == "pendiente")
+                                                    <button type="button"  class="btn btn-outline-danger" data-toggle="modal" data-target="#__{{$pedido->id}}">
+                                                    Eliminar
+                                                    </button>
+                                                    @endif
                                                 </center>                                  
                                             </td>
                                         </tr>
@@ -69,6 +74,21 @@ $cervezaController = new CervezaController();
                             </div>
                             @else
                             <h3><div class="col alert alert-info alert-dismissible fade show" role="alert"> <i class="fa fa-info-circle"></i> No hay pedidos con deuda</div></h3>
+                    @endif
+                    @if(session('success'))
+                    <div class=" col-md-6 float-left mt-2 alert alert-success alert-dismissible fade show" role="alert">
+                          <strong>{{session('success')}}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                    </div>
+                    @elseif(session('error'))
+                    <div class=" col-md-6 float-left mt-2 alert alert-danger alert-dismissible fade show" role="alert">
+                          <strong>{{session('error')}}</strong>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
                     @endif
                     </div>
                     
@@ -114,6 +134,43 @@ $cervezaController = new CervezaController();
                 </div>
             </div>
             <!-- -->  
-         @endforeach                               
+         @endforeach           
+
+
+         @foreach($pedidos as $pedido)        
+            <!-- Modal -->
+             <div class="modal fade" id="__{{$pedido->id}}" tabindex="-1" role="dialog" aria-labelledby="__{{$pedido->id}}" aria-hidden="true">
+                  <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Eliminar Pedido</h5>
+                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                       </div>
+                       <div class="modal-body">
+                            <center>
+                                Desea Eliminar el pedido? <br>
+                                <p hidden>{{$total=0}}</p>
+                                <strong>Nro: </strong>{{$pedido->id}}<br>
+                                @foreach($pedido->itemsPedidos as $item)
+                                <p hidden>{{$precioCerveza=$cervezaController->getPrecioVigente($item->cerveza->id,$pedido->created_at)}}</p>
+                                    <strong> Cerveza: </strong>{{$item->cerveza->nombre}}<br>
+                                    <strong>Cantidad Litros: </strong>{{$item->cantidad}}<br>
+                                    <p hidden>{{$total+= $item->cantidad * $precioCerveza}} </p>
+                                @endforeach      
+                                <strong> Total a abonar: $ </strong>{{number_format($total,2)}}<br>    
+                            </center>           
+                       </div>
+
+                       <div class="modal-footer">
+                           <a href="{{route('deletePedidos',$pedido->id)}}" class="btn btn-primary">Aceptar</a>   
+                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <!-- -->  
+         @endforeach                    
 
 @stop
