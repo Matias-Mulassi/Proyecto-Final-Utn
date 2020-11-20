@@ -49,12 +49,30 @@ Route::get('/home', function()
 				
 				
 			case 2:
-			    return view('Administrador.homeAdmin');
-				break;
+				if(isset(Auth::user()->deleted_at))
+				{
+					return view('Usuario.noHabilitado');
+					break;
+				}
+				else
+				{
+					return view('Administrador.homeAdmin');
+					break;
+				}
+			    
 			
 			case 3:
-			    return view('Operador.homeOperador');
-				break;		
+				if(isset(Auth::user()->deleted_at))
+				{
+					return view('Usuario.noHabilitado');
+					break;
+				}
+				else
+				{
+					return view('Operador.homeOperador');
+					break;	
+				}
+			    	
 			
 		}   
  
@@ -73,7 +91,7 @@ Route::bind('cerveza', function($id){
 	return App\Cerveza::where('id',$id)->first();
 });
 
-Route::group(['middleware' => ['auth']], function()
+Route::group(['middleware' => ['auth','checkDisable']], function()
 {
     Route::get('/abmlUsuarios','UserController@index' )->name('abmlUsuarios');
 	Route::post('/altaUsuario','UserController@store' )->name('altaUsuario');

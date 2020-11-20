@@ -58,6 +58,7 @@ class Kernel extends HttpKernel
         'operations' => \App\Http\Middleware\Operations::class,
         'onlyCustomers' => \App\Http\Middleware\Onlycustomers::class,
         'noHabilitado' => \App\Http\Middleware\NoHabilitado::class,
+        'checkDisable' => \App\Http\Middleware\CheckDisable::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'prioridad' => \App\Http\Middleware\PrioridadMiddleware::class,

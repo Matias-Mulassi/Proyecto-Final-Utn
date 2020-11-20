@@ -42,7 +42,7 @@ class ProveedorController extends Controller
         $rules = [
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'],
             'cuit' => ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'],
-            'razonSocial' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'],
+            'razonSocial' => ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.]+$/', 'max:255','unique:proveedores','unique:users'],
             'telefono' => ['required','numeric'],
           ];
 
@@ -133,7 +133,7 @@ class ProveedorController extends Controller
             {
                 $ruleMail = [];
                 $ruleCuit = [];
-                $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
+                $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.]+$/', 'max:255','unique:proveedores','unique:users'];
             }
             else
             {   
@@ -160,7 +160,7 @@ class ProveedorController extends Controller
                         {
                             $ruleMail = [];
                             $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
-                            $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
+                            $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.]+$/', 'max:255','unique:proveedores','unique:users'];
                         }
                         else
                         {
@@ -169,7 +169,7 @@ class ProveedorController extends Controller
                             {
                                 $ruleMail = ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'];
                                 $ruleCuit = [];
-                                $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
+                                $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.]+$/', 'max:255','unique:proveedores','unique:users'];
                             }
                             else
                             {
@@ -184,7 +184,7 @@ class ProveedorController extends Controller
                                 {
                                     $ruleMail = ['required', 'string', 'email', 'max:255', 'unique:users','unique:proveedores'];
                                     $ruleCuit = ['required','regex:/^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/','unique:proveedores',new FormatoCuit(), 'min:13','max:13'];
-                                    $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ]+$/', 'max:255','unique:proveedores','unique:users'];
+                                    $ruleRazonSocial = ['required','regex:/^[A-Za-z\s-zäÄëËïÏöÖüÜáéíóúáéíóúÁÉÍÓÚÂÊÎÔÛâêîôûàèìòùÀÈÌÒÙ.]+$/', 'max:255','unique:proveedores','unique:users'];
                                 }
                             }
 
