@@ -382,7 +382,7 @@ class CervezaController extends Controller
     {
         if(isset($request['precio']))
         {
-            if(ctype_digit($request['precio']))
+            if(is_numeric($request['precio'])& ((int)$request['precio']>0))
             {
                 if($request['precio']==0)
                 {
