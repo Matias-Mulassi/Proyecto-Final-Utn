@@ -70,7 +70,15 @@ class FormatoCuit implements Rule
         }
   
         $decimal=explode('.',round( $ac/11, 1, PHP_ROUND_HALF_UP));
-        $digitoverificador=11-$decimal[1];
+        if(isset($decimal[1]))
+        {
+            $digitoverificador=11-$decimal[1];
+        }
+
+        else
+        {
+            return false;
+        }
         if($digitoverificador==(int)$cuit[strlen($cuit)-1])
         {
 
@@ -85,6 +93,6 @@ class FormatoCuit implements Rule
      */
     public function message()
     {
-        return 'El codigo verificador no es valido.';
+        return 'El codigo verificador no es valido o el cuit no verifica.';
     }
 }
