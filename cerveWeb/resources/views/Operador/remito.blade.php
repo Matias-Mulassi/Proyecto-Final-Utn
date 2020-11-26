@@ -47,8 +47,13 @@
                    <p style="float:left;"> <strong>I V A </strong> </p>
                 </div>
                 <div class="col-md-6 p-2" style="border-right: 1px solid black;">
+                @if($pedido->usuario->condicionIVA=="Responsable Inscripto")
                    <p style="float:left; margin-left:20px;"> <strong> Resp. Inscrip. </strong></p>
-                   <p style="float:right; margin-right:30px;"><strong> Resp. No Inscrip. </strong>
+                   <s><p style="float:right; margin-right:30px;"><strong> Resp. No Inscrip. </strong></s>
+                @else
+                <s><p style="float:left; margin-left:20px;"> <strong> Resp. Inscrip. </strong></s>
+                <p style="float:right; margin-right:30px;"><strong> Resp. No Inscrip. </strong>
+                @endif
                 </div>
                 
                 <div class="col p-2" >
