@@ -87,7 +87,8 @@
                        </div>
                        <div class="modal-body">
 
-                       <a href="https://online.flippingbook.com/view/566188/" class="fbo-embed" data-fbo-id="566188" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Usuario</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=566188"></script>
+                       <a href="https://online.flippingbook.com/view/939865/" class="fbo-embed" data-fbo-id="939865" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Cliente</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=939865"></script>
+
 
                        </div>
                        <div class="modal-footer">
@@ -110,7 +111,8 @@
                               </button>
                        </div>
                        <div class="modal-body">
-                       <a href="https://online.flippingbook.com/view/421457/" class="fbo-embed" data-fbo-id="421457" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Administrador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=421457"></script>
+                       <a href="https://online.flippingbook.com/view/689773/" class="fbo-embed" data-fbo-id="689773" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Administrador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=689773"></script>
+
 
                        </div>
                        <div class="modal-footer">
@@ -133,7 +135,8 @@
                               </button>
                        </div>
                        <div class="modal-body">
-                       <a href="https://online.flippingbook.com/view/738469/" class="fbo-embed" data-fbo-id="738469" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Operador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=738469"></script>
+                       <a href="https://online.flippingbook.com/view/215070/" class="fbo-embed" data-fbo-id="215070" data-fbo-lightbox="yes" data-fbo-width="740px" data-fbo-height="480px" data-fbo-version="1" style="max-width: 100%">Manual del Operador</a><script async defer src="https://online.flippingbook.com/EmbedScriptUrl.aspx?m=redir&hid=215070"></script>
+
                        </div>
                        <div class="modal-footer">
                        <button type="button" class="btn btn-outline-success btn-lg" data-dismiss="modal"><i class="fa fa-check"></i></button>
