@@ -132,7 +132,7 @@
                         <li>Garrafas 20 Litros : {{$totalGarrafas20}} unidades</li>
                         @endif
                         @if($totalGarrafas10>0)
-                        <li>Garragas 10 Litros : {{$totalGarrafas10}}  unidades</li>
+                        <li>Garrafas 10 Litros : {{$totalGarrafas10}}  unidades</li>
                         @endif
                         @if($totalGarrafas5>0)
                         <li>Garrafas 5 Litros : {{$totalGarrafas5}} unidades</li>
@@ -153,7 +153,7 @@
                         <li>Garrafas 20 Litros : @php echo(${"cantgarrafas20_".$cerveza->nombre}); @endphp unidades</li>
                         @endif
                         @if(${"cantgarrafas10_".$cerveza->nombre}>0)
-                        <li>Garragas 10 Litros : @php echo(${"cantgarrafas10_".$cerveza->nombre}); @endphp unidades</li>
+                        <li>Garrafas 10 Litros : @php echo(${"cantgarrafas10_".$cerveza->nombre}); @endphp unidades</li>
                         @endif
                         @if(${"cantgarrafas5_".$cerveza->nombre}>0)
                         <li>Garrafas 5 Litros : @php echo(${"cantgarrafas5_".$cerveza->nombre}); @endphp unidades</li>
