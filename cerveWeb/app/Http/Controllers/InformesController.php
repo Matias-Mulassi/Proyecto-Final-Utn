@@ -528,7 +528,7 @@ class InformesController extends Controller
             $cervezas= Cerveza::where('deleted_at',null)->where('nombre','like',"%$cerveza%")->get();
             $fechaDesde=$request['fechaDesde'];
             $fechaHasta=$request['fechaHasta']; 
-            return view('Administrador.informeComprasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
+            return view('Administrador.informesComprasCervezas',compact('cervezas','fechaDesde','fechaHasta'));
         }
         
         

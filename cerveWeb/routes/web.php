@@ -179,7 +179,7 @@ Route::group(['middleware' => ['auth','checkDisable']], function()
 	Route::get('/informeComprasProveedor','InformesController@showComprasProveedores' )->name('informeComprasProveedor');
 	Route::get('/informeComprasProveedoresSeleccionados','InformesController@showComprasProveedoresSelect' )->name('informeComprasProveedoresSeleccionados');
 	Route::get('/informeComprasCervezas','InformesController@showComprasCervezas' )->name('informeComprasCervezas');
-	Route::get('/informeVentasCervezasSeleccionados','InformesController@showComprasCervezasSelect' )->name('informeVentasCervezasSeleccionados');
+	Route::get('/informeComprasCervezasSeleccionados','InformesController@showComprasCervezasSelect' )->name('informeComprasCervezasSeleccionados');
 	Route::get('/informeVentasClientes','InformesController@showVentasClientes' )->name('informeVentasClientes');
 	Route::get('/informeVentasClientesSeleccionados','InformesController@showVentasClientesSelect' )->name('informeVentasClientesSeleccionados');
 	Route::get('/informeVentasCervezas','InformesController@showVentasCervezas' )->name('informeVentasCervezas');

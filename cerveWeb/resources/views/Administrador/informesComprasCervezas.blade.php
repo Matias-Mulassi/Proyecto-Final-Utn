@@ -120,7 +120,7 @@ $compraController = new CompraController();
 
 
 <!-- Modal -->
-<form method="GET" action="{{route('informeVentasCervezasSeleccionados')}}">
+<form method="GET" action="{{route('informeComprasCervezasSeleccionados')}}">
             @csrf
              <div class="modal fade" id="_{{1}}" tabindex="-1" role="dialog" aria-labelledby="_{{1}}" aria-hidden="true">
                   <div class="modal-dialog" role="document">
